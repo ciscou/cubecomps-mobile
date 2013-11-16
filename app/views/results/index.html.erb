@@ -1,0 +1,34 @@
+<% content_for(:title) { "Results" } %>
+
+<table data-role="table" data-mode="reflow" class="ui-responsive table-stripe">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>T1</th>
+      <th>T2</th>
+      <th>T3</th>
+      <th>T4</th>
+      <th>T5</th>
+      <th>Average</th>
+      <th>Best</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= result.position %></td>
+        <td><%= result.name %></td>
+        <td><%= result.country %></td>
+        <td><%= result.t1 %></td>
+        <td><%= result.t2 %></td>
+        <td><%= result.t3 %></td>
+        <td><%= result.t4 %></td>
+        <td><%= result.t5 %></td>
+        <td><%= result.average %></td>
+        <td><%= result.best %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
