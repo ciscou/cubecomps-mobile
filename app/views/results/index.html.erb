@@ -2,37 +2,39 @@
 <% content_for(:title) { "Results" } %>
 
 <% content_for(:extra_pages) do %>
-  <% @round.results.each_with_index do |result, idx| %>
-    <div data-role="page" id="result_<%= @round.competition_id %>_<%= @round.category_id %>_<%= @round.id %>_<%= idx %>">
-      <div data-role="header">
-        <h2><%= result.name %></h2>
-      </div>
+  <% cache [@round, "results", "extra_pages"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+    <% @round.results.each_with_index do |result, idx| %>
+      <div data-role="page" id="result_<%= @round.competition_id %>_<%= @round.category_id %>_<%= @round.id %>_<%= idx %>">
+        <div data-role="header">
+          <h2><%= result.name %></h2>
+        </div>
 
-      <div data-role="content">
-        <p>
-          <strong>Country</strong><br/>
-          <%= result.country %>
-        </p>
-        <p>
-          <strong>Average</strong><br/>
-            <%= result.average %>
-            <% if result.average_record.present? %>
-              (<%= result.average_record %>)
-            <% end %>
-        </p>
-        <p>
-          <strong>Best</strong><br/>
-            <%= result.best %>
-            <% if result.best_record.present? %>
-              (<%= result.best_record %>)
-            <% end %>
-        </p>
-        <p>
-          <strong>Times</strong><br/>
-          <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %>
-        </p>
+        <div data-role="content">
+          <p>
+            <strong>Country</strong><br/>
+            <%= result.country %>
+          </p>
+          <p>
+            <strong>Average</strong><br/>
+              <%= result.average %>
+              <% if result.average_record.present? %>
+                (<%= result.average_record %>)
+              <% end %>
+          </p>
+          <p>
+            <strong>Best</strong><br/>
+              <%= result.best %>
+              <% if result.best_record.present? %>
+                (<%= result.best_record %>)
+              <% end %>
+          </p>
+          <p>
+            <strong>Times</strong><br/>
+            <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %>
+          </p>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -46,23 +48,25 @@
     </tr>
   </thead>
   <tbody>
-    <% @round.results.each_with_index do |result, idx| %>
-      <tr>
-        <td><%= result.position %></td>
-        <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
-        <td>
-          <%= result.average %>
-          <% if result.average_record.present? %>
-            (<%= result.average_record %>)
-          <% end %>
-        </td>
-        <td>
-          <%= result.best %>
-          <% if result.best_record.present? %>
-            (<%= result.best_record %>)
-          <% end %>
-        </td>
-      </tr>
+    <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+      <% @round.results.each_with_index do |result, idx| %>
+        <tr>
+          <td><%= result.position %></td>
+          <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
+          <td>
+            <%= result.average %>
+            <% if result.average_record.present? %>
+              (<%= result.average_record %>)
+            <% end %>
+          </td>
+          <td>
+            <%= result.best %>
+            <% if result.best_record.present? %>
+              (<%= result.best_record %>)
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

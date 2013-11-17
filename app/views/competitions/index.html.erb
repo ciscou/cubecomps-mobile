@@ -2,8 +2,10 @@
 
 <ul data-role="listview">
   <li data-role="list-divider">Competitions in progress</li>
-  <% @competitions.in_progress.each do |competition| %>
-    <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+  <% cache "competitions_in_progress", expires_in: 5.minutes, race_condition_ttl: 10 do %>
+    <% @competitions.in_progress.each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% end %>
   <% end %>
   <li data-role="list-divider">Past competitions</li>
   <li><%= link_to "Competition 3", competition_categories_path(3) %></li>

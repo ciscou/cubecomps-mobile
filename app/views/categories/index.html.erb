@@ -2,14 +2,16 @@
 <% content_for(:title) { "Categories" } %>
 
 <div data-role="collapsible-set" data-inset="false">
-  <% @competition.categories.each do |category| %>
-    <div data-role="collapsible" data-theme="b" data-content-theme="c">
-      <h2><%= category.name %></h2>
-      <ul data-role="listview">
-        <% category.rounds.each do |round| %>
-          <li><%= link_to round.name, competition_category_round_results_path(@competition, category, round), data: { ajax: false } %></li>
-        <% end %>
-      </ul>
-    </div>
+  <% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+    <% @competition.categories.each do |category| %>
+      <div data-role="collapsible" data-theme="b" data-content-theme="c">
+        <h2><%= category.name %></h2>
+        <ul data-role="listview">
+          <% category.rounds.each do |round| %>
+            <li><%= link_to round.name, competition_category_round_results_path(@competition, category, round), data: { ajax: false } %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 </div>
