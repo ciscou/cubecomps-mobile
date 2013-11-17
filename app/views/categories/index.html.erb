@@ -1,6 +1,6 @@
 <% content_for(:title) { "Categories" } %>
 
-<div data-role="collapsible-set">
+<div data-role="collapsible-set" data-inset="false">
   <% @competition.categories.each do |category| %>
     <div data-role="collapsible" data-theme="b" data-content-theme="c">
       <h2><%= category.name %></h2>
