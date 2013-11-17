@@ -1,8 +1,8 @@
 <% content_for(:back_button) { link_to "Back", competitions_path, data: { icon: "back" } } %>
 <% content_for(:title) { "Categories" } %>
 
-<div data-role="collapsible-set" data-inset="false">
-  <% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+<% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
     <% @competition.categories.each do |category| %>
       <div data-role="collapsible" data-theme="b" data-content-theme="c">
         <h2><%= category.name %></h2>
@@ -14,4 +14,4 @@
       </div>
     <% end %>
   <% end %>
-</div>
+<% end %>

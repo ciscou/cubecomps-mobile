@@ -15,6 +15,10 @@ class Competition
     id.to_s
   end
 
+  def cache_key
+    ["competitions", id].join("/")
+  end
+
   private
 
   def self.find(id)

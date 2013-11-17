@@ -1,22 +1,22 @@
 <% content_for(:title) { "Competitions" } %>
 
-<ul data-role="listview">
-  <li data-role="list-divider">Competitions in progress</li>
-  <% cache "competitions_in_progress", expires_in: 5.minutes, race_condition_ttl: 10 do %>
+<% cache @competitions, expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <%= content_tag :ul, data: { role: "listview", generated_at: Time.now.to_s(:db) } do %>
+    <li data-role="list-divider">Competitions in progress</li>
     <% @competitions.in_progress.each do |competition| %>
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
+    <li data-role="list-divider">Past competitions</li>
+    <li><%= link_to "Competition 3", competition_categories_path(3) %></li>
+    <li><%= link_to "Competition 4", competition_categories_path(4) %></li>
+    <li><%= link_to "Competition 5", competition_categories_path(5) %></li>
+    <li><%= link_to "Competition 6", competition_categories_path(6) %></li>
+    <li><%= link_to "Competition 7", competition_categories_path(7) %></li>
+    <li><%= link_to "Competition 8", competition_categories_path(8) %></li>
+    <li><%= link_to "Competition 9", competition_categories_path(9) %></li>
+    <li><%= link_to "Competition 10", competition_categories_path(10) %></li>
+    <li data-role="list-divider">Upcoming competitions</li>
+    <li><%= link_to "Competition 11", competition_categories_path(11) %></li>
+    <li><%= link_to "Competition 12", competition_categories_path(12) %></li>
   <% end %>
-  <li data-role="list-divider">Past competitions</li>
-  <li><%= link_to "Competition 3", competition_categories_path(3) %></li>
-  <li><%= link_to "Competition 4", competition_categories_path(4) %></li>
-  <li><%= link_to "Competition 5", competition_categories_path(5) %></li>
-  <li><%= link_to "Competition 6", competition_categories_path(6) %></li>
-  <li><%= link_to "Competition 7", competition_categories_path(7) %></li>
-  <li><%= link_to "Competition 8", competition_categories_path(8) %></li>
-  <li><%= link_to "Competition 9", competition_categories_path(9) %></li>
-  <li><%= link_to "Competition 10", competition_categories_path(10) %></li>
-  <li data-role="list-divider">Upcoming competitions</li>
-  <li><%= link_to "Competition 11", competition_categories_path(11) %></li>
-  <li><%= link_to "Competition 12", competition_categories_path(12) %></li>
-</ul>
+<% end %>

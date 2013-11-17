@@ -15,6 +15,10 @@ class Round
     id.to_s
   end
 
+  def cache_key
+    ["rounds", competition_id, category_id, id].join("/")
+  end
+
   private
 
   def fetch_results

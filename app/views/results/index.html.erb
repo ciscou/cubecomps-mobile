@@ -4,7 +4,7 @@
 <% content_for(:extra_pages) do %>
   <% cache [@round, "results", "extra_pages"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
     <% @round.results.each_with_index do |result, idx| %>
-      <div data-role="page" id="result_<%= @round.competition_id %>_<%= @round.category_id %>_<%= @round.id %>_<%= idx %>">
+      <%= content_tag :div, id: ["result", @round.competition_id, @round.category_id, @round.id, idx].join("_"), data: { role: "page", generated_at: Time.now.to_s(:db) } do %>
         <div data-role="header">
           <h2><%= result.name %></h2>
         </div>
@@ -33,7 +33,7 @@
             <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %>
           </p>
         </div>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
@@ -50,7 +50,7 @@
   <tbody>
     <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
       <% @round.results.each_with_index do |result, idx| %>
-        <tr>
+        <%= content_tag :tr, data: { generated_at: Time.now.to_s(:db) } do %>
           <td><%= result.position %></td>
           <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
           <td>
@@ -65,7 +65,7 @@
               (<%= result.best_record %>)
             <% end %>
           </td>
-        </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>

@@ -3,6 +3,10 @@ class Competitions
     @in_progress ||= fetch_in_progress
   end
 
+  def cache_key
+    "competitions"
+  end
+
   private
 
   def fetch_in_progress
