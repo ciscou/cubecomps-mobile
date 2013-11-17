@@ -1,25 +1,22 @@
-@media ( min-width: 480px ) {
-  /* Fixes table rendering when switching between breakpoints in Safari <= 5. See https://github.com/jquery/jquery-mobile/issues/5380 */
-  .ui-table-reflow.results-table {
-    display: table-row-group;
-  }
-  /* Show the table header rows */ 
-  .ui-table-reflow.results-table td,
-  .ui-table-reflow.results-table th,
-  .ui-table-reflow.results-table tbody th,
-  .ui-table-reflow.results-table tbody td,
-  .ui-table-reflow.results-table thead td,
-  .ui-table-reflow.results-table thead th {
-    display: table-cell;
-    margin: 0;
-  }
-  /* Hide the labels in each cell */ 
-  .ui-table-reflow.results-table td .ui-table-cell-label,
-  .ui-table-reflow.results-table th .ui-table-cell-label { 
-    display: none;
-  }
-  /* Right align numbers */
-  .ui-table-reflow.results-table td.number {
-    text-align: right;
-  }
+@media screen and (min-width: 360px) {
+   #results th.ui-table-priority-1,
+   #results td.ui-table-priority-1 {
+     display: table-cell;
+   }
+}
+@media screen and (min-width: 720px) {
+   #results th.ui-table-priority-2,
+   #results td.ui-table-priority-2 {
+     display: table-cell;
+   }
+}
+@media screen and (min-width: 960px) {
+   #results th.ui-table-priority-3,
+   #results td.ui-table-priority-3 {
+     display: table-cell;
+   }
+}
+#results.ui-table td.number,
+#results.ui-table th.number {
+  text-align: right;
 }
