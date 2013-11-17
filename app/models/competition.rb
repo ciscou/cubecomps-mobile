@@ -30,7 +30,7 @@ class Competition
     categories_table = doc.css("body > table > tr > td:first-child table")
     categories = categories_table.css("tr td").each_with_object([]) do |competition_td, a|
       competition_name = competition_td.css("div.event").text
-      unless ["", "Competitors"].include? competition_name
+      unless ["", "Competitors", "Schedule"].include? competition_name
         competition_rounds = competition_td.css("div.round").map do |round_div|
           round_url = round_div.attr("onclick").slice(17..-2)
           round_params = CGI.parse round_url.split("?").last
