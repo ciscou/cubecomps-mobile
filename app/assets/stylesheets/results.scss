@@ -1,21 +1,25 @@
 @media ( min-width: 480px ) {
-	/* Fixes table rendering when switching between breakpoints in Safari <= 5. See https://github.com/jquery/jquery-mobile/issues/5380 */
-	.ui-table-reflow.results-table {
-		display: table-row-group;
-	}
-	/* Show the table header rows */ 
-	.ui-table-reflow.results-table td,
-	.ui-table-reflow.results-table th,
-	.ui-table-reflow.results-table tbody th,
-	.ui-table-reflow.results-table tbody td,
-	.ui-table-reflow.results-table thead td,
-	.ui-table-reflow.results-table thead th {
-		display: table-cell;
-		margin: 0;
-	}
-	/* Hide the labels in each cell */ 
-	.ui-table-reflow.results-table td .ui-table-cell-label,
-	.ui-table-reflow.results-table th .ui-table-cell-label { 
-		display: none;
-	}
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5. See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.results-table {
+    display: table-row-group;
+  }
+  /* Show the table header rows */ 
+  .ui-table-reflow.results-table td,
+  .ui-table-reflow.results-table th,
+  .ui-table-reflow.results-table tbody th,
+  .ui-table-reflow.results-table tbody td,
+  .ui-table-reflow.results-table thead td,
+  .ui-table-reflow.results-table thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */ 
+  .ui-table-reflow.results-table td .ui-table-cell-label,
+  .ui-table-reflow.results-table th .ui-table-cell-label { 
+    display: none;
+  }
+  /* Right align numbers */
+  .ui-table-reflow.results-table td.number {
+    text-align: right;
+  }
 }
