@@ -2,7 +2,7 @@
 
 <% content_for(:extra_pages) do %>
   <% @round.results.each_with_index do |result, idx| %>
-    <div id="result-<%= @round.competition_id %>-<%= @round.category_id %>-<%= @round.id %>-<%= idx %>" data-role="page">
+    <div data-role="page" id="result_<%= @round.competition_id %>_<%= @round.category_id %>_<%= @round.id %>_<%= idx %>">
       <div data-role="header">
         <h2><%= result.name %></h2>
       </div>
@@ -48,7 +48,7 @@
     <% @round.results.each_with_index do |result, idx| %>
       <tr>
         <td><%= result.position %></td>
-        <td><%= link_to truncate(result.name, length: 25), "#result-#{@round.competition_id}-#{@round.category_id}-#{@round.id}-#{idx}", data: { rel: "dialog" } %></td>
+        <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
         <td>
           <%= result.average %>
           <% if result.average_record.present? %>
