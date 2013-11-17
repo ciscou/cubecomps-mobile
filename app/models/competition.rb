@@ -17,6 +17,10 @@ class Competition
 
   private
 
+  def self.find(id)
+    new(id: id)
+  end
+
   def fetch_categories
     doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{id}"
     categories_table = doc.css("body > table > tr > td:first-child table")
