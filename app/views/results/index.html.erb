@@ -13,7 +13,7 @@
     <% @round.results.each do |result| %>
       <tr>
         <td><%= result.position %></td>
-        <td><%= result.name %></td>
+        <td><%= truncate result.name, length: 25 %></td>
         <td>
           <%= result.average %>
           <% if result.average_record.present? %>
