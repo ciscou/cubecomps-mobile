@@ -1,6 +1,6 @@
 <% content_for(:title) { "Competitions" } %>
 
-<ul data-role="listview" data-inset="true">
+<ul data-role="listview">
   <li data-role="list-divider">Competitions in progress</li>
   <% @competitions.in_progress.each do |competition| %>
     <li><%= link_to competition.name, competition_categories_path(competition) %></li>

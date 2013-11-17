@@ -6,11 +6,7 @@
       <th>#</th>
       <th>Name</th>
       <th>Country</th>
-      <th>T1</th>
-      <th>T2</th>
-      <th>T3</th>
-      <th>T4</th>
-      <th>T5</th>
+      <th>Times</th>
       <th>Average</th>
       <th>Best</th>
     </tr>
@@ -21,11 +17,7 @@
         <td><%= result.position %></td>
         <td><%= result.name %></td>
         <td><%= result.country %></td>
-        <td><%= result.t1 %></td>
-        <td><%= result.t2 %></td>
-        <td><%= result.t3 %></td>
-        <td><%= result.t4 %></td>
-        <td><%= result.t5 %></td>
+        <td><%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %></td>
         <td><%= result.average %></td>
         <td><%= result.best %></td>
       </tr>
