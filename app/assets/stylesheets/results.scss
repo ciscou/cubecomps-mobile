@@ -1,7 +1,7 @@
 @media ( min-width: 480px ) {
-  /* Full width table */
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5. See https://github.com/jquery/jquery-mobile/issues/5380 */
   .ui-table-reflow.results-table {
-    width: 100%;
+    display: table-row-group;
   }
   /* Show the table header rows */ 
   .ui-table-reflow.results-table td,
