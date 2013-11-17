@@ -7,16 +7,12 @@
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
     <li data-role="list-divider">Past competitions</li>
-    <li><%= link_to "Competition 3", competition_categories_path(3) %></li>
-    <li><%= link_to "Competition 4", competition_categories_path(4) %></li>
-    <li><%= link_to "Competition 5", competition_categories_path(5) %></li>
-    <li><%= link_to "Competition 6", competition_categories_path(6) %></li>
-    <li><%= link_to "Competition 7", competition_categories_path(7) %></li>
-    <li><%= link_to "Competition 8", competition_categories_path(8) %></li>
-    <li><%= link_to "Competition 9", competition_categories_path(9) %></li>
-    <li><%= link_to "Competition 10", competition_categories_path(10) %></li>
+    <% @competitions.past.each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% end %>
     <li data-role="list-divider">Upcoming competitions</li>
-    <li><%= link_to "Competition 11", competition_categories_path(11) %></li>
-    <li><%= link_to "Competition 12", competition_categories_path(12) %></li>
+    <% @competitions.upcoming.each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% end %>
   <% end %>
 <% end %>
