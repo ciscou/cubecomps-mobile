@@ -7,6 +7,10 @@ class Round
     end
   end
 
+  def started?
+    [ competition_id, category_id, id ].all? &:present?
+  end
+
   def results
     @results ||= fetch_results
   end

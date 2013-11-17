@@ -8,7 +8,13 @@
         <h2><%= category.name %></h2>
         <ul data-role="listview">
           <% category.rounds.each do |round| %>
-            <li><%= link_to round.name, competition_category_round_results_path(@competition, category, round), data: { ajax: false } %></li>
+            <li>
+              <% if round.started? %>
+                <%= link_to round.name, competition_category_round_results_path(@competition, category, round), data: { ajax: false } %>
+              <% else %>
+                <%= round.name %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </div>

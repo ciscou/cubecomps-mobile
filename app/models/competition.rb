@@ -29,11 +29,16 @@ class Competition
     doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{id}"
     categories_table = doc.css("body > table > tr > td:first-child table")
     categories = categories_table.css("tr td").each_with_object([]) do |competition_td, a|
-      competition_name = competition_td.css("div.event").text
-      unless ["", "Competitors", "Schedule"].include? competition_name
-        competition_rounds = competition_td.css("div.round").map do |round_div|
-          round_url = round_div.attr("onclick").slice(17..-2)
-          round_params = CGI.parse round_url.split("?").last
+      category_name = competition_td.css("div.event, div.c_event").text
+      unless ["", "Competitors", "Schedule"].include? category_name
+        competition_rounds = competition_td.css("div.round, div.c_round").map do |round_div|
+          round_onclick = round_div.attr("onclick")
+          round_params = if round_onclick.nil?
+                           Hash.new { [] }
+                         else
+                           round_url = round_onclick.slice(17..-2)
+                           CGI.parse round_url.split("?").last
+                         end
           Round.new(
             competition_id: round_params["cid"].first,
             category_id:    round_params["cat"].first,
@@ -43,7 +48,7 @@ class Competition
         end
         a << Category.new(
           id:     competition_rounds.first.category_id,
-          name:   competition_name,
+          name:   category_name,
           rounds: competition_rounds
         )
       end
