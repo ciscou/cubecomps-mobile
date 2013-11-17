@@ -1,5 +1,40 @@
 <% content_for(:title) { "Results" } %>
 
+<% content_for(:extra_pages) do %>
+  <% @round.results.each_with_index do |result, idx| %>
+    <div id="result-<%= idx %>" data-role="page">
+      <div data-role="header">
+        <h2><%= result.name %></h2>
+      </div>
+
+      <div data-role="content">
+        <p>
+          <strong>Country</strong><br/>
+          <%= result.country %>
+        </p>
+        <p>
+          <strong>Average</strong><br/>
+            <%= result.average %>
+            <% if result.average_record.present? %>
+              (<%= result.average_record %>)
+            <% end %>
+        </p>
+        <p>
+          <strong>Best</strong><br/>
+            <%= result.best %>
+            <% if result.best_record.present? %>
+              (<%= result.best_record %>)
+            <% end %>
+        </p>
+        <p>
+          <strong>Times</strong><br/>
+          <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 <table data-role="table" data-mode="reflow" class="ui-responsive table-stripe">
   <thead>
     <tr>
@@ -10,10 +45,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @round.results.each do |result| %>
+    <% @round.results.each_with_index do |result, idx| %>
       <tr>
         <td><%= result.position %></td>
-        <td><%= truncate result.name, length: 25 %></td>
+        <td><%= link_to truncate(result.name, length: 25), "#result-#{idx}", data: { rel: "dialog" } %></td>
         <td>
           <%= result.average %>
           <% if result.average_record.present? %>
