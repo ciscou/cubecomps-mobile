@@ -2,17 +2,23 @@
 
 <% cache @competitions, expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <%= content_tag :ul, data: { role: "listview", generated_at: Time.now.to_s(:db) } do %>
-    <li data-role="list-divider">Competitions in progress</li>
-    <% @competitions.in_progress.each do |competition| %>
-      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% if @competitions.in_progress.any? %>
+      <li data-role="list-divider">Competitions in progress</li>
+      <% @competitions.in_progress.each do |competition| %>
+        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+      <% end %>
     <% end %>
-    <li data-role="list-divider">Past competitions</li>
-    <% @competitions.past.each do |competition| %>
-      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% if @competitions.past.any? %>
+      <li data-role="list-divider">Past competitions</li>
+      <% @competitions.past.each do |competition| %>
+        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+      <% end %>
     <% end %>
-    <li data-role="list-divider">Upcoming competitions</li>
-    <% @competitions.upcoming.each do |competition| %>
-      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% if @competitions.upcoming.any? %>
+      <li data-role="list-divider">Upcoming competitions</li>
+      <% @competitions.upcoming.each do |competition| %>
+        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
