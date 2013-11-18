@@ -2,28 +2,31 @@
 
 <% cache @competitions, expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <%= content_tag :ul, data: { role: "listview", generated_at: Time.now.to_s(:db) } do %>
-    <% if @competitions.in_progress.any? %>
-      <li data-role="list-divider">Competitions in progress</li>
-      <% @competitions.in_progress.each do |competition| %>
-        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
-      <% end %>
+    <li data-role="list-divider">Competitions in progress</li>
+    <% @competitions.in_progress.each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
-    <% if @competitions.past.any? %>
-      <li data-role="list-divider">Past competitions</li>
-      <% @competitions.past.first(10).each do |competition| %>
-        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
-      <% end %>
-      <li>
-        <%= link_to past_competitions_path do %>
-          <em>See more past competitions...</em>
-        <% end %>
-      </li>
+    <% if @competitions.in_progress.empty? %>
+      <li><em>No current competitions at the moment</em></li>
     <% end %>
-    <% if @competitions.upcoming.any? %>
-      <li data-role="list-divider">Upcoming competitions</li>
-      <% @competitions.upcoming.each do |competition| %>
-        <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <li data-role="list-divider">Past competitions</li>
+    <% @competitions.past.first(10).each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% end %>
+    <li>
+      <%= link_to past_competitions_path do %>
+        <em>See more past competitions...</em>
       <% end %>
+    </li>
+    <% if @competitions.past.empty? %>
+      <li><em>No past competitions (yet!)</em></li>
+    <% end %>
+    <li data-role="list-divider">Upcoming competitions</li>
+    <% @competitions.upcoming.each do |competition| %>
+      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+    <% end %>
+    <% if @competitions.upcoming.empty? %>
+      <li><em>No upcoming competitions (yet!)</em></li>
     <% end %>
   <% end %>
 <% end %>
