@@ -7,6 +7,22 @@ class Round
     end
   end
 
+  def self.build_from_round_div(round_div)
+    round_onclick = round_div.attr("onclick")
+    round_params = if round_onclick.nil?
+                     Hash.new { [] }
+                   else
+                     round_url = round_onclick.slice(17..-2)
+                     CGI.parse round_url.split("?").last
+                   end
+    new(
+      competition_id: round_params["cid"].first,
+      category_id:    round_params["cat"].first,
+      id:             round_params["rnd"].first,
+      name:           round_div.text
+    )
+  end
+
   def started?
     [ competition_id, category_id, id ].all? &:present?
   end
@@ -28,21 +44,9 @@ class Round
   def fetch_results
     doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{category_id}&rnd=#{id}"
     headers_table = doc.css("body > table > tr > td:last-child table.TH")
-    headers = headers_table.css("tr th").map(&:text)
     results_table = doc.css("body > table > tr > td:last-child table.TD")
-    results = results_table.css("tr").map do |result_tr|
-      Result.new(
-        position: result_tr.css("td:nth-child(1)").text,
-        name:     result_tr.css("td:nth-child(2)").text,
-        country:     result_tr.css("td:nth-child(3)").text,
-        t1:       result_tr.css("td:nth-child(#{(headers.index("t1") || 999) + 1})").text,
-        t2:       result_tr.css("td:nth-child(#{(headers.index("t2") || 999) + 1})").text,
-        t3:       result_tr.css("td:nth-child(#{(headers.index("t3") || 999) + 1})").text,
-        t4:       result_tr.css("td:nth-child(#{(headers.index("t4") || 999) + 1})").text,
-        t5:       result_tr.css("td:nth-child(#{(headers.index("t5") || 999) + 1})").text,
-        average:  result_tr.css("td:nth-child(#{(headers.index("average") || 999) + 1})").text,
-        best:     result_tr.css("td:nth-child(#{(headers.index("best") || 999) + 1})").text
-      )
+    results_table.css("tr").map do |result_tr|
+      Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
     end
   end
 end

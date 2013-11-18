@@ -7,6 +7,19 @@ class Competition
     end
   end
 
+  def self.find(id)
+    new(id: id)
+  end
+
+  def self.build_from_competition_div(competition_div)
+    competition_url = competition_div.css("b.p a").attr("href").value
+    competition_params = CGI.parse competition_url.split("?").last
+    new(
+      id:   competition_params["cid"].first,
+      name: competition_div.css("b.p a").text.strip
+    )
+  end
+
   def categories
     @categories ||= fetch_categories
   end
@@ -21,37 +34,12 @@ class Competition
 
   private
 
-  def self.find(id)
-    new(id: id)
-  end
-
   def fetch_categories
     doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{id}"
     categories_table = doc.css("body > table > tr > td:first-child table")
-    categories = categories_table.css("tr td").each_with_object([]) do |competition_td, a|
-      category_name = competition_td.css("div.event, div.c_event").text
-      unless ["", "Competitors", "Schedule"].include? category_name
-        competition_rounds = competition_td.css("div.round, div.c_round").map do |round_div|
-          round_onclick = round_div.attr("onclick")
-          round_params = if round_onclick.nil?
-                           Hash.new { [] }
-                         else
-                           round_url = round_onclick.slice(17..-2)
-                           CGI.parse round_url.split("?").last
-                         end
-          Round.new(
-            competition_id: round_params["cid"].first,
-            category_id:    round_params["cat"].first,
-            id:             round_params["rnd"].first,
-            name:           round_div.text
-          )
-        end
-        a << Category.new(
-          id:     competition_rounds.first.category_id,
-          name:   category_name,
-          rounds: competition_rounds
-        )
-      end
+    categories = categories_table.css("tr td").map do |category_td|
+      Category.build_from_category_td(category_td)
     end
+    categories.compact
   end
 end

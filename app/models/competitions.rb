@@ -34,12 +34,7 @@ class Competitions
 
     competitions_tr = doc.css("div.list")[index].css("table tr")
     competitions_tr.css("td div").map do |competition_div|
-      competition_url = competition_div.css("b.p a").attr("href").value
-      competition_params = CGI.parse competition_url.split("?").last
-      Competition.new(
-        id:   competition_params["cid"].first,
-        name: competition_div.css("b.p a").text.strip
-      )
+      Competition.build_from_competition_div(competition_div)
     end
   end
 
