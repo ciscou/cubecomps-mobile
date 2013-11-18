@@ -3,55 +3,7 @@
 
 <% content_for(:extra_pages) do %>
   <% cache [@round, "results", "extra_pages"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-    <% @round.results.each_with_index do |result, idx| %>
-      <%= content_tag :div, id: ["result", @round.competition_id, @round.category_id, @round.id, idx].join("_"), data: { role: "page", generated_at: Time.now.to_s(:db) } do %>
-        <div data-role="header">
-          <h2>#<%= result.position %></h2>
-        </div>
-
-        <div data-role="content">
-          <p>
-            <strong>Name</strong><br/>
-            <%= result.name %>
-          </p>
-          <p>
-            <strong>Country</strong><br/>
-            <%= result.country %>
-          </p>
-          <p>
-            <strong>Times</strong><br/>
-            <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
-          </p>
-          <% if @round.average? %>
-            <p>
-              <strong>Average</strong><br/>
-                <% if result.average_record.present? %>
-                  (<%= result.average_record %>)
-                <% end %>
-                <%= result.average %>
-            </p>
-          <% end %>
-          <% if @round.mean? %>
-            <p>
-              <strong>Mean</strong><br/>
-                <% if result.mean_record.present? %>
-                  (<%= result.mean_record %>)
-                <% end %>
-                <%= result.mean %>
-            </p>
-          <% end %>
-          <% if @round.best? %>
-            <p>
-              <strong>Best</strong><br/>
-                <% if result.best_record.present? %>
-                  (<%= result.best_record %>)
-                <% end %>
-                <%= result.best %>
-            </p>
-          <% end %>
-        </div>
-      <% end %>
-    <% end %>
+    <%= render partial: "extra_page", collection: @round.results, as: :result, locals: { round: @round } %>
   <% end %>
 <% end %>
 
@@ -79,42 +31,7 @@
   </thead>
   <tbody>
     <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-      <% @round.results.each_with_index do |result, idx| %>
-        <%= content_tag :tr, data: { generated_at: Time.now.to_s(:db) } do %>
-          <td class="number"><%= result.position %></td>
-          <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
-          <td><%= result.country %></td>
-          <% (1..5).each do |i| %>
-            <% if @round.send("t#{i}?") %>
-              <td class="number"><%= result.send("t#{i}") %></td>
-            <% end %>
-          <% end %>
-          <% if @round.average? %>
-            <td class="number">
-              <% if result.average_record.present? %>
-                (<%= result.average_record %>)
-              <% end %>
-              <%= result.average %>
-            </td>
-          <% end %>
-          <% if @round.mean? %>
-            <td class="number">
-              <% if result.mean_record.present? %>
-                (<%= result.mean_record %>)
-              <% end %>
-              <%= result.mean %>
-            </td>
-          <% end %>
-          <% if @round.best? %>
-            <td class="number">
-              <% if result.best_record.present? %>
-                (<%= result.best_record %>)
-              <% end %>
-              <%= result.best %>
-            </td>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= render partial: "row", collection: @round.results, as: :result, locals: { round: @round } %>
     <% end %>
   </tbody>
 </table>

@@ -1,0 +1,47 @@
+<%= content_tag :div, id: ["result", round.competition_id, round.category_id, round.id, result_counter].join("_"), data: { role: "page", generated_at: Time.now.to_s(:db) } do %>
+  <div data-role="header">
+    <h2>#<%= result.position %></h2>
+  </div>
+
+  <div data-role="content">
+    <p>
+      <strong>Name</strong><br/>
+      <%= result.name %>
+    </p>
+    <p>
+      <strong>Country</strong><br/>
+      <%= result.country %>
+    </p>
+    <p>
+      <strong>Times</strong><br/>
+      <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
+    </p>
+    <% if round.average? %>
+      <p>
+        <strong>Average</strong><br/>
+          <% if result.average_record.present? %>
+            (<%= result.average_record %>)
+          <% end %>
+          <%= result.average %>
+      </p>
+    <% end %>
+    <% if round.mean? %>
+      <p>
+        <strong>Mean</strong><br/>
+          <% if result.mean_record.present? %>
+            (<%= result.mean_record %>)
+          <% end %>
+          <%= result.mean %>
+      </p>
+    <% end %>
+    <% if round.best? %>
+      <p>
+        <strong>Best</strong><br/>
+          <% if result.best_record.present? %>
+            (<%= result.best_record %>)
+          <% end %>
+          <%= result.best %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

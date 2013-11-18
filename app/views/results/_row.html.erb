@@ -1,0 +1,34 @@
+<%= content_tag :tr, data: { generated_at: Time.now.to_s(:db) } do %>
+  <td class="number"><%= result.position %></td>
+  <td><%= link_to truncate(result.name, length: 25), "#result_#{round.competition_id}_#{round.category_id}_#{round.id}_#{result_counter}", data: { rel: "dialog" } %></td>
+  <td><%= result.country %></td>
+  <% (1..5).each do |i| %>
+    <% if round.send("t#{i}?") %>
+      <td class="number"><%= result.send("t#{i}") %></td>
+    <% end %>
+  <% end %>
+  <% if round.average? %>
+    <td class="number">
+      <% if result.average_record.present? %>
+        (<%= result.average_record %>)
+      <% end %>
+      <%= result.average %>
+    </td>
+  <% end %>
+  <% if round.mean? %>
+    <td class="number">
+      <% if result.mean_record.present? %>
+        (<%= result.mean_record %>)
+      <% end %>
+      <%= result.mean %>
+    </td>
+  <% end %>
+  <% if round.best? %>
+    <td class="number">
+      <% if result.best_record.present? %>
+        (<%= result.best_record %>)
+      <% end %>
+      <%= result.best %>
+    </td>
+  <% end %>
+<% end %>
