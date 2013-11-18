@@ -6,6 +6,7 @@ gem 'nokogiri'
 gem 'unicorn'
 gem 'memcachier'
 gem 'dalli'
+gem 'newrelic_rpm'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
