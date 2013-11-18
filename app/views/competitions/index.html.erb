@@ -10,9 +10,14 @@
     <% end %>
     <% if @competitions.past.any? %>
       <li data-role="list-divider">Past competitions</li>
-      <% @competitions.past.each do |competition| %>
+      <% @competitions.past.first(10).each do |competition| %>
         <li><%= link_to competition.name, competition_categories_path(competition) %></li>
       <% end %>
+      <li>
+        <%= link_to past_competitions_path do %>
+          <em>See more...</em>
+        <% end %>
+      </li>
     <% end %>
     <% if @competitions.upcoming.any? %>
       <li data-role="list-divider">Upcoming competitions</li>
