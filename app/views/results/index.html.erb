@@ -13,6 +13,10 @@
   <% end %>
 <% end %>
 
+<% cache [@round, "category_and_round"] do %>
+  <h2><%= @round.category_name %> - <%= @round.name %></h2>
+<% end %>
+
 <table id="results" class="table-stripe" data-role="table" data-mode="columntoggle">
   <thead>
     <tr>

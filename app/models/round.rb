@@ -1,5 +1,5 @@
 class Round
-  attr_accessor :competition_id, :category_id, :id, :name
+  attr_accessor :competition_id, :category_id, :id, :category_name, :name
 
   def initialize(args)
     args.each do |k, v|
@@ -25,6 +25,14 @@ class Round
 
   def competition_name
     @competition_name ||= fetch_competition_name
+  end
+
+  def category_name
+    @category_name ||= fetch_category_name
+  end
+
+  def name
+    @name ||= fetch_name
   end
 
   def started?
@@ -82,6 +90,18 @@ class Round
       node.is_a? Nokogiri::XML::Text
     end
     text_nodes.first.text
+  end
+
+  def fetch_category_and_round
+    doc.css("div.main > div").text.split(" - ")
+  end
+
+  def fetch_category_name
+    fetch_category_and_round.first
+  end
+
+  def fetch_name
+    fetch_category_and_round.last
   end
 
   def fetch_results
