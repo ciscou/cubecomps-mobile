@@ -23,6 +23,10 @@ class Round
     )
   end
 
+  def competition_name
+    @competition_name ||= fetch_competition_name
+  end
+
   def started?
     [ competition_id, category_id, id ].all? &:present?
   end
@@ -73,12 +77,22 @@ class Round
 
   private
 
+  def fetch_competition_name
+    text_nodes = doc.css("div.top").children.select do |node|
+      node.is_a? Nokogiri::XML::Text
+    end
+    text_nodes.first.text
+  end
+
   def fetch_results
-    doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{category_id}&rnd=#{id}"
     headers_table = doc.css("body > table > tr > td:last-child table.TH")
     results_table = doc.css("body > table > tr > td:last-child table.TD")
     results_table.css("tr").map do |result_tr|
       Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
     end
+  end
+
+  def doc
+    @doc ||= Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{category_id}&rnd=#{id}"
   end
 end

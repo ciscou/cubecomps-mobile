@@ -1,5 +1,11 @@
-<% content_for(:back_button) { link_to "Back", competition_categories_path(@round.competition_id), data: { icon: "back" } } %>
-<% content_for(:title) { "Results" } %>
+<% content_for(:back_button) do %>
+ <%= link_to "Back", competition_categories_path(@round.competition_id), data: { icon: "back" } %>
+<% end %>
+<% content_for(:title) do %>
+  <% cache [@round, "competition_name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+    <%= @round.competition_name %>
+  <% end %>
+<% end %>
 
 <% content_for(:extra_pages) do %>
   <% cache [@round, "results", "extra_pages"], expires_in: 5.minutes, race_condition_ttl: 10 do %>

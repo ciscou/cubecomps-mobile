@@ -20,6 +20,10 @@ class Competition
     )
   end
 
+  def name
+    @name ||= fetch_name
+  end
+
   def categories
     @categories ||= fetch_categories
   end
@@ -34,12 +38,22 @@ class Competition
 
   private
 
+  def fetch_name
+    text_nodes = doc.css("div.top").children.select do |node|
+      node.is_a? Nokogiri::XML::Text
+    end
+    text_nodes.first.text
+  end
+
   def fetch_categories
-    doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{id}"
     categories_table = doc.css("body > table > tr > td:first-child table")
     categories = categories_table.css("tr td").map do |category_td|
       Category.build_from_category_td(category_td)
     end
     categories.compact
+  end
+
+  def doc
+    @doc ||= Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{id}"
   end
 end
