@@ -101,7 +101,7 @@ class Round
   end
 
   def fetch_name
-    fetch_category_and_round.last
+    fetch_category_and_round.second
   end
 
   def fetch_results
