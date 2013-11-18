@@ -31,6 +31,38 @@ class Round
     @results ||= fetch_results
   end
 
+  def t1?
+    results.any? { |r| r.t1.present? }
+  end
+
+  def t2?
+    results.any? { |r| r.t2.present? }
+  end
+
+  def t3?
+    results.any? { |r| r.t3.present? }
+  end
+
+  def t4?
+    results.any? { |r| r.t4.present? }
+  end
+
+  def t5?
+    results.any? { |r| r.t5.present? }
+  end
+
+  def average?
+    results.any? { |r| r.average.present? }
+  end
+
+  def mean?
+    results.any? { |r| r.mean.present? }
+  end
+
+  def best?
+    results.any? { |r| r.best.present? }
+  end
+
   def to_param
     id.to_s
   end

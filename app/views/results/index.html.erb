@@ -20,22 +20,35 @@
           </p>
           <p>
             <strong>Times</strong><br/>
-            <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].join(", ") %>
+            <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
           </p>
-          <p>
-            <strong>Average</strong><br/>
-              <% if result.average_record.present? %>
-                (<%= result.average_record %>)
-              <% end %>
-              <%= result.average %>
-          </p>
-          <p>
-            <strong>Best</strong><br/>
-              <% if result.best_record.present? %>
-                (<%= result.best_record %>)
-              <% end %>
-              <%= result.best %>
-          </p>
+          <% if @round.average? %>
+            <p>
+              <strong>Average</strong><br/>
+                <% if result.average_record.present? %>
+                  (<%= result.average_record %>)
+                <% end %>
+                <%= result.average %>
+            </p>
+          <% end %>
+          <% if @round.mean? %>
+            <p>
+              <strong>Mean</strong><br/>
+                <% if result.mean_record.present? %>
+                  (<%= result.mean_record %>)
+                <% end %>
+                <%= result.mean %>
+            </p>
+          <% end %>
+          <% if @round.best? %>
+            <p>
+              <strong>Best</strong><br/>
+                <% if result.best_record.present? %>
+                  (<%= result.best_record %>)
+                <% end %>
+                <%= result.best %>
+            </p>
+          <% end %>
         </div>
       <% end %>
     <% end %>
@@ -48,13 +61,20 @@
       <th class="number">#</th>
       <th>Name</th>
       <th data-priority="3">Country</th>
-      <th class="number" data-priority="2">T1</th>
-      <th class="number" data-priority="2">T2</th>
-      <th class="number" data-priority="2">T3</th>
-      <th class="number" data-priority="2">T4</th>
-      <th class="number" data-priority="2">T5</th>
-      <th class="number" data-priority="1">Average</th>
-      <th class="number" data-priority="1">Best</th>
+      <% (1..5).each do |i| %>
+        <% if @round.send("t#{i}?") %>
+          <th class="number" data-priority="2">T<%= i %></th>
+        <% end %>
+      <% end %>
+      <% if @round.average? %>
+        <th class="number" data-priority="1">Average</th>
+      <% end %>
+      <% if @round.mean? %>
+        <th class="number" data-priority="1">Mean</th>
+      <% end %>
+      <% if @round.best? %>
+        <th class="number" data-priority="1">Best</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -64,23 +84,35 @@
           <td class="number"><%= result.position %></td>
           <td><%= link_to truncate(result.name, length: 25), "#result_#{@round.competition_id}_#{@round.category_id}_#{@round.id}_#{idx}", data: { rel: "dialog" } %></td>
           <td><%= result.country %></td>
-          <td class="number"><%= result.t1 %></td>
-          <td class="number"><%= result.t2 %></td>
-          <td class="number"><%= result.t3 %></td>
-          <td class="number"><%= result.t4 %></td>
-          <td class="number"><%= result.t5 %></td>
-          <td class="number">
-            <% if result.average_record.present? %>
-              (<%= result.average_record %>)
+          <% (1..5).each do |i| %>
+            <% if @round.send("t#{i}?") %>
+              <td class="number"><%= result.send("t#{i}") %></td>
             <% end %>
-            <%= result.average %>
-          </td>
-          <td class="number">
-            <% if result.best_record.present? %>
-              (<%= result.best_record %>)
-            <% end %>
-            <%= result.best %>
-          </td>
+          <% end %>
+          <% if @round.average? %>
+            <td class="number">
+              <% if result.average_record.present? %>
+                (<%= result.average_record %>)
+              <% end %>
+              <%= result.average %>
+            </td>
+          <% end %>
+          <% if @round.mean? %>
+            <td class="number">
+              <% if result.mean_record.present? %>
+                (<%= result.mean_record %>)
+              <% end %>
+              <%= result.mean %>
+            </td>
+          <% end %>
+          <% if @round.best? %>
+            <td class="number">
+              <% if result.best_record.present? %>
+                (<%= result.best_record %>)
+              <% end %>
+              <%= result.best %>
+            </td>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

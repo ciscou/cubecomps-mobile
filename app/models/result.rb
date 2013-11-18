@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :position, :name, :country, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :best, :best_record
+  attr_accessor :position, :name, :country, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
 
   def initialize(args)
     args.each do |k, v|
@@ -19,6 +19,7 @@ class Result
       t4:       result_tr.css("td:nth-child(#{(headers.index("t4") || 999) + 1})").text,
       t5:       result_tr.css("td:nth-child(#{(headers.index("t5") || 999) + 1})").text,
       average:  result_tr.css("td:nth-child(#{(headers.index("average") || 999) + 1})").text,
+      mean:     result_tr.css("td:nth-child(#{(headers.index("mean") || 999) + 1})").text,
       best:     result_tr.css("td:nth-child(#{(headers.index("best") || 999) + 1})").text
     )
   end
@@ -26,6 +27,11 @@ class Result
   def average=(s)
     @average = s
     @average_record = extract_record_from! @average
+  end
+
+  def mean=(s)
+    @mean = s
+    @mean_record = extract_record_from! @mean
   end
 
   def best=(s)
