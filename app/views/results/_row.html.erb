@@ -1,4 +1,4 @@
-<%= content_tag :tr, data: { generated_at: Time.now.to_s(:db) } do %>
+<tr>
   <td class="number"><%= result.position %></td>
   <td><%= link_to truncate(result.name, length: 25), "#result_#{round.competition_id}_#{round.category_id}_#{round.id}_#{result_counter}", data: { rel: "dialog" } %></td>
   <td><%= result.country %></td>
@@ -31,4 +31,4 @@
       <%= result.best %>
     </td>
   <% end %>
-<% end %>
+</tr>

@@ -17,31 +17,31 @@
   <h2><%= @round.category_name %> - <%= @round.name %></h2>
 <% end %>
 
-<table id="results" class="table-stripe" data-role="table" data-mode="columntoggle">
-  <thead>
-    <tr>
-      <th class="number">#</th>
-      <th>Name</th>
-      <th data-priority="3">Country</th>
-      <% (1..5).each do |i| %>
-        <% if @round.send("t#{i}?") %>
-          <th class="number" data-priority="2">T<%= i %></th>
+<% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <%= content_tag :table, id: "results", class: "table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
+    <thead>
+      <tr>
+        <th class="number">#</th>
+        <th>Name</th>
+        <th data-priority="3">Country</th>
+        <% (1..5).each do |i| %>
+          <% if @round.send("t#{i}?") %>
+            <th class="number" data-priority="2">T<%= i %></th>
+          <% end %>
         <% end %>
-      <% end %>
-      <% if @round.average? %>
-        <th class="number" data-priority="1">Average</th>
-      <% end %>
-      <% if @round.mean? %>
-        <th class="number" data-priority="1">Mean</th>
-      <% end %>
-      <% if @round.best? %>
-        <th class="number" data-priority="1">Best</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+        <% if @round.average? %>
+          <th class="number" data-priority="1">Average</th>
+        <% end %>
+        <% if @round.mean? %>
+          <th class="number" data-priority="1">Mean</th>
+        <% end %>
+        <% if @round.best? %>
+          <th class="number" data-priority="1">Best</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
       <%= render partial: "row", collection: @round.results, as: :result, locals: { round: @round } %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  <% end %>
+<% end %>
