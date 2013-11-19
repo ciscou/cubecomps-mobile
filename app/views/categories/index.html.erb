@@ -2,7 +2,7 @@
   <%= link_to "Back", competitions_path, data: { icon: "back" } %>
 <% end %>
 <% content_for(:title) do %>
-  <% cache [@competition, "name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+  <% cache [@competition, "name"] do %>
     <%= @competition.name %>
   <% end %>
 <% end %>
