@@ -1,6 +1,6 @@
 json.cache! [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do
   json.array! @round.results do |result|
-    json.extract! result, :position, :country
+    json.extract! result, :position, :name, :country
 
     json.t1 result.t1 if @round.t1?
     json.t2 result.t2 if @round.t2?
