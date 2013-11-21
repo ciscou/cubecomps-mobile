@@ -7,14 +7,14 @@
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
     <% if @competitions.in_progress.empty? %>
-      <li><em>No competitions in progress (yet!)</em></li>
+      <li><em class="muted">No competitions in progress (yet!)</em></li>
     <% end %>
     <li data-role="list-divider">Past competitions</li>
     <% @competitions.past.first(10).each do |competition| %>
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
     <% if @competitions.past.empty? %>
-      <li><em>No past competitions (yet!)</em></li>
+      <li><em class="muted">No past competitions (yet!)</em></li>
     <% else %>
       <li>
         <%= link_to past_competitions_path do %>
@@ -27,7 +27,7 @@
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
     <% if @competitions.upcoming.empty? %>
-      <li><em>No upcoming competitions (yet!)</em></li>
+      <li><em class="muted">No upcoming competitions (yet!)</em></li>
     <% end %>
   <% end %>
 <% end %>

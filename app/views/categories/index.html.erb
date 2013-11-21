@@ -8,22 +8,11 @@
 <% end %>
 
 <% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-  <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
-    <% @competition.categories.each do |category| %>
-      <div data-role="collapsible" data-theme="b" data-content-theme="c">
-        <h2><%= category.name %></h2>
-        <ul data-role="listview">
-          <% category.rounds.each do |round| %>
-            <li>
-              <% if round.started? %>
-                <%= link_to round.name, competition_category_round_results_path(@competition, category, round), data: { ajax: false } %>
-              <% else %>
-                <%= round.name %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+  <% if @competition.categories.any? %>
+    <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
+      <% render partial: "category", collection: @competition.categories, locals: { competition: @competition } %>
     <% end %>
+  <% else %>
+    <p>No available categories (yet!)</p>
   <% end %>
 <% end %>

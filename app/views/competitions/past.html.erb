@@ -8,7 +8,7 @@
       <li><%= link_to competition.name, competition_categories_path(competition) %></li>
     <% end %>
     <% if @competitions.past.empty? %>
-      <li><em>No past competitions (yet!)</em></li>
+      <li><em class="muted">No past competitions (yet!)</em></li>
     <% end %>
   <% end %>
 <% end %>

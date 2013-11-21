@@ -1,0 +1,14 @@
+<div data-role="collapsible" data-theme="b" data-content-theme="c">
+  <h2><%= category.name %></h2>
+  <ul data-role="listview">
+    <% category.rounds.each do |round| %>
+      <li>
+        <% if round.started? %>
+          <%= link_to round.name, competition_category_round_results_path(competition, category, round), data: { ajax: false } %>
+        <% else %>
+          <em class="muted"><%= round.name %> - not available (yet!)</em>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
