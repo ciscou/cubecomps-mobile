@@ -7,12 +7,6 @@
   <% end %>
 <% end %>
 
-<% content_for(:extra_pages) do %>
-  <% cache [@round, "results", "extra_pages"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-    <%= render partial: "extra_page", collection: @round.results, as: :result, locals: { round: @round } %>
-  <% end %>
-<% end %>
-
 <% cache [@round, "category_and_round"] do %>
   <h2><%= @round.category_name %> - <%= @round.name %></h2>
 <% end %>
@@ -44,4 +38,8 @@
       <%= render partial: "row", collection: @round.results, as: :result, locals: { round: @round } %>
     </tbody>
   <% end %>
+<% end %>
+
+<% cache [@round, "results", "more_info"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <%= render partial: "more_info", collection: @round.results, as: :result, locals: { round: @round } %>
 <% end %>
