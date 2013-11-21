@@ -6,7 +6,7 @@
         <% if round.started? %>
           <%= link_to round.name, competition_category_round_results_path(competition, category, round), data: { ajax: false } %>
         <% else %>
-          <em class="muted"><%= round.name %> - not available (yet!)</em>
+          <em class="muted"><%= round.name %></em>
         <% end %>
       </li>
     <% end %>
