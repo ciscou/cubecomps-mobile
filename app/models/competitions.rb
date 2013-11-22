@@ -18,7 +18,7 @@ class Competitions
   private
 
   def fetch_in_progress
-    fetch_competitions_at fetch_competitions_headers.index("In progress")
+    fetch_competitions_at fetch_competitions_headers.index("Competitions in progress")
   end
 
   def fetch_past
