@@ -27,6 +27,7 @@
 #results.ui-table td.number,
 #results.ui-table th.number {
   text-align: right;
+  white-space: nowrap;
 }
 .ui-table-columntoggle-btn {
   display: none !important;
