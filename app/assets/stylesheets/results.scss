@@ -1,23 +1,28 @@
 @media screen and (min-width: 240px) {
-   #results th.ui-table-priority-1,
-   #results td.ui-table-priority-1 {
-     display: table-cell;
-   }
+  #results {
+    font-size: .8em;
+  }
+  #results th.ui-table-priority-1,
+  #results td.ui-table-priority-1 {
+    display: table-cell;
+  }
 }
 @media screen and (min-width: 480px) {
-   #results th.ui-table-priority-2,
-   #results td.ui-table-priority-2 {
-     display: table-cell;
-   }
+  #results th.ui-table-priority-2,
+  #results td.ui-table-priority-2 {
+    display: table-cell;
+  }
 }
 @media screen and (min-width: 600px) {
-   #results th.ui-table-priority-3,
-   #results td.ui-table-priority-3 {
-     display: table-cell;
-   }
+  #results th.ui-table-priority-3,
+  #results td.ui-table-priority-3 {
+    display: table-cell;
+  }
 }
-#results {
-  font-size: .8em;
+@media screen and (min-width: 960px) {
+  #results {
+    font-size: 1em;
+  }
 }
 #results.ui-table td.number,
 #results.ui-table th.number {
