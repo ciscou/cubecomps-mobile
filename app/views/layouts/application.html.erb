@@ -12,16 +12,16 @@
 <body>
 
 <div data-role="page">
-  <div data-role="header">
+  <div data-role="header" data-theme="b">
     <%= yield(:back_button) %>
     <h1><%= yield(:title) %></h1>
-  </div>
 
-  <% if content_for?(:navbar) %>
-    <div data-role="navbar">
-      <%= yield(:navbar) %>
-    </div>
-  <% end %>
+    <% if content_for?(:navbar) %>
+      <div data-role="navbar">
+        <%= yield(:navbar) %>
+      </div>
+    <% end %>
+  </div>
 
   <div data-role="content">
     <%= yield %>
