@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :position, :name, :country, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
+  attr_accessor :position, :name, :country, :evt_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
 
   def initialize(args)
     args.each do |k, v|
@@ -13,6 +13,7 @@ class Result
       position: result_tr.css("td:nth-child(1)").text,
       name:     result_tr.css("td:nth-child(2)").text,
       country:  result_tr.css("td:nth-child(3)").text,
+      evt_rnd:  result_tr.css("td:nth-child(2)").text,
       t1:       result_tr.css("td:nth-child(#{(headers.index("t1") || 999) + 1})").text,
       t2:       result_tr.css("td:nth-child(#{(headers.index("t2") || 999) + 1})").text,
       t3:       result_tr.css("td:nth-child(#{(headers.index("t3") || 999) + 1})").text,
@@ -42,7 +43,7 @@ class Result
   private
 
   def extract_record_from!(s)
-    s.gsub!(/^\u00A0(WR|CR|NR)\u00A0/, "")
+    s.gsub!(/^\u00A0(WR|CR|NR|PB)\u00A0/, "")
     $1
   end
 end

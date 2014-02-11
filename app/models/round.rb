@@ -36,7 +36,7 @@ class Round
   end
 
   def started?
-    [ competition_id, category_id, id ].all? &:present?
+    [ competition_id, category_id, id ].all?(&:present?)
   end
 
   def results

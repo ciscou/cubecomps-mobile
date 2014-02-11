@@ -10,7 +10,7 @@
 <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <h2><%= @round.category_name %> - <%= @round.name %></h2>
 
-  <%= content_tag :table, id: "results", class: "table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
+  <%= content_tag :table, id: "results", class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
     <thead>
       <tr>
         <th class="number">#</th>

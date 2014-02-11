@@ -1,0 +1,32 @@
+<% content_for(:back_button) do %>
+ <%= link_to "Back", competition_competitors_path(@competitor.competition_id), data: { icon: "back" } %>
+<% end %>
+<% content_for(:title) do %>
+  <% cache [@competitor, "name"] do %>
+    <%= @competitor.name %>
+  <% end %>
+<% end %>
+
+<% cache [@competitor, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <h2><%= @competitor.name %></h2>
+
+  <%= content_tag :table, class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
+    <thead>
+      <tr>
+        <th class="number">#</th>
+        <th>Event / Round</th>
+        <% (1..5).each do |i| %>
+          <th class="number" data-priority="2">T<%= i %></th>
+        <% end %>
+        <th class="number" data-priority="1">Mean</th>
+        <th class="number" data-priority="1">Average</th>
+        <th class="number" data-priority="1">Best</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @competitor.results.each do |results| %>
+        <%= render partial: "result", collection: results, as: :result %>
+      <% end %>
+    </tbody>
+  <% end %>
+<% end %>

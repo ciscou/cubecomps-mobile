@@ -1,0 +1,25 @@
+<tr>
+  <td class="number"><%= result.position %></td>
+  <td><%= truncate(result.evt_rnd, length: 25) %></td>
+  <% (1..5).each do |i| %>
+    <td class="number"><%= result.send("t#{i}") %></td>
+  <% end %>
+  <td class="number">
+    <% if result.mean_record.present? %>
+      (<%= result.mean_record %>)
+    <% end %>
+    <%= result.mean %>
+  </td>
+  <td class="number">
+    <% if result.average_record.present? %>
+      (<%= result.average_record %>)
+    <% end %>
+    <%= result.average %>
+  </td>
+  <td class="number">
+    <% if result.best_record.present? %>
+      (<%= result.best_record %>)
+    <% end %>
+    <%= result.best %>
+  </td>
+</tr>
