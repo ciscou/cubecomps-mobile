@@ -5,6 +5,7 @@ CubecompsMobile::Application.routes.draw do
         resources :results, only: :index
       end
     end
+    resources :competitors, only: :index
     get :past, on: :collection
   end
 

@@ -17,6 +17,12 @@
     <h1><%= yield(:title) %></h1>
   </div>
 
+  <% if content_for?(:navbar) %>
+    <div data-role="navbar">
+      <%= yield(:navbar) %>
+    </div>
+  <% end %>
+
   <div data-role="content">
     <%= yield %>
   </div>

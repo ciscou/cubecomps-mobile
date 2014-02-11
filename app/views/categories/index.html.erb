@@ -7,6 +7,13 @@
   <% end %>
 <% end %>
 
+<% content_for(:navbar) do %>
+  <ul>
+    <li><%= link_to "Categories",  competition_categories_path(@competition), data: { ajax: false }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false } %></li>
+  </ul>
+<% end %>
+
 <% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <% if @competition.categories.any? %>
     <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
