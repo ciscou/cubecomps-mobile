@@ -15,5 +15,13 @@
 <% end %>
 
 <% cache [@competition, "competitors"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-  <p>No available competitors (yet!)</p>
+  <% if @competition.competitors.any? %>
+    <%= content_tag :ul, data: { role: "listview", generated_at: Time.now.to_s(:db) } do %>
+      <% @competition.competitors.each do |competitor| %>
+        <li><%= link_to competitor.name, root_path %></li>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>No available competitors (yet!)</p>
+  <% end %>
 <% end %>

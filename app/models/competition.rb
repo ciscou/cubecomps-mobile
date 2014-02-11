@@ -28,6 +28,10 @@ class Competition
     @categories ||= fetch_categories
   end
 
+  def competitors
+    @competitors ||= fetch_competitors
+  end
+
   def to_param
     id.to_s
   end
@@ -51,6 +55,13 @@ class Competition
       Category.build_from_category_td(category_td)
     end
     categories.compact
+  end
+
+  def fetch_competitors
+    competitors_container = doc.css(".collapser_c")
+    competitors_container.css("div.round").map do |competitor_div|
+      Competitor.build_from_competitor_div(competitor_div)
+    end
   end
 
   def doc
