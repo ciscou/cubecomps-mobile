@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :position, :name, :country, :evt_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
+  attr_accessor :position, :name, :country, :cat_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
 
   def initialize(args)
     args.each do |k, v|
@@ -13,7 +13,7 @@ class Result
       position: result_tr.css("td:nth-child(1)").text,
       name:     result_tr.css("td:nth-child(2)").text,
       country:  result_tr.css("td:nth-child(3)").text,
-      evt_rnd:  result_tr.css("td:nth-child(2)").text,
+      cat_rnd:  result_tr.css("td:nth-child(2)").text,
       t1:       result_tr.css("td:nth-child(#{(headers.index("t1") || 999) + 1})").text,
       t2:       result_tr.css("td:nth-child(#{(headers.index("t2") || 999) + 1})").text,
       t3:       result_tr.css("td:nth-child(#{(headers.index("t3") || 999) + 1})").text,
@@ -25,12 +25,12 @@ class Result
     )
   end
 
-  def event
-    evt_rnd.split(" - ").first
+  def category
+    cat_rnd.split(" - ").first
   end
 
   def round
-    evt_rnd.split(" - ").second
+    cat_rnd.split(" - ").second
   end
 
   def average=(s)
