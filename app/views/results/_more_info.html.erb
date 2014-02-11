@@ -16,7 +16,7 @@
       <strong>Times</strong><br/>
       <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
     </p>
-    <% if round.average? %>
+    <% if round.results.average? %>
       <p>
         <strong>Average</strong><br/>
           <% if result.average_record.present? %>
@@ -25,7 +25,7 @@
           <%= result.average %>
       </p>
     <% end %>
-    <% if round.mean? %>
+    <% if round.results.mean? %>
       <p>
         <strong>Mean</strong><br/>
           <% if result.mean_record.present? %>
@@ -34,7 +34,7 @@
           <%= result.mean %>
       </p>
     <% end %>
-    <% if round.best? %>
+    <% if round.results.best? %>
       <p>
         <strong>Best</strong><br/>
           <% if result.best_record.present? %>

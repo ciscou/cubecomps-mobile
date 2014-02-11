@@ -40,11 +40,12 @@ class Competitor
   def fetch_results
     headers_tables = doc.css("body > table > tr > td:last-child table.TH")
     results_tables = doc.css("body > table > tr > td:last-child table.TD")
-    headers_tables.zip(results_tables).map do |headers_table, results_table|
+    results = headers_tables.zip(results_tables).flat_map do |headers_table, results_table|
       results_table.css("tr").map do |result_tr|
         Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
       end
     end
+    Results.new(results)
   end
 
   def doc

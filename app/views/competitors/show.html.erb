@@ -8,7 +8,7 @@
 <% end %>
 
 <% cache [@competitor, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-  <% @competitor.results.flatten.group_by(&:category).each do |category, results| %>
+  <% @competitor.results.by_category.each do |category, results| %>
     <h2><%= category %></h2>
 
     <%= content_tag :table, class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
@@ -17,15 +17,25 @@
           <th class="number">#</th>
           <th>Round</th>
           <% (1..5).each do |i| %>
-            <th class="number" data-priority="2">T<%= i %></th>
+            <% if results.send("t#{i}?") %>
+              <th class="number" data-priority="2">T<%= i %></th>
+            <% end %>
           <% end %>
-          <th class="number" data-priority="1">Mean</th>
-          <th class="number" data-priority="1">Average</th>
-          <th class="number" data-priority="1">Best</th>
+          <% if results.mean? %>
+            <th class="number" data-priority="1">Mean</th>
+          <% end %>
+          <% if results.average? %>
+            <th class="number" data-priority="1">Average</th>
+          <% end %>
+          <% if results.best? %>
+            <th class="number" data-priority="1">Best</th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
-        <%= render partial: "result", collection: results, as: :result %>
+        <% results.each do |result| %>
+          <%= render partial: "result", object: result, as: :result, locals: { results: results } %>
+        <% end %>
       </tbody>
     <% end %>
   <% end %>

@@ -18,7 +18,7 @@
   <% if @competition.competitors.any? %>
     <%= content_tag :ul, data: { role: "listview", filter: true, generated_at: Time.now.to_s(:db) } do %>
       <% @competition.competitors.each do |competitor| %>
-        <li><%= link_to competitor.name, competition_competitor_path(@competition, competitor) %></li>
+        <li><%= link_to competitor.name, competition_competitor_path(@competition, competitor), data: { ajax: false } %></li>
       <% end %>
     <% end %>
   <% else %>

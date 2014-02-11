@@ -17,25 +17,29 @@
         <th>Name</th>
         <th data-priority="3">Country</th>
         <% (1..5).each do |i| %>
-          <% if @round.send("t#{i}?") %>
+          <% if @round.results.send("t#{i}?") %>
             <th class="number" data-priority="2">T<%= i %></th>
           <% end %>
         <% end %>
-        <% if @round.average? %>
+        <% if @round.results.average? %>
           <th class="number" data-priority="1">Average</th>
         <% end %>
-        <% if @round.mean? %>
+        <% if @round.results.mean? %>
           <th class="number" data-priority="1">Mean</th>
         <% end %>
-        <% if @round.best? %>
+        <% if @round.results.best? %>
           <th class="number" data-priority="1">Best</th>
         <% end %>
       </tr>
     </thead>
     <tbody>
-      <%= render partial: "row", collection: @round.results, as: :result, locals: { round: @round } %>
+      <% @round.results.each_with_index do |result, idx| %>
+        <%= render partial: "row", object: result, as: :result, locals: { round: @round, result_counter: idx } %>
+      <% end %>
     </tbody>
   <% end %>
 
-  <%= render partial: "more_info", collection: @round.results, as: :result, locals: { round: @round } %>
+  <% @round.results.each_with_index do |result, idx| %>
+    <%= render partial: "more_info", object: result, as: :result, locals: { round: @round, result_counter: idx } %>
+  <% end %>
 <% end %>

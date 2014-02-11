@@ -3,11 +3,11 @@
   <td><%= link_to truncate(result.name, length: 25), "#result_#{round.competition_id}_#{round.category_id}_#{round.id}_#{result_counter}", data: { rel: "popup", position_to: "window" } %></td>
   <td><%= result.country %></td>
   <% (1..5).each do |i| %>
-    <% if round.send("t#{i}?") %>
+    <% if round.results.send("t#{i}?") %>
       <td class="number"><%= result.send("t#{i}") %></td>
     <% end %>
   <% end %>
-  <% if round.average? %>
+  <% if round.results.average? %>
     <td class="number">
       <% if result.average_record.present? %>
         (<%= result.average_record %>)
@@ -15,7 +15,7 @@
       <%= result.average %>
     </td>
   <% end %>
-  <% if round.mean? %>
+  <% if round.results.mean? %>
     <td class="number">
       <% if result.mean_record.present? %>
         (<%= result.mean_record %>)
@@ -23,7 +23,7 @@
       <%= result.mean %>
     </td>
   <% end %>
-  <% if round.best? %>
+  <% if round.results.best? %>
     <td class="number">
       <% if result.best_record.present? %>
         (<%= result.best_record %>)
