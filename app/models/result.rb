@@ -25,6 +25,14 @@ class Result
     )
   end
 
+  def event
+    evt_rnd.split(" - ").first
+  end
+
+  def round
+    evt_rnd.split(" - ").second
+  end
+
   def average=(s)
     @average = s
     @average_record = extract_record_from! @average

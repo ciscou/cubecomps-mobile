@@ -1,6 +1,6 @@
 <tr>
   <td class="number"><%= result.position %></td>
-  <td><%= truncate(result.evt_rnd, length: 25) %></td>
+  <td><%= result.round %></td>
   <% (1..5).each do |i| %>
     <td class="number"><%= result.send("t#{i}") %></td>
   <% end %>
