@@ -23,6 +23,10 @@ class Competitor
     )
   end
 
+  def name
+    @name ||= fetch_name
+  end
+
   def results
     @results ||= fetch_results
   end
@@ -36,6 +40,10 @@ class Competitor
   end
 
   private
+
+  def fetch_name
+    doc.css("div.main font").first.text
+  end
 
   def fetch_results
     headers_tables = doc.css("body > table > tr > td:last-child table.TH")
