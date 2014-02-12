@@ -1,6 +1,7 @@
 <% content_for(:back_button) do %>
   <%= link_to "Back", competitions_path, data: { icon: "back" } %>
 <% end %>
+
 <% content_for(:title) do %>
   <% cache [@competition, "name"] do %>
     <%= @competition.name %>
@@ -13,6 +14,8 @@
     <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false } %></li>
   </ul>
 <% end %>
+
+<% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
 <% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <% if @competition.categories.any? %>

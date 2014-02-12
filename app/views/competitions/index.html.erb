@@ -1,5 +1,7 @@
 <% content_for(:title) { "Competitions" } %>
 
+<% content_for(:desktop_version_url) { "http://www.cubecomps.com/?desktop=1" } %>
+
 <% cache @competitions, expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <%= content_tag :ul, data: { role: "listview", generated_at: Time.now.to_s(:db) } do %>
     <li data-role="list-divider">Competitions in progress</li>
