@@ -30,14 +30,16 @@
   <div data-role="footer" data-theme="b">
     <h4>cubecomps</h4>
 
-    <div data-role="navbar">
-      <ul>
-        <% if content_for?(:desktop_version_url) && params[:desktop].present? %>
-          <li><%= link_to "Desktop version", yield(:desktop_version_url), data: { ajax: false } %></li>
-        <% end %>
-        <li><%= link_to "Report a bug", "https://github.com/ciscou/cubecomps-mobile/issues", data: { ajax: false } %></li>
-      </ul>
-    </div>
+    <% if params[:footer] %>
+      <div data-role="navbar">
+        <ul>
+          <% if content_for?(:desktop_version_url) %>
+            <li><%= link_to "Desktop version", yield(:desktop_version_url), data: { ajax: false } %></li>
+          <% end %>
+          <li><%= link_to "Report a bug", "https://github.com/ciscou/cubecomps-mobile/issues", data: { ajax: false } %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
 </div>
 
