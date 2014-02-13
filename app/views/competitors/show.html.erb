@@ -50,4 +50,8 @@
       </tbody>
     <% end %>
   <% end %>
+
+  <% if @competitor.results.empty? %>
+    <p>No available results for <%= @competitor.name %> (yet!)</p>
+  <% end %>
 <% end %>
