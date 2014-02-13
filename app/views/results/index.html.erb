@@ -8,6 +8,14 @@
   <% end %>
 <% end %>
 
+<% content_for(:navbar) do %>
+  <ul>
+    <li><%= link_to "Categories",  competition_categories_path(@round.competition_id),  data: { ajax: false }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Competitors", competition_competitors_path(@round.competition_id), data: { ajax: false } %></li>
+    <li><%= link_to "Schedule",    competition_schedule_path(@round.competition_id),    data: { ajax: false } %></li>
+  </ul>
+<% end %>
+
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@round.competition_id}&cat=#{@round.category_id}&rnd=#{@round.id}&desktop=1" } %>
 
 <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
