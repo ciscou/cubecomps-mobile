@@ -32,6 +32,10 @@ class Competition
     @competitors ||= fetch_competitors
   end
 
+  def schedule
+    @schedule ||= fetch_schedule
+  end
+
   def to_param
     id.to_s
   end
@@ -62,6 +66,15 @@ class Competition
     competitors_container.css("div.round").map do |competitor_div|
       Competitor.build_from_competitor_div(competitor_div)
     end
+  end
+
+  def fetch_schedule
+    @sch ||= begin
+               f = open("http://cubecomps.com/uploads/sch_#{id}.txt")
+               Schedule.parse(f)
+             rescue OpenURI::HTTPError
+               []
+             end
   end
 
   def doc

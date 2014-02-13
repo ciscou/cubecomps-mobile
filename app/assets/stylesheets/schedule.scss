@@ -1,0 +1,17 @@
+@media screen and (min-width: 640px) {
+	/* Show the table header rows and set all cells to display: table-cell */
+	.schedule-table td,
+	.schedule-table th,
+	.schedule-table tbody th,
+	.schedule-table tbody td,
+	.schedule-table thead td,
+	.schedule-table thead th {
+		display: table-cell;
+		margin: 0;
+	}
+	/* Hide the labels in each cell */
+	.schedule-table td .ui-table-cell-label,
+	.schedule-table th .ui-table-cell-label {
+		display: none;
+	}
+}

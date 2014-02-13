@@ -6,6 +6,7 @@ CubecompsMobile::Application.routes.draw do
       end
     end
     resources :competitors, only: [:index, :show]
+    resource  :schedule, only: :show
     get :past, on: :collection
   end
 

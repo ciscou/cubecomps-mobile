@@ -1,0 +1,63 @@
+<% content_for(:back_button) do %>
+  <%= link_to "Back", competitions_path, data: { icon: "back" } %>
+<% end %>
+
+<% content_for(:title) do %>
+  <% cache [@competition, "name"] do %>
+    <%= @competition.name %>
+  <% end %>
+<% end %>
+
+<% content_for(:navbar) do %>
+  <ul>
+    <li><%= link_to "Categories",  competition_categories_path(@competition),  data: { ajax: false } %></li>
+    <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false } %></li>
+    <li><%= link_to "Schedule",    competition_schedule_path(@competition),    data: { ajax: false }, class: "ui-btn-active" %></li>
+  </ul>
+<% end %>
+
+<% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
+
+<% cache [@competition, "schedule"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+  <% if @competition.schedule.any? %>
+    <% @competition.schedule.group_by { |row| row.start.to_date }.each do |date, rows| %>
+      <h2><%= date.to_s(:long) %></h2>
+
+      <%= content_tag :table, class: "schedule-table table-stripe", data: { role: "table", mode: "reflow", generated_at: Time.now.to_s(:db) } do %>
+        <thead>
+          <tr>
+            <th>Hour</th>
+            <th>Category</th>
+            <th>Round</th>
+            <th>Extra info</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% rows.each do |row| %>
+            <tr>
+              <td>
+                <%= row.start.strftime("%H:%M") %>
+                -
+                <%= row.  end.strftime("%H:%M") %>
+              </td>
+              <td>
+                <%= row.alternate_text.presence || row.category %>
+              </td>
+              <td>
+                <%= row.round_name %>
+              </td>
+              <td>
+                <% if row.extra_info.present? %>
+                  <em class="muted"><%= row.extra_info %></em>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>No available schedule (yet!)</p>
+  <% end %>
+<% end %>
