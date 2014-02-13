@@ -19,4 +19,8 @@ class Results
   def each(&block)
     @results.each(&block)
   end
+
+  def empty?
+    @results.empty?
+  end
 end
