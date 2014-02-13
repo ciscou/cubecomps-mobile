@@ -34,7 +34,7 @@
         </thead>
 
         <tbody>
-          <% rows.each do |row| %>
+          <% rows.sort_by { |row| [row.start, row.end] }.each do |row| %>
             <tr>
               <td>
                 <%= row.start.strftime("%H:%M") %>
