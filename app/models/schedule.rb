@@ -19,6 +19,7 @@ class Schedule
     "444bf"  => "4x4x4 Blindfolded",
     "555bf"  => "4x4x4 Blindfolded",
     "333mbf" => "3x3x3 Multiple Blindfolded",
+    "skewb"  => "Skewb",
     "reg"    => "REGISTRATION",
     "lun"    => "LUNCH",
     "tro"    => "AWARDS"
@@ -71,6 +72,6 @@ class Schedule
   end
 
   def category
-    CATEGORIES.fetch(category_code)
+    CATEGORIES.fetch(category_code) { category_code }
   end
 end
