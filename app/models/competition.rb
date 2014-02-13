@@ -70,7 +70,7 @@ class Competition
 
   def fetch_schedule
     @sch ||= begin
-               f = open("http://cubecomps.com/uploads/sch_#{id}.txt")
+               f = open("http://cubecomps.com/uploads/sch_#{id}.txt", redirect: false)
                Schedule.parse(f)
              rescue OpenURI::HTTPError
                []
