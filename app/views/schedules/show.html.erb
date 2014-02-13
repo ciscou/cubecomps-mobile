@@ -10,9 +10,9 @@
 
 <% content_for(:navbar) do %>
   <ul>
-    <li><%= link_to "Categories",  competition_categories_path(@competition),  data: { ajax: false } %></li>
-    <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false } %></li>
-    <li><%= link_to "Schedule",    competition_schedule_path(@competition),    data: { ajax: false }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Categories",  competition_categories_path(@competition),  data: { ajax: false, icon: "bars"  } %></li>
+    <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false, icon: "user"  } %></li>
+    <li><%= link_to "Schedule",    competition_schedule_path(@competition),    data: { ajax: false, icon: "clock" }, class: "ui-btn-active" %></li>
   </ul>
 <% end %>
 
