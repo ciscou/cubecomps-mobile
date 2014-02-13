@@ -24,7 +24,8 @@ class Schedule
     "lun"    => "LUNCH",
     "tro"    => "AWARDS"
   }
-  attr_accessor :start, :end, :category_code, :alternate_text, :round_name, :extra_info
+
+  attr_accessor :start, :end, :category_code, :alternate_text, :round_name, :extra_info, :am_pm_format
 
   def initialize(args)
     args.each do |k, v|
@@ -36,7 +37,8 @@ class Schedule
     f.gets # ignore "01"
     f.gets # ignore tz abbreviation
     f.gets # ignore tz offset
-    f.gets # ignore 24h flag
+
+    am_pm_format = f.gets.chomp
 
     date = nil
 
@@ -49,12 +51,12 @@ class Schedule
         date = Time.new(s[0, 4].to_i, s[4, 2].to_i, s[6, 2].to_i)
         nil
       else
-        parse_row(s, date)
+        parse_row(s, date, am_pm_format)
       end
     end.compact
   end
 
-  def self.parse_row(s, date)
+  def self.parse_row(s, date, am_pm_format)
     start_hour, end_hour,
     category_code,
     alternate_text,
@@ -67,8 +69,25 @@ class Schedule
       category_code: category_code,
       alternate_text: alternate_text,
       round_name: round_name,
-      extra_info: extra_info
+      extra_info: extra_info,
+      am_pm_format: am_pm_format == "0"
     )
+  end
+
+  def formatted_start
+    start.strftime(time_format)
+  end
+
+  def formatted_end
+    self.end.strftime(time_format)
+  end
+
+  def time_format
+    if am_pm_format
+      "%I:%M"
+    else
+      "%H:%M"
+    end
   end
 
   def category

@@ -37,9 +37,9 @@
           <% rows.sort_by { |row| [row.start, row.end] }.each do |row| %>
             <tr>
               <td>
-                <%= row.start.strftime("%H:%M") %>
+                <%= row.formatted_start %>
                 -
-                <%= row.  end.strftime("%H:%M") %>
+                <%= row.formatted_end %>
               </td>
               <td>
                 <%= row.alternate_text.presence || row.category %>
