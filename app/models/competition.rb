@@ -24,8 +24,8 @@ class Competition
     @name ||= fetch_name
   end
 
-  def categories
-    @categories ||= fetch_categories
+  def events
+    @events ||= fetch_events
   end
 
   def competitors
@@ -53,12 +53,12 @@ class Competition
     text_nodes.first.text
   end
 
-  def fetch_categories
-    categories_table = doc.css("body > table > tr > td:first-child table")
-    categories = categories_table.css("tr td").map do |category_td|
-      Category.build_from_category_td(category_td)
+  def fetch_events
+    events_table = doc.css("body > table > tr > td:first-child table")
+    events = events_table.css("tr td").map do |event_td|
+      Event.build_from_event_td(event_td)
     end
-    categories.compact
+    events.compact
   end
 
   def fetch_competitors

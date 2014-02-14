@@ -1,5 +1,5 @@
 class Round
-  attr_accessor :competition_id, :category_id, :id, :category_name, :name
+  attr_accessor :competition_id, :event_id, :id, :event_name, :name
 
   def initialize(args)
     args.each do |k, v|
@@ -17,7 +17,7 @@ class Round
                    end
     new(
       competition_id: round_params["cid"].first,
-      category_id:    round_params["cat"].first,
+      event_id:       round_params["cat"].first,
       id:             round_params["rnd"].first,
       name:           round_div.text
     )
@@ -27,8 +27,8 @@ class Round
     @competition_name ||= fetch_competition_name
   end
 
-  def category_name
-    @category_name ||= fetch_category_name
+  def event_name
+    @event_name ||= fetch_event_name
   end
 
   def name
@@ -36,7 +36,7 @@ class Round
   end
 
   def started?
-    [ competition_id, category_id, id ].all?(&:present?)
+    [ competition_id, event_id, id ].all?(&:present?)
   end
 
   def results
@@ -48,7 +48,7 @@ class Round
   end
 
   def cache_key
-    ["rounds", competition_id, category_id, id].join("/")
+    ["rounds", competition_id, event_id, id].join("/")
   end
 
   private
@@ -60,16 +60,16 @@ class Round
     text_nodes.first.text
   end
 
-  def fetch_category_and_round
+  def fetch_event_and_round
     doc.css("div.main > div").text.split(" - ")
   end
 
-  def fetch_category_name
-    fetch_category_and_round.first
+  def fetch_event_name
+    fetch_event_and_round.first
   end
 
   def fetch_name
-    fetch_category_and_round.second
+    fetch_event_and_round.second
   end
 
   def fetch_results
@@ -82,6 +82,6 @@ class Round
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{category_id}&rnd=#{id}"
+    @doc ||= Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}"
   end
 end

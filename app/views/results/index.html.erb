@@ -1,5 +1,5 @@
 <% content_for(:back_button) do %>
- <%= link_to "Back", competition_categories_path(@round.competition_id), data: { icon: "back" } %>
+ <%= link_to "Back", competition_events_path(@round.competition_id), data: { icon: "back" } %>
 <% end %>
 
 <% content_for(:title) do %>
@@ -10,16 +10,16 @@
 
 <% content_for(:navbar) do %>
   <ul>
-    <li><%= link_to "Categories",  competition_categories_path(@round.competition_id),  data: { ajax: false, icon: "bars"  }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Events",      competition_events_path(@round.competition_id),      data: { ajax: false, icon: "bars"  }, class: "ui-btn-active" %></li>
     <li><%= link_to "Competitors", competition_competitors_path(@round.competition_id), data: { ajax: false, icon: "user"  } %></li>
     <li><%= link_to "Schedule",    competition_schedule_path(@round.competition_id),    data: { ajax: false, icon: "clock" } %></li>
   </ul>
 <% end %>
 
-<% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@round.competition_id}&cat=#{@round.category_id}&rnd=#{@round.id}&desktop=1" } %>
+<% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@round.competition_id}&cat=#{@round.event_id}&rnd=#{@round.id}&desktop=1" } %>
 
 <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-  <h2><%= @round.category_name %> - <%= @round.name %></h2>
+  <h2><%= @round.event_name %> - <%= @round.name %></h2>
 
   <%= content_tag :table, id: "results", class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
     <thead>

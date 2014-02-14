@@ -10,7 +10,7 @@
 
 <% content_for(:navbar) do %>
   <ul>
-    <li><%= link_to "Categories",  competition_categories_path(@competition),  data: { ajax: false, icon: "bars"  }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Events",      competition_events_path(@competition),      data: { ajax: false, icon: "bars"  }, class: "ui-btn-active" %></li>
     <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false, icon: "user"  } %></li>
     <li><%= link_to "Schedule",    competition_schedule_path(@competition),    data: { ajax: false, icon: "clock" } %></li>
   </ul>
@@ -18,12 +18,12 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% cache [@competition, "categories"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
-  <% if @competition.categories.any? %>
+<% cache [@competition, "events"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+  <% if @competition.events.any? %>
     <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
-      <% render partial: "category", collection: @competition.categories, locals: { competition: @competition } %>
+      <% render partial: "event", collection: @competition.events, locals: { competition: @competition } %>
     <% end %>
   <% else %>
-    <p>No available categories (yet!)</p>
+    <p>No available events (yet!)</p>
   <% end %>
 <% end %>

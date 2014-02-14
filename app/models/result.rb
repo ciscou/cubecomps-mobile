@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :position, :name, :country, :cat_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
+  attr_accessor :position, :name, :country, :evt_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
   %w[t1 t2 t3 t4 t5 mean average best].each do |m|
     alias_method "#{m}?", m
   end
@@ -16,7 +16,7 @@ class Result
       position: result_tr.css("td:nth-child(1)").text,
       name:     result_tr.css("td:nth-child(2)").text,
       country:  result_tr.css("td:nth-child(3)").text,
-      cat_rnd:  result_tr.css("td:nth-child(2)").text,
+      evt_rnd:  result_tr.css("td:nth-child(2)").text,
       t1:       extract_from_headers_and_tr(headers, result_tr, "t1"),
       t2:       extract_from_headers_and_tr(headers, result_tr, "t2"),
       t3:       extract_from_headers_and_tr(headers, result_tr, "t3"),
@@ -34,12 +34,12 @@ class Result
     end
   end
 
-  def category
-    cat_rnd.split(" - ").first
+  def event
+    evt_rnd.split(" - ").first
   end
 
   def round
-    cat_rnd.split(" - ").second
+    evt_rnd.split(" - ").second
   end
 
   def average=(s)

@@ -8,7 +8,7 @@
   <%= content_tag :ul, data: { role: "listview", filter: "true", generated_at: Time.now.to_s(:db) } do %>
     <li data-role="list-divider">Past competitions</li>
     <% @competitions.past.each do |competition| %>
-      <li><%= link_to competition.name, competition_categories_path(competition) %></li>
+      <li><%= link_to competition.name, competition_events_path(competition) %></li>
     <% end %>
     <% if @competitions.past.empty? %>
       <li><em class="muted">No past competitions (yet!)</em></li>

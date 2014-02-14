@@ -11,8 +11,8 @@ class Results
     end
   end
 
-  def by_category
-    h = group_by(&:category)
+  def by_event
+    h = group_by(&:event)
     h.merge(h) { |k, v| self.class.new(v) }
   end
 

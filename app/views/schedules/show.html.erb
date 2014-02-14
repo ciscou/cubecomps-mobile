@@ -10,7 +10,7 @@
 
 <% content_for(:navbar) do %>
   <ul>
-    <li><%= link_to "Categories",  competition_categories_path(@competition),  data: { ajax: false, icon: "bars"  } %></li>
+    <li><%= link_to "Events",      competition_events_path(@competition),      data: { ajax: false, icon: "bars"  } %></li>
     <li><%= link_to "Competitors", competition_competitors_path(@competition), data: { ajax: false, icon: "user"  } %></li>
     <li><%= link_to "Schedule",    competition_schedule_path(@competition),    data: { ajax: false, icon: "clock" }, class: "ui-btn-active" %></li>
   </ul>
@@ -42,7 +42,7 @@
                 <%= row.formatted_end %>
               </td>
               <td>
-                <%= row.alternate_text.presence || row.category %>
+                <%= row.alternate_text.presence || row.event %>
               </td>
               <td>
                 <%= row.round_name %>

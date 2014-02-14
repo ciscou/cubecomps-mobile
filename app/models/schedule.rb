@@ -1,5 +1,5 @@
 class Schedule
-  CATEGORIES = {
+  EVENTS = {
     "333" => "Rubik's Cube",
     "222" => "2x2x2 Cube",
     "444" => "4x4x4 Cube",
@@ -25,7 +25,7 @@ class Schedule
     "tro"    => "AWARDS"
   }
 
-  attr_accessor :start, :end, :category_code, :alternate_text, :round_name, :extra_info, :am_pm_format
+  attr_accessor :start, :end, :event_code, :alternate_text, :round_name, :extra_info, :am_pm_format
 
   def initialize(args)
     args.each do |k, v|
@@ -58,7 +58,7 @@ class Schedule
 
   def self.parse_row(s, date, am_pm_format)
     start_hour, end_hour,
-    category_code,
+    event_code,
     alternate_text,
     round_name,
     extra_info = s.split(",")
@@ -66,7 +66,7 @@ class Schedule
     new(
       start: date.change(hour: start_hour[0, 2].to_i, min: start_hour[2, 2].to_i, sec: start_hour[4, 2].to_i),
       end:   date.change(hour:   end_hour[0, 2].to_i, min:   end_hour[2, 2].to_i, sec:   end_hour[4, 2].to_i),
-      category_code: category_code,
+      event_code: event_code,
       alternate_text: alternate_text,
       round_name: round_name,
       extra_info: extra_info,
@@ -90,7 +90,7 @@ class Schedule
     end
   end
 
-  def category
-    CATEGORIES.fetch(category_code) { category_code }
+  def event
+    EVENTS.fetch(event_code) { event_code }
   end
 end
