@@ -4,7 +4,12 @@
     <% event.rounds.each do |round| %>
       <li>
         <% if round.started? %>
-          <%= link_to round.name, competition_event_round_results_path(competition, event, round), data: { ajax: false } %>
+          <%= link_to competition_event_round_results_path(competition, event, round), data: { ajax: false } do %>
+            <%= round.name %>
+            <% if round.live? %>
+              <span class="ui-li-count">Live!</span>
+            <% end %>
+          <% end %>
         <% else %>
           <em class="muted"><%= round.name %></em>
         <% end %>

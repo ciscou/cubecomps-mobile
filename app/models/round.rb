@@ -43,6 +43,10 @@ class Round
     @results ||= fetch_results
   end
 
+  def live?
+    $redis.sismember(live_rounds_redis_key, redis_key)
+  end
+
   def to_param
     id.to_s
   end
@@ -78,7 +82,33 @@ class Round
     results = results_table.css("tr").map do |result_tr|
       Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
     end
+    check_live_results(results)
     Results.new(results)
+  end
+
+  def check_live_results(results)
+    times_count = results.flat_map do |r|
+      [r.t1, r.t2, r.t3, r.t4, r.t5]
+    end.count(&:present?)
+
+    if times_count > $redis.get(times_count_redis_key).to_i
+      $redis.set(times_count_redis_key, times_count)
+      $redis.sadd(live_rounds_redis_key, redis_key)
+    else
+      $redis.srem(live_rounds_redis_key, redis_key)
+    end
+  end
+
+  def times_count_redis_key
+    ["times_count", competition_id, event_id, id].join(":")
+  end
+
+  def live_rounds_redis_key
+    ["live_rounds", competition_id].join(":")
+  end
+
+  def redis_key
+    [event_id, id].join(":")
   end
 
   def doc
