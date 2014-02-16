@@ -22,7 +22,7 @@
           <% if result.average_record.present? %>
             (<%= result.average_record %>)
           <% end %>
-          <%= result.average %>
+          <%= result.average.presence || "-" %>
       </p>
     <% end %>
     <% if round.results.mean? %>
@@ -31,7 +31,7 @@
           <% if result.mean_record.present? %>
             (<%= result.mean_record %>)
           <% end %>
-          <%= result.mean %>
+          <%= result.mean.presence || "-" %>
       </p>
     <% end %>
     <% if round.results.best? %>

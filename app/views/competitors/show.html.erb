@@ -54,10 +54,14 @@
         </tr>
       </thead>
       <tbody>
-        <% results.each do |result| %>
-          <%= render partial: "result", object: result, as: :result, locals: { results: results } %>
+        <% results.each_with_index do |result, idx| %>
+          <%= render partial: "result", object: result, as: :result, locals: { results: results, event: event, result_counter: idx } %>
         <% end %>
       </tbody>
+    <% end %>
+
+    <% results.each_with_index do |result, idx| %>
+      <%= render partial: "more_info", object: result, as: :result, locals: { results: results, event: event, result_counter: idx } %>
     <% end %>
   <% end %>
 
