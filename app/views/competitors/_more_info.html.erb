@@ -5,6 +5,14 @@
 
   <div data-role="content">
     <p>
+      <strong>Event</strong><br/>
+      <%= result.event %>
+    </p>
+    <p>
+      <strong>Round</strong><br/>
+      <%= result.round %>
+    </p>
+    <p>
       <strong>Times</strong><br/>
       <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
     </p>
