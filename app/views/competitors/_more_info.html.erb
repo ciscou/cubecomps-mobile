@@ -1,0 +1,39 @@
+<%= content_tag :div, id: ["result", event.parameterize, result_counter].join("_"), data: { role: "popup", overlay_theme: "a" } do %>
+  <div data-role="header">
+    <h2>#<%= result.position %></h2>
+  </div>
+
+  <div data-role="content">
+    <p>
+      <strong>Times</strong><br/>
+      <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
+    </p>
+    <% if results.average? %>
+      <p>
+        <strong>Average</strong><br/>
+          <% if result.average_record.present? %>
+            (<%= result.average_record %>)
+          <% end %>
+          <%= result.average.presence || "-" %>
+      </p>
+    <% end %>
+    <% if results.mean? %>
+      <p>
+        <strong>Mean</strong><br/>
+          <% if result.mean_record.present? %>
+            (<%= result.mean_record %>)
+          <% end %>
+          <%= result.mean.presence || "-" %>
+      </p>
+    <% end %>
+    <% if results.best? %>
+      <p>
+        <strong>Best</strong><br/>
+          <% if result.best_record.present? %>
+            (<%= result.best_record %>)
+          <% end %>
+          <%= result.best %>
+      </p>
+    <% end %>
+  </div>
+<% end %>
