@@ -1,5 +1,5 @@
 <% content_for(:back_button) do %>
- <%= link_to "Back", competition_events_path(@round.competition_id), data: { icon: "back" } %>
+ <%= link_to "Back", competition_events_path(@round.competition_id), data: { ajax: false, icon: "back" } %>
 <% end %>
 
 <% content_for(:title) do %>
