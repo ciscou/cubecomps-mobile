@@ -18,6 +18,16 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@round.competition_id}&cat=#{@round.event_id}&rnd=#{@round.id}&desktop=1" } %>
 
+<div data-role="popup" id="landscape-mode-hint">
+  <div data-role="header">
+    <h1>Did you know?</h1>
+  </div>
+  <div role="main" class="ui-content">
+    <p>Depending on your screen resolution, you might be able to see more columns if you turn your device into landscape mode.</p>
+    <a href="#" class="close ui-btn ui-corner-all" data-rel="back">OK, I got it</a>
+  </div>
+</div>
+
 <% cache [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
   <h2><%= @round.event_name %> - <%= @round.name %></h2>
 
