@@ -47,7 +47,8 @@ class Schedule
 
       if s.blank?
         nil
-      elsif s =~ /\A[0-9]{8}\z/
+      elsif s.strip =~ /\A[0-9]{8}\z/
+        s.strip!
         date = Time.new(s[0, 4].to_i, s[4, 2].to_i, s[6, 2].to_i)
         nil
       else
