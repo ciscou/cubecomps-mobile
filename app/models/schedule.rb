@@ -41,7 +41,7 @@ class Schedule
 
     am_pm_format = f.gets.chomp
 
-    date = Date.new
+    date = Time.new
 
     f.read.lines.map do |s|
       s.chomp!
