@@ -34,7 +34,8 @@ class Schedule
   end
 
   def self.parse(f)
-    f.gets # ignore "01"
+    return [] unless f.gets.chomp == "01"
+
     f.gets # ignore tz abbreviation
     f.gets # ignore tz offset
 
