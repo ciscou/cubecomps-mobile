@@ -50,7 +50,7 @@ class Competition
     text_nodes = doc.css("div.top").children.select do |node|
       node.is_a? Nokogiri::XML::Text
     end
-    text_nodes.first.text
+    text_nodes.first.text.strip
   end
 
   def fetch_events
