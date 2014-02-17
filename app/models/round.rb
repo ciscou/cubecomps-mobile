@@ -112,6 +112,10 @@ class Round
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}"
+    @doc ||= fetch_doc
+  end
+
+  def fetch_doc
+    Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}"
   end
 end
