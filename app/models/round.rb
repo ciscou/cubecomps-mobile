@@ -116,6 +116,9 @@ class Round
   end
 
   def fetch_doc
-    Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}"
+    doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}"
+    raise NotFoundException if doc.css("body").text.include? "That competition is not available any more."
+
+    doc
   end
 end
