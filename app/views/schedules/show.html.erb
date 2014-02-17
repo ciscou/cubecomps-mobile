@@ -36,7 +36,7 @@
         <tbody>
           <% rows.sort_by { |row| [row.start, row.end] }.each do |row| %>
             <tr>
-              <td>
+              <td class="hour">
                 <%= row.formatted_start %>
                 -
                 <%= row.formatted_end %>
