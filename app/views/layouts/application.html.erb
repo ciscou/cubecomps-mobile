@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CubecompsMobile | <%= yield(:title) %></title>
+  <title>CubecompsMobile | <%= yield(:title).strip %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= javascript_include_tag "application" %>
   <%= stylesheet_link_tag    "http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css", media: "all" %>
@@ -23,7 +23,7 @@
 <div data-role="page">
   <div data-role="header" data-theme="b">
     <%= yield(:back_button) %>
-    <h1><%= yield(:title) %></h1>
+    <h1><%= yield(:title).strip %></h1>
 
     <% if content_for?(:navbar) %>
       <div data-role="navbar">
