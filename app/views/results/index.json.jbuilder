@@ -8,8 +8,17 @@ json.cache! [@round, "results"], expires_in: 5.minutes, race_condition_ttl: 10 d
     json.t4 result.t4 if @round.results.t4?
     json.t5 result.t5 if @round.results.t5?
 
-    json.average result.average if @round.results.average?
-    json.mean    result.mean    if @round.results.mean?
-    json.best    result.best    if @round.results.best?
+    if @round.results.average?
+      json.average        result.average
+      json.average_record result.average_record
+    end
+    if @round.results.mean?
+      json.mean        result.mean
+      json.mean_record result.mean_record
+    end
+    if @round.results.best?
+      json.best        result.best
+      json.best_record result.best_record
+    end
   end
 end
