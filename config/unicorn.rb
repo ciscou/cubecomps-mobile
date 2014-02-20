@@ -8,7 +8,7 @@ before_fork do |server, worker|
     Process.kill 'QUIT', Process.pid
   end
 
-# $redis.quit
+  $redis.quit
 end
 
 after_fork do |server, worker|
@@ -16,5 +16,5 @@ after_fork do |server, worker|
     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
   end
 
-# $redis = Redis.new url: (ENV["REDISTOGO_URL"] || "redis://localhost:6379")
+  $redis = Redis.new url: (ENV["REDISTOGO_URL"] || "redis://localhost:6379")
 end
