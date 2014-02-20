@@ -44,6 +44,7 @@ class Round
   end
 
   def live?
+    return false
     $redis.sismember(live_rounds_redis_key, redis_key)
   end
 
@@ -82,7 +83,7 @@ class Round
     results = results_table.css("tr").map do |result_tr|
       Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
     end
-    check_live_results(results)
+#   check_live_results(results)
     Results.new(results)
   end
 
