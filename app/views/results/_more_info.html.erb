@@ -14,7 +14,7 @@
     </p>
     <p>
       <strong>Times</strong><br/>
-      <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ") %>
+      <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ").presence || "-" %>
     </p>
     <% if round.results.average? %>
       <p>
@@ -40,7 +40,7 @@
           <% if result.best_record.present? %>
             (<%= result.best_record %>)
           <% end %>
-          <%= result.best %>
+          <%= result.best.presence || "-" %>
       </p>
     <% end %>
   </div>
