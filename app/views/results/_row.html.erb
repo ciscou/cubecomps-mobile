@@ -1,6 +1,6 @@
 <tr>
   <td class="number"><%= result.position %></td>
-  <td><%= link_to truncate(result.name, length: 25), "#result_#{round.competition_id}_#{round.event_id}_#{round.id}_#{result_counter}", data: { rel: "popup", position_to: "window" } %></td>
+  <td><%= link_to truncate(result.name, length: 24), "#result_#{round.competition_id}_#{round.event_id}_#{round.id}_#{result_counter}", data: { rel: "popup", position_to: "window" } %></td>
   <td><%= result.country %></td>
   <% (1..5).each do |i| %>
     <% if round.results.send("t#{i}?") %>
