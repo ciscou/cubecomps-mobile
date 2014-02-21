@@ -26,10 +26,10 @@
       <%= content_tag :table, class: "schedule-table table-stripe", data: { role: "table", mode: "reflow", generated_at: Time.now.to_s(:db) } do %>
         <thead>
           <tr>
-            <th>Hour</th>
-            <th>Event</th>
-            <th>Round</th>
-            <th>Extra info</th>
+            <th class="hour">Hour</th>
+            <th class="event">Event</th>
+            <th class="round">Round</th>
+            <th class="extra_info">Extra info</th>
           </tr>
         </thead>
 
@@ -41,13 +41,13 @@
                 -
                 <%= row.formatted_end %>
               </td>
-              <td>
+              <td class="event">
                 <%= row.alternate_text.presence || row.event %>
               </td>
-              <td>
+              <td class="round">
                 <%= row.round_name %>
               </td>
-              <td>
+              <td class="extra_info">
                 <% if row.extra_info.present? %>
                   <em class="muted"><%= row.extra_info %></em>
                 <% end %>

@@ -1,4 +1,26 @@
 @media screen and (min-width: 580px) {
+  .schedule-table {
+    td, th {
+      font-size: .8em;
+    }
+
+    td.hour, th.hour {
+      width: 10%;
+    }
+
+    td.event, th.event {
+      width: 40%;
+    }
+
+    td.round, th.round {
+      width: 30%;
+    }
+
+    td.extra_info, th.extra_info {
+      width: 20%;
+    }
+  }
+
 	/* Show the table header rows and set all cells to display: table-cell */
 	.schedule-table td,
 	.schedule-table th,
@@ -14,6 +36,14 @@
 	.schedule-table th .ui-table-cell-label {
 		display: none;
 	}
+}
+
+@media screen and (min-width: 800px) {
+  .schedule-table {
+    td, th {
+      font-size: 1em;
+    }
+  }
 }
 
 .schedule-table td.hour {
