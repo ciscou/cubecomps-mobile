@@ -4,7 +4,7 @@
 
 <% content_for(:title) do %>
   <% cache [@competition, "name"] do %>
-    <%= @competition.name %>
+    <%= @competition.name.html_safe %>
   <% end %>
 <% end %>
 
