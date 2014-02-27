@@ -44,7 +44,16 @@ class Round
   end
 
   def live?
-    $redis.sismember(live_rounds_redis_key, redis_key)
+    return false if past?
+
+    updated_at = $redis.hget("updated_at", redis_key)
+    return false unless updated_at
+
+    (Time.parse(updated_at) + 15.minutes).future?
+  end
+
+  def past?
+    $redis.sismember("past_competition_ids", competition_id)
   end
 
   def to_param
@@ -53,6 +62,10 @@ class Round
 
   def cache_key
     ["rounds", competition_id, event_id, id].join("/")
+  end
+
+  def redis_key
+    [competition_id, event_id, id].join(":")
   end
 
   private
@@ -87,28 +100,16 @@ class Round
   end
 
   def check_live_results(results)
+    return false if past?
+
     times_count = results.flat_map do |r|
       [r.t1, r.t2, r.t3, r.t4, r.t5]
     end.count(&:present?)
 
-    if times_count > $redis.get(times_count_redis_key).to_i
-      $redis.set(times_count_redis_key, times_count)
-      $redis.sadd(live_rounds_redis_key, redis_key)
-    else
-      $redis.srem(live_rounds_redis_key, redis_key)
+    if times_count > $redis.hget("times_count", redis_key).to_i
+      $redis.hset("times_count", redis_key, times_count)
+      $redis.hset("updated_at",  redis_key, Time.now)
     end
-  end
-
-  def times_count_redis_key
-    ["times_count", competition_id, event_id, id].join(":")
-  end
-
-  def live_rounds_redis_key
-    ["live_rounds", competition_id].join(":")
-  end
-
-  def redis_key
-    [event_id, id].join(":")
   end
 
   def doc
