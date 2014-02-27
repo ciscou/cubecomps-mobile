@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% cache [@competitor, "name"] do %>
+  <% cache [@competitor, "name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
     <%= @competitor.name.html_safe %>
   <% end %>
 <% end %>

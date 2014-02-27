@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% cache [@round, "competition_name"] do %>
+  <% cache [@round, "competition_name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
     <%= @round.competition_name.html_safe %>
   <% end %>
 <% end %>
