@@ -30,6 +30,9 @@
   text-align: right;
   white-space: nowrap;
 }
+.results-table.ui-table td.top-position {
+  background-color: #CCFF00;
+}
 .ui-table-columntoggle-btn {
   display: none !important;
 }

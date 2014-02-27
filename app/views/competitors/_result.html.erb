@@ -1,5 +1,5 @@
 <tr>
-  <td class="number"><%= result.position %></td>
+  <td class="number <%= "top-position" if result.top_position? %>"><%= result.position %></td>
   <td><%= link_to result.round, "#result_#{event.parameterize}_#{result_counter}", data: { rel: "popup", position_to: "window" } %></td>
   <% (1..5).each do |i| %>
     <% if results.send("t#{i}?") %>
