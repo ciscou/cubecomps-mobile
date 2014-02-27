@@ -1,0 +1,25 @@
+@import "compass/css3/border-radius";
+
+span.record {
+  @include border-radius(50%);
+  font-size: .8em;
+  padding: 0 .25em .25em .25em;
+  cursor: pointer;
+  color: white;
+
+  &.wr {
+    background-color: #ff0000;
+  }
+
+  &.cr {
+    background-color: #ff4200;
+  }
+
+  &.nr {
+    background-color: #ff8400;
+  }
+
+  &.pb {
+    background-color: #06bc28;
+  }
+}

@@ -9,7 +9,7 @@
   <% if results.mean? %>
     <td class="number">
       <% if result.mean_record.present? %>
-        (<%= result.mean_record %>)
+        <%= format_record result.mean_record %>
       <% end %>
       <%= result.mean %>
     </td>
@@ -17,7 +17,7 @@
   <% if results.average? %>
     <td class="number">
       <% if result.average_record.present? %>
-        (<%= result.average_record %>)
+        <%= format_record result.average_record %>
       <% end %>
       <%= result.average %>
     </td>
@@ -25,7 +25,7 @@
   <% if results.best? %>
     <td class="number">
       <% if result.best_record.present? %>
-        (<%= result.best_record %>)
+        <%= format_record result.best_record %>
       <% end %>
       <%= result.best %>
     </td>
