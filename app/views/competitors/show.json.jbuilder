@@ -1,4 +1,4 @@
-json.cache! [@competitor, "results"], expires_in: 5.minutes, race_condition_ttl: 10 do
+json.cache! [@competitor, "results"], ccm_cache_options(@competitor.competition_id) do
   json.array! @competitor.results do |json, result|
     json.extract! result, :position, :event, :round
 

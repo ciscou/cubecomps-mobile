@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% cache [@competition, "name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+  <% ccm_cache [@competition, "name"], @competition.id, expires_in: 1.hour do %>
     <%= @competition.name.html_safe %>
   <% end %>
 <% end %>
@@ -18,7 +18,7 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% cache [@competition, "events"], expires_in: 5.minutes, race_condition_ttl: 10 do %>
+<% ccm_cache [@competition, "events"], @competition.id do %>
   <% if @competition.events.any? %>
     <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
       <% render partial: "event", collection: @competition.events, locals: { competition: @competition } %>

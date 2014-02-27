@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% cache [@competition, "name"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+  <% ccm_cache [@competition, "name"], @competition.id, expires_in: 1.hour do %>
     <%= @competition.name.html_safe %>
   <% end %>
 <% end %>
@@ -18,7 +18,7 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% cache [@competition, "schedule"], expires_in: 1.hour, race_condition_ttl: 10 do %>
+<% ccm_cache [@competition, "schedule"], @competition.id, expires_in: 1.hour do %>
   <% if @competition.schedule.any? %>
     <% @competition.schedule.group_by { |row| row.start.to_date }.each do |date, rows| %>
       <h2><%= date.to_s(:long) %></h2>
