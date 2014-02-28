@@ -40,6 +40,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem "fakeweb", "~> 1.3"
+  gem "launchy"
 end
 
 # Use ActiveModel has_secure_password
