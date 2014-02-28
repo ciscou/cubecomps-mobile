@@ -2,6 +2,8 @@ require 'spec_helper'
 
 feature "List competitions" do
   before do
+    FakeWeb.register_uri :get, "http://cubecomps.com/", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "home.html")
+
     visit root_path
   end
 

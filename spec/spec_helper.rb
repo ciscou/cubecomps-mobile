@@ -12,6 +12,8 @@ require 'rspec/rails'
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+FakeWeb.allow_net_connect = false
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -26,4 +28,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before(:each) do
+    FakeWeb.clean_registry
+  end
 end
