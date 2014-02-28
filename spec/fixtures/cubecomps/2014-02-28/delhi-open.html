@@ -1,0 +1,163 @@
+HTTP/1.1 200 OK
+Date: Fri, 28 Feb 2014 20:10:43 GMT
+Server: Apache
+X-Powered-By: PHP/5.2.17
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Set-Cookie: PHPSESSID=a425e6bdbf79f2b90d12541c304824ee; path=/
+Transfer-Encoding: chunked
+Content-Type: text/html
+
+<html>
+<head>
+<TITLE>Delhi Open 2014</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+	body {font-family:arial,sans-serif;background-color:#2b355a;color:white;margin:0;}
+	a {color:black;text-decoration:none;font-weight:bold;}
+	a:hover {color:red;}
+	.a_white {color:white;}
+
+	.event, .c_event, .event_top, .blank, .extra {width:286px;height:18px;background:url('img/shadow-v.gif') right repeat-y;font-size:15px;font-weight:bold;background-color:#000022;color:white;padding:2px 0 2px 10px;}
+	.event, .c_event {cursor:pointer;}
+	.c_event {color:#888;}
+	.event:hover, .c_event:hover {background-color:#12182E;}
+	.extra {height:100%;font-size:12px;font-weight:normal;}
+	.event_top {width:300px;background:url('img/shadow-c.gif') right no-repeat;background-color:#000022;}
+
+	.round, .c_round {width:260px;height:18px;font-size:13px;font-weight:bold;color:black;padding:0 0 0 30px;background-color:#FFFFCC;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+	.round {cursor:pointer;}
+	.c_round {color:#888;}
+	.round:hover, .c_round:hover {background-color:#f9d395;}
+
+	.collapser, .collapser_c {width:280px;display:none;overflow:hidden;margin:0;padding:0;}
+	.collapser_c {overflow-y:auto;overflow-x:hidden;}
+	.top {height:100px;
+background:url('uploads/cc_ban.gif') top right no-repeat;	background-color:#000022;padding:0 10px;font-weight:bold;color:#CCFF00;}
+	.top a {color:white}
+	.main {height:100%;background:url('img/shadow-h.gif') top repeat-x;font-weight:bold;font-size:12px;}
+	.pb, .nr, .cr, .wr {font-size:7px;font-weight:bold;color:white;margin-right:4px;}
+	.pb {background-color:#06bc28;}
+	.nr {background-color:#ff8400;}
+	.cr {background-color:#ff4200;}
+	.wr {background-color:#ff0000;}
+</style>
+</head>
+<body>
+<script>
+
+var cllsNoR;
+var cllId;
+var timerCll;
+var step;
+
+function getHeight(obj)
+{
+	if (!obj.style.display)
+		return 0;
+	else
+		return (obj.height ? obj.height : obj.offsetHeight);
+}
+
+function setHeight(obj,h)
+{
+	if (h)
+	{
+		obj.style.height = h+"px";
+		if (!obj.style.display) obj.style.display = "block";
+	}
+	else
+		obj.style.display = "";
+}
+
+function expandOneStep()
+{
+	var alldone = true;
+	var x = 0;
+	do {
+		x++;
+		var obj = document.getElementById("cll"+x);
+		if (obj)
+		{
+			var h = getHeight(obj);
+			if (x==cllId)
+			{
+				if (h < cllsNoR[x]*18)
+				{
+					h = Math.min(cllsNoR[x]*18, h+step);
+					alldone = false;
+				}
+			}
+			else
+			{
+				if (h > 0)
+				{
+					h = Math.max(0, h-step);
+					alldone = false;
+				}
+			}
+			setHeight(obj,h);
+		}
+	} while (obj);
+	if (!alldone) 
+	{
+		setTimeout("expandOneStep();",50);
+		if (step < 8) step = step*2;
+	}
+}
+
+function expand(id,immediate)
+{
+	if (immediate)
+		setHeight(document.getElementById("cll"+id), cllsNoR[id]*18);
+	else
+	{
+		step = 1;
+		cllId = id;
+		expandOneStep();
+	}
+}
+</script>
+<TABLE width=100% height=100% cellspacing=0 cellpadding=0><TR valign=top><TD colspan=2><div class=top><br>Delhi Open 2014<br>Delhi<br>India</div></TD></TR><TR valign=top><TD><table height=100% cellspacing=0 cellpadding=0><tr><td><div class=event_top>&nbsp;</div></td></tr><tr valign=top><td><div class=event onclick='expand(1,false);'>Rubik's Cube</div><div id=cll1 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=1&rnd=1"'>Combined First</div><div class=c_round>Second Round</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(2,false);'>4x4x4 Cube</div><div id=cll2 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=3&rnd=1"'>Combined First</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(3,false);'>5x5x5 Cube</div><div id=cll3 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=4&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(4,false);'>2x2x2 Cube</div><div id=cll4 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=2&rnd=1"'>Combined First</div><div class=c_round>Second Round</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(5,false);'>Rubik's Cube: Blindfolded</div><div id=cll5 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=16&rnd=1"'>First Round</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(6,false);'>Rubik's Cube: One-handed</div><div id=cll6 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=13&rnd=1"'>Combined First</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(7,false);'>Rubik's Cube: Fewest moves</div><div id=cll7 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=15&rnd=1"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(8,false);'>Megaminx</div><div id=cll8 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=10&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(9,false);'>Pyraminx</div><div id=cll9 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=11&rnd=1"'>Combined First</div><div class=c_round>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(10,false);'>Clock</div><div id=cll10 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=7&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(11,false);'>Skewb</div><div id=cll11 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=20&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(12,false);'>4x4x4 Cube: Blindfolded</div><div id=cll12 class=collapser><div class=round onclick='window.location="live.php?cid=418&cat=17&rnd=1"'>Final</div></div></td></tr><tr><td><div class=blank>&nbsp;</div></td></tr><tr valign=top><td><div class=event onclick='expand(13,false);'>Competitors</div><div id=cll13 class=collapser_c><div class=round onclick='window.location="live.php?cid=418&compid=21"'>Aaryaman Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=52"'>Abhi Gawande</div><div class=round onclick='window.location="live.php?cid=418&compid=108"'>Achyuta Mahesh</div><div class=round onclick='window.location="live.php?cid=418&compid=100"'>Aditya Mahesh</div><div class=round onclick='window.location="live.php?cid=418&compid=69"'>Akash Rupela</div><div class=round onclick='window.location="live.php?cid=418&compid=98"'>Akshay Sharma</div><div class=round onclick='window.location="live.php?cid=418&compid=84"'>Amey Gupta</div><div class=round onclick='window.location="live.php?cid=418&compid=71"'>Ankit Kataria</div><div class=round onclick='window.location="live.php?cid=418&compid=10"'>Ankush Kumar</div><div class=round onclick='window.location="live.php?cid=418&compid=102"'>Ansh Arora</div><div class=round onclick='window.location="live.php?cid=418&compid=72"'>Anshuman Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=101"'>Arnav Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=51"'>Arun Padmanabhan</div><div class=round onclick='window.location="live.php?cid=418&compid=5"'>Aryan Kejriwal</div><div class=round onclick='window.location="live.php?cid=418&compid=57"'>Ashish Rawat</div><div class=round onclick='window.location="live.php?cid=418&compid=41"'>Ashwin Godura</div><div class=round onclick='window.location="live.php?cid=418&compid=99"'>Aueshic Das</div><div class=round onclick='window.location="live.php?cid=418&compid=63"'>Ayush Goyal</div><div class=round onclick='window.location="live.php?cid=418&compid=56"'>Ayush Kumar</div><div class=round onclick='window.location="live.php?cid=418&compid=79"'>Baljeet Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=55"'>Chaitanya Vaid</div><div class=round onclick='window.location="live.php?cid=418&compid=94"'>Chinmaya Iyer</div><div class=round onclick='window.location="live.php?cid=418&compid=76"'>Deb Banerji</div><div class=round onclick='window.location="live.php?cid=418&compid=90"'>Dev Krishn Gulati</div><div class=round onclick='window.location="live.php?cid=418&compid=83"'>Devansh Sharma</div><div class=round onclick='window.location="live.php?cid=418&compid=23"'>Gunraj Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=2"'>Hemang Sarkar</div><div class=round onclick='window.location="live.php?cid=418&compid=96"'>Ishaan Gupta</div><div class=round onclick='window.location="live.php?cid=418&compid=1"'>Jithin Prakash Karimbanakkal</div><div class=round onclick='window.location="live.php?cid=418&compid=58"'>Jordan Muriel</div><div class=round onclick='window.location="live.php?cid=418&compid=61"'>Karan Maini</div><div class=round onclick='window.location="live.php?cid=418&compid=105"'>Karan Varshney</div><div class=round onclick='window.location="live.php?cid=418&compid=87"'>Khoda Hailyang</div><div class=round onclick='window.location="live.php?cid=418&compid=59"'>Kopal Kapoor</div><div class=round onclick='window.location="live.php?cid=418&compid=16"'>Kunal Sehgal</div><div class=round onclick='window.location="live.php?cid=418&compid=44"'>Naman Sahni</div><div class=round onclick='window.location="live.php?cid=418&compid=74"'>Neel Aryan Katoch</div><div class=round onclick='window.location="live.php?cid=418&compid=91"'>Neil Dey</div><div class=round onclick='window.location="live.php?cid=418&compid=85"'>Nikhil Mande</div><div class=round onclick='window.location="live.php?cid=418&compid=95"'>Niten Mukesh</div><div class=round onclick='window.location="live.php?cid=418&compid=103"'>Nitish Agarwal</div><div class=round onclick='window.location="live.php?cid=418&compid=33"'>Parth Padwal</div><div class=round onclick='window.location="live.php?cid=418&compid=12"'>Piyush Passi</div><div class=round onclick='window.location="live.php?cid=418&compid=78"'>Prakhar Gupta</div><div class=round onclick='window.location="live.php?cid=418&compid=26"'>Pulkit Mehra</div><div class=round onclick='window.location="live.php?cid=418&compid=8"'>Raghav Saran Aggarwal</div><div class=round onclick='window.location="live.php?cid=418&compid=46"'>Raja Siddarth Raju</div><div class=round onclick='window.location="live.php?cid=418&compid=3"'>Ranphoa Ngowa</div><div class=round onclick='window.location="live.php?cid=418&compid=62"'>Raunaq Ashok Sinha</div><div class=round onclick='window.location="live.php?cid=418&compid=40"'>Rishabh Bhatia</div><div class=round onclick='window.location="live.php?cid=418&compid=104"'>Rishabh Sethi</div><div class=round onclick='window.location="live.php?cid=418&compid=20"'>Rupak Mazumdar</div><div class=round onclick='window.location="live.php?cid=418&compid=32"'>Samrit Kunja</div><div class=round onclick='window.location="live.php?cid=418&compid=67"'>Saransh Grover</div><div class=round onclick='window.location="live.php?cid=418&compid=24"'>Satwik Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=93"'>Saumya Bansal</div><div class=round onclick='window.location="live.php?cid=418&compid=31"'>Shashwat Jolly</div><div class=round onclick='window.location="live.php?cid=418&compid=28"'>Shivam Bansal</div><div class=round onclick='window.location="live.php?cid=418&compid=64"'>Shivang Seth</div><div class=round onclick='window.location="live.php?cid=418&compid=82"'>Shivansh Pathak</div><div class=round onclick='window.location="live.php?cid=418&compid=37"'>Shubham Kumar</div><div class=round onclick='window.location="live.php?cid=418&compid=9"'>Shubhayan Kabir</div><div class=round onclick='window.location="live.php?cid=418&compid=106"'>Sidharth Nair</div><div class=round onclick='window.location="live.php?cid=418&compid=73"'>Tanmay Kale</div><div class=round onclick='window.location="live.php?cid=418&compid=92"'>Tarun Agarwal</div><div class=round onclick='window.location="live.php?cid=418&compid=81"'>Upendra Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=45"'>Vihaan Nadkarni</div><div class=round onclick='window.location="live.php?cid=418&compid=75"'>Vijay Daultani</div><div class=round onclick='window.location="live.php?cid=418&compid=29"'>Vijay Pratap Singh</div><div class=round onclick='window.location="live.php?cid=418&compid=49"'>Vinayyak Vajpeyi</div><div class=round onclick='window.location="live.php?cid=418&compid=66"'>Yash Sharma</div></div></td></tr><tr><td><div class=blank>&nbsp;</div></td></tr><tr valign=top><td><div class=event onclick='window.location="live.php?cid=418&schedule=1";'>Schedule</div><tr><td><div class=blank>&nbsp;</div></td></tr><tr><td><div class=blank><a class=a_white href='live.php?cid=418&schedule=1'>[refresh]</a><br><br><a class=a_white href='/' title='home - switch competition'><img src='img/home.png'/></a></div></td></tr><tr height=100%><td style='height:100%;'><div class=extra></div></td></tr></table></TD><TD width=100% height=100%><div class=main><br>
+<DIV id=SCH_container style='position:relative;height:95%;overflow-y:auto;font-weight:normal;'>
+<span style='position:absolute;top:0px;'><b>Friday - February 28th, 2014</b></span> <span style='position:absolute;top:16px;width:300px;background-color:white;height:5px;'></span><p></p>
+
+<span class=SCH style='background-color:#888;width:380px;height:110px;left:5px;top:36px;'><img border=0 src='img/reg.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>09:45</center></span><h1 style='position:relative;top:0px;'><center>REGISTRATION</center></h1></span>
+<span class=SCH style='background-color:#7381FB;width:180px;height:182px;left:5px;top:156px;'><img border=0 src='img/333.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>11:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Rubik's Cube</h3><b><a href='live.php?cid=418&cat=1&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 1:00</div></span>
+<span class=SCH style='background-color:#FF939D;width:180px;height:182px;left:205px;top:156px;'><img border=0 src='img/clock.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>11:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Clock</h3><b><a href='live.php?cid=418&cat=7&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined Final</a></b><br>Cutoff 45.00</div></span>
+<span class=SCH style='background-color:#FFF977;width:380px;height:86px;left:5px;top:348px;'><img border=0 src='img/222.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>13:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>2x2x2 Cube</h3><b><a href='live.php?cid=418&cat=2&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 20.00</div></span>
+<span class=SCH style='background-color:#888;width:380px;height:86px;left:5px;top:444px;'><img border=0 src='img/lun.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>14:00</center></span><h1 style='position:relative;top:0px;'><center>LUNCH</center></h1></span>
+<span class=SCH style='background-color:#85E377;width:180px;height:134px;left:5px;top:540px;'><img border=0 src='img/444.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>15:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>4x4x4 Cube</h3><b><a href='live.php?cid=418&cat=3&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 2:00</div></span>
+<span class=SCH style='background-color:#FFA74F;width:180px;height:134px;left:205px;top:540px;'><img border=0 src='img/444bf.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>15:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>4x4x4 Cube: Blindfolded</h3><b><a href='live.php?cid=418&cat=17&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Final</a></b></div></span>
+<span class=SCH style='background-color:#ffffff;width:380px;height:38px;left:5px;top:684px;'><img border=0 src='img/skewb.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>16:30</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>Skewb</h3><b><a href='live.php?cid=418&cat=20&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined Final</a></b> - Cutoff 1:00</div></span>
+<span class=SCH style='background-color:#7381FB;width:380px;height:86px;left:5px;top:732px;'><img border=0 src='img/333bf.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>17:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Rubik's Cube: Blindfolded</h3><b><a href='live.php?cid=418&cat=16&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;First Round</a></b></div></span>
+<span class=SCH style='background-color:#FF939D;width:380px;height:62px;left:5px;top:828px;'><img border=0 src='img/pyram.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>18:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Pyraminx</h3><b><a href='live.php?cid=418&cat=11&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 20.00</div></span>
+<span class=SCH style='background-color:#FFF977;width:380px;height:110px;left:5px;top:900px;'><img border=0 src='img/333fm.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>18:45</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Rubik's Cube: Fewest moves</h3><b><a href='live.php?cid=418&cat=15&rnd=1'><img border=0 src='img/g-arrow.gif'>&nbsp;Final</a></b></div></span>
+<span style='position:absolute;top:1046px;'><b>Saturday - March 1st, 2014</b></span> <span style='position:absolute;top:1062px;width:300px;background-color:white;height:5px;'></span><p></p>
+
+<span class=SCH style='background-color:#7381FB;width:380px;height:62px;left:5px;top:1082px;'><img border=0 src='img/555.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>10:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>5x5x5 Cube</h3><b><a href='live.php?cid=418&cat=4&rnd=1'><img border=0 src='img/r-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 3:00</div></span>
+<span class=SCH style='background-color:#FF939D;width:380px;height:62px;left:5px;top:1154px;'><img border=0 src='img/minx.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>10:45</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Megaminx</h3><b><a href='live.php?cid=418&cat=10&rnd=1'><img border=0 src='img/r-arrow.gif'>&nbsp;Combined Final</a></b><br>Cutoff 3:30</div></span>
+<span class=SCH style='background-color:#FFF977;width:380px;height:62px;left:5px;top:1226px;'><img border=0 src='img/333oh.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>11:30</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Rubik's Cube: One-handed</h3><b><a href='live.php?cid=418&cat=13&rnd=1'><img border=0 src='img/r-arrow.gif'>&nbsp;Combined First</a></b><br>Cutoff 1:00</div></span>
+<span class=SCH style='background-color:#85E377;width:380px;height:62px;left:5px;top:1298px;'><img border=0 src='img/333.gif' style='position:absolute;top:5px;left:-5px;'><span class=HR style='top:40px;'><center>12:15</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:10px 0 0 0;'>Rubik's Cube</h3><b>Second Round</b></div></span>
+<span class=SCH style='background-color:#FFA74F;width:380px;height:38px;left:5px;top:1370px;'><img border=0 src='img/555.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>13:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>5x5x5 Cube</h3><b>Final</b></div></span>
+<span class=SCH style='background-color:#ffffff;width:380px;height:38px;left:5px;top:1418px;'><img border=0 src='img/222.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>13:30</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>2x2x2 Cube</h3><b>Second Round</b></div></span>
+<span class=SCH style='background-color:#7381FB;width:380px;height:22px;left:5px;top:1466px;'><img border=0 src='img/333bf.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:15px;'><center>14:00</center></span><div style='margin:0 0 0 32px;position:relative;top:+3px'><h3 style='color:#114;margin:4px 0 0 0;display:inline;'>Rubik's Cube: Blindfolded</h3><b>&nbsp;&nbsp;&nbsp;Final</b></div></span>
+<span class=SCH style='background-color:#FF939D;width:380px;height:22px;left:5px;top:1498px;'><img border=0 src='img/pyram.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:15px;'><center>14:20</center></span><div style='margin:0 0 0 32px;position:relative;top:+3px'><h3 style='color:#114;margin:4px 0 0 0;display:inline;'>Pyraminx</h3><b>&nbsp;&nbsp;&nbsp;Final</b></div></span>
+<span class=SCH style='background-color:#FFF977;width:380px;height:38px;left:5px;top:1530px;'><img border=0 src='img/444.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>14:40</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>4x4x4 Cube</h3><b>Final</b></div></span>
+<span class=SCH style='background-color:#85E377;width:380px;height:38px;left:5px;top:1578px;'><img border=0 src='img/333oh.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>15:10</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>Rubik's Cube: One-handed</h3><b>Final</b></div></span>
+<span class=SCH style='background-color:#FFA74F;width:380px;height:22px;left:5px;top:1626px;'><img border=0 src='img/222.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:15px;'><center>15:40</center></span><div style='margin:0 0 0 32px;position:relative;top:+3px'><h3 style='color:#114;margin:4px 0 0 0;display:inline;'>2x2x2 Cube</h3><b>&nbsp;&nbsp;&nbsp;Final</b></div></span>
+<span class=SCH style='background-color:#ffffff;width:380px;height:38px;left:5px;top:1658px;'><img border=0 src='img/333.gif' style='position:absolute;top:-5px;left:-5px;'><span class=HR style='top:30px;'><center>16:00</center></span><div style='margin:0 0 0 32px;'><h3 style='color:#114;margin:4px 0 0 0;'>Rubik's Cube</h3><b>Final</b></div></span>
+<span style='position:absolute;top:1732px'><b>All times are IST (GMT+5.5)</b></span>
+</DIV>
+<script>window.onload=function() { document.getElementById('SCH_container').scrollTop=900; };</script>
+<style>
+	table.SCH {color:black;font-size:12px;-webkit-box-shadow: 6px 6px 5px #000022; box-shadow: 6px 6px 5px #000022;background-color:white;}
+	table.SCH th {color:#FFFFCC;background-color:#4471CC;}
+	table.SCH td {padding:0 5px;}
+	span.SCH {color:black;position:absolute;padding:0 5px;-webkit-box-shadow: 4px 4px 3px #000022; box-shadow: 4px 4px 3px #000022;}
+	span.HR {background-color:red;width:30px;position:absolute;left:-5px;font-size:9px;color:white; -webkit-box-shadow: 2px 2px 2px #000022; box-shadow: 2px 2px 2px #000022;}
+	.rest {background-color:#ccc;}
+</style>
+</div></TD></TR></TABLE><script>cllsNoR = new Array(0,3,2,1,3,2,2,1,1,2,1,1,1,10);</script></body>
+</html>
