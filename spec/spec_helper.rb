@@ -31,5 +31,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     FakeWeb.clean_registry
+    $redis.flushdb
   end
 end
