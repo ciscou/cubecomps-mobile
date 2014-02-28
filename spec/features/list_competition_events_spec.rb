@@ -27,8 +27,10 @@ feature "List competition events" do
       expect(page).to have_css("h2", text: event_name)
     end
 
-    expect(page).to have_link "First Round"
-    expect(page).to have_css "em.muted", text: "Second Round"
-    expect(page).to have_css "em.muted", text: "Final"
+    within("#event-1") do
+      expect(page).to have_link "Combined First"
+      expect(page).to have_css "em.muted", text: "Second Round"
+      expect(page).to have_css "em.muted", text: "Final"
+    end
   end
 end
