@@ -1,5 +1,5 @@
 json.cache! [@competitor, "results"], ccm_cache_options(@competitor.competition_id) do
-  json.array! @competitor.results do |json, result|
+  json.array! @competitor.results do |result|
     json.extract! result, :position, :event, :round
 
     json.t1 result.t1 if @competitor.results.t1?
