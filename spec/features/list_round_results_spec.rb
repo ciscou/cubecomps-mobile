@@ -12,7 +12,6 @@ feature "List round results" do
   end
 
   it "should list round results" do
-    save_and_open_page
     within("table#results tbody tr:nth-child(1)") do
       expect(page).to have_css "td.top-position:nth-child(1)", text: "1"
       expect(page).to have_css "td:nth-child(2)",  text: "Akash Rupela"
