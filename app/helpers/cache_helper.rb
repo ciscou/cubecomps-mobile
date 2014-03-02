@@ -4,7 +4,7 @@ module CacheHelper
   end
 
   def ccm_cache_options(options={})
-    options.reverse_merge! expires_in: 5.minutes, race_condition_ttl: 10
+    options.reverse_merge! expires_in: 1.minute, race_condition_ttl: 10
 
     if competition_id = options.delete(:competition_id)
       options[:expires_in] = 1.week if $redis.sismember("past_competition_ids", competition_id)
