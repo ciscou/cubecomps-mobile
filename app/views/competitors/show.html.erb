@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% ccm_cache [@competitor, "name"], @competitor.competition_id, expires_in: 1.hour do %>
+  <% ccm_cache [@competitor, "name"], competition_id: @competitor.competition_id, expires_in: 1.hour do %>
     <%= @competitor.name.html_safe %>
   <% end %>
 <% end %>
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<% ccm_cache [@competitor, "results"], @competitor.competition_id do %>
+<% ccm_cache [@competitor, "results"], competition_id: @competitor.competition_id do %>
   <% @competitor.results.by_event.each do |event, results| %>
     <h2><%= event %></h2>
 
