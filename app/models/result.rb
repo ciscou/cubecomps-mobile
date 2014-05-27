@@ -61,6 +61,18 @@ class Result
     @best_record = extract_record_from! @best
   end
 
+  def world_record?
+    "WR".in? [best_record, mean_record, average_record]
+  end
+
+  def continental_record?
+    "CR".in? [best_record, mean_record, average_record]
+  end
+
+  def national_record?
+    "NR".in? [best_record, mean_record, average_record]
+  end
+
   private
 
   def extract_record_from!(s)

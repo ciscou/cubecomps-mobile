@@ -50,6 +50,16 @@ class Round
     (Time.parse(updated_at) + 15.minutes).future?
   end
 
+  def best_record
+    if $redis.sismember "world_records", redis_key
+      "WR"
+    elsif $redis.sismember "contental_records", redis_key
+      "CR"
+    elsif $redis.sismember "national_records", redis_key
+      "NR"
+    end
+  end
+
   def finished?
     return true if past?
 
@@ -100,6 +110,7 @@ class Round
       Result.build_from_headers_table_and_result_tr(headers_table, result_tr)
     end
     check_live_results(results)
+    check_records(results)
     Results.new(results)
   end
 
@@ -113,6 +124,28 @@ class Round
     if times_count > $redis.hget("times_count", redis_key).to_i
       $redis.hset("times_count", redis_key, times_count)
       $redis.hset("updated_at",  redis_key, Time.now)
+    end
+  end
+
+  def check_records(results)
+    return false if past?
+
+    if results.any?(&:world_record?)
+      $redis.sadd "world_records", redis_key
+    else
+      $redis.srem "world_records", redis_key
+    end
+
+    if results.any?(&:continental_record?)
+      $redis.sadd "continental_records", redis_key
+    else
+      $redis.srem "continental_records", redis_key
+    end
+
+    if results.any?(&:national_record?)
+      $redis.sadd "national_records", redis_key
+    else
+      $redis.srem "national_records", redis_key
     end
   end
 

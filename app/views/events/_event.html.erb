@@ -6,11 +6,7 @@
         <% if round.started? %>
           <%= link_to competition_event_round_results_path(competition, event, round), data: { ajax: false } do %>
             <%= round.name %>
-            <% if round.live? %>
-              <span class="ui-li-count">Live!</span>
-            <% elsif round.finished? %>
-              <span class="ui-li-count">Done!</span>
-            <% end %>
+            <%= round_label(round) %>
           <% end %>
         <% else %>
           <em class="muted"><%= round.name %></em>
