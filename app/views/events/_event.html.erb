@@ -8,6 +8,8 @@
             <%= round.name %>
             <% if round.live? %>
               <span class="ui-li-count">Live!</span>
+            <% elsif round.finished? %>
+              <span class="ui-li-count">Done!</span>
             <% end %>
           <% end %>
         <% else %>

@@ -45,11 +45,15 @@ class Round
 
   def live?
     return false if past?
-
-    updated_at = $redis.hget("updated_at", redis_key)
     return false unless updated_at
 
     (Time.parse(updated_at) + 15.minutes).future?
+  end
+
+  def finished?
+    return true if past?
+
+    updated_at && !live?
   end
 
   def past?
@@ -110,6 +114,10 @@ class Round
       $redis.hset("times_count", redis_key, times_count)
       $redis.hset("updated_at",  redis_key, Time.now)
     end
+  end
+
+  def updated_at
+    @updated_at ||= $redis.hget("updated_at", redis_key)
   end
 
   def doc
