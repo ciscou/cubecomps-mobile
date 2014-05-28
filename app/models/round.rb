@@ -53,7 +53,7 @@ class Round
   def best_record
     if $redis.sismember "world_records", redis_key
       "WR"
-    elsif $redis.sismember "contental_records", redis_key
+    elsif $redis.sismember "continental_records", redis_key
       "CR"
     elsif $redis.sismember "national_records", redis_key
       "NR"
