@@ -35,7 +35,7 @@ class Round
     @name ||= fetch_name
   end
 
-  def started?
+  def setup?
     [ competition_id, event_id, id ].all?(&:present?)
   end
 
@@ -58,6 +58,12 @@ class Round
     elsif $redis.sismember "national_records", redis_key
       "NR"
     end
+  end
+
+  def started?
+    return true if past?
+
+    !! updated_at
   end
 
   def finished?

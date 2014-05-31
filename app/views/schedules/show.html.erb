@@ -45,7 +45,8 @@
                 <%= row.alternate_text.presence || row.event %>
               </td>
               <td class="round">
-                <%= link_to row.round_name, competition_event_round_results_path(@competition, row.event_id, row.round_id) if row.round_name.present? %>
+                <% round = Round.new(competition_id: @competition.id, event_id: row.event_id, id: row.round_id) %>
+                <%= link_to_if round.started?, row.round_name, competition_event_round_results_path(@competition, row.event_id, row.round_id) if row.round_name.present? %>
               </td>
               <td class="extra_info">
                 <% if row.extra_info.present? %>
