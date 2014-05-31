@@ -6,7 +6,8 @@
   <div data-role="content">
     <p>
       <strong>Name</strong><br/>
-      <%= result.name %>
+      <%= result.name %><br/>
+      <%= link_to "All results", competition_competitor_path(round.competition_id, result.competitor_id) %>
     </p>
     <p>
       <strong>Country</strong><br/>

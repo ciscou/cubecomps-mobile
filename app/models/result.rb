@@ -1,5 +1,5 @@
 class Result
-  attr_accessor :position, :top_position, :name, :country, :evt_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
+  attr_accessor :position, :top_position, :competitor_id, :name, :country, :evt_rnd, :t1, :t2, :t3, :t4, :t5, :average, :average_record, :mean, :mean_record, :best, :best_record
   alias_method :top_position?, :top_position
   %w[t1 t2 t3 t4 t5 mean average best].each do |m|
     alias_method "#{m}?", m
@@ -29,6 +29,10 @@ class Result
     ).tap do |result|
       position_td_style = result_tr.css("td:nth-child(1)").attr("style").try(:value) || ""
       result.top_position = position_td_style.include?("background-color:#CCFF00")
+
+      competitor_link = result_tr.css("td:nth-child(2) a")
+      competitor_link_attrs = CGI.parse competitor_link.attr("href").to_s.split("?").last
+      result.competitor_id = competitor_link_attrs["compid"].first
     end
   end
 
