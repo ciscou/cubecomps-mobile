@@ -18,7 +18,7 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% ccm_cache [@competition, "schedule"], competition_id: @competition.id, expires_in: 1.hour do %>
+<% ccm_cache [@competition, "schedule"], competition_id: @competition.id do %>
   <% if @competition.schedule.any? %>
     <% @competition.schedule.group_by { |row| row.start.to_date }.each do |date, rows| %>
       <h2><%= date.to_s(:long) %></h2>
