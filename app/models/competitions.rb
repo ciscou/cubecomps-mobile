@@ -15,6 +15,12 @@ class Competitions
     "competitions"
   end
 
+  def archive_old_competitions!
+    competitions = past
+    competitions.shift(10)
+    competitions.count(&:archive!)
+  end
+
   private
 
   def fetch_in_progress

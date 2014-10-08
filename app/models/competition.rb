@@ -44,6 +44,19 @@ class Competition
     ["competitions", id].join("/")
   end
 
+  def archive!
+    if $redis.sadd "past_competition_ids", id
+      puts "Archiving competition #{name} (#{id})"
+
+      %w[updated_at times_count].each do |key|
+        hkeys = $redis.hkeys(key)
+        hkeys.select { |k| k.start_with? "#{id}:" }.each do |k|
+          $redis.hdel key, k
+        end
+      end
+    end
+  end
+
   private
 
   def fetch_name
