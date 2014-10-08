@@ -3,7 +3,7 @@ require 'spec_helper'
 feature "List competition events" do
   before do
     FakeWeb.register_uri :get, "http://cubecomps.com/", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "home.html")
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=418", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html")
+    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=418&dnrd=1", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html")
 
     visit root_path
     click_link "Delhi Open"
