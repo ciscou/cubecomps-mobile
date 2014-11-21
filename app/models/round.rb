@@ -69,7 +69,8 @@ class Round
   def finished?
     return true if past?
 
-    updated_at && !live?
+    finished = updated_at && !live?
+    !!finished
   end
 
   def past?
