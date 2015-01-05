@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  rescue_from NotFoundException do |ex|
+  rescue_from NotFoundException, ActionView::MissingTemplate do |ex|
     raise ActionController::RoutingError.new("Not Found")
   end
 end
