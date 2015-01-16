@@ -56,7 +56,7 @@ class RecordsPublisher
       competition_name: competition['name']
     }
 
-    url = "http://m.cubecomps.com/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results" % {
+    url = "http://cubecomps.com/live.php?cid=%{competition_id}80&cat=%{event_id}&rnd=%{round_id}" % {
       competition_id: competition['id'],
       event_id: round['event_id'],
       round_id: round['id']
@@ -79,7 +79,7 @@ class RecordsPublisher
       competition_name: competition['name']
     }
 
-    url = "http://m.cubecomps.com/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results" % {
+    url = "http://cubecomps.com/live.php?cid=%{competition_id}80&cat=%{event_id}&rnd=%{round_id}" % {
       competition_id: competition['id'],
       event_id: round['event_id'],
       round_id: round['id']
