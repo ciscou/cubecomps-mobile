@@ -49,9 +49,14 @@ class Competition
       puts "Archiving competition #{name} (#{id})"
 
       %w[updated_at times_count].each do |key|
-        hkeys = $redis.hkeys(key)
-        hkeys.select { |k| k.start_with? "#{id}:" }.each do |k|
+        $redis.hkeys(key).select { |k| k.start_with? "#{id}:" }.each do |k|
           $redis.hdel key, k
+        end
+      end
+
+      %w[published_average_records published_best_records].each do |key|
+        $redis.smembers(key).select { |m| m.start_with? "#{id}:" }.each do |m|
+          $redis.sdel(key, m)
         end
       end
     end
