@@ -45,37 +45,25 @@ class RecordsPublisher
   def handle_average_record(competition, event, round, result, &block)
     return unless $redis.sadd('published_average_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
 
-    @there_are_new_records = true
-
-    description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} average %{average_record} (%{average_time}) at %{competition_name}" % {
-      competitor_name: result['name'],
-      competitor_country: result['country'],
-      event_name: event['name'],
-      average_record: result['average_record'],
-      average_time: result['average'],
-      competition_name: competition['name']
-    }
-
-    url = "http://cubecomps.com/live.php?cid=%{competition_id}80&cat=%{event_id}&rnd=%{round_id}" % {
-      competition_id: competition['id'],
-      event_id: round['event_id'],
-      round_id: round['id']
-    }
-
-    block.call description, url
+    publish_record(competition, event, round, result, "average", &block)
   end
 
   def handle_best_record(competition, event, round, result, &block)
     return unless $redis.sadd('published_best_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
 
+    publish_record(competition, event, round, result, "best", &block)
+  end
+
+  def publish_record(competition, event, round, result, type, &block)
     @there_are_new_records = true
 
-    description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} single %{single_record} (%{single_time}) at %{competition_name}" % {
+    description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} %{type} %{record} (%{time}) at %{competition_name}" % {
       competitor_name: result['name'],
       competitor_country: result['country'],
       event_name: event['name'],
-      single_record: result['best_record'],
-      single_time: result['best'],
+      type: type == "best" ? "single" : type,
+      record: result["#{type}_record"],
+      time: result[type],
       competition_name: competition['name']
     }
 
