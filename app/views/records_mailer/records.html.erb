@@ -9,7 +9,7 @@
     <% @publisher.for_each_record do |description, url| %>
       <p>
         <%= description %> <%= url %>
-        <a href="https://twitter.com/intent/tweet?text=<%= description %>&url=<%= url %>">tweet</a>
+        <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape(description) %>&url=<%= CGI.escape(url) %>">tweet</a>
       </p>
     <% end %>
   </body>

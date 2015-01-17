@@ -67,7 +67,7 @@ class RecordsPublisher
       competition_name: competition['name']
     }
 
-    url = "http://cubecomps.com/live.php?cid=%{competition_id}80&cat=%{event_id}&rnd=%{round_id}" % {
+    url = "http://cubecomps.com/live.php?cid=%{competition_id}&cat=%{event_id}&rnd=%{round_id}" % {
       competition_id: competition['id'],
       event_id: round['event_id'],
       round_id: round['id']
