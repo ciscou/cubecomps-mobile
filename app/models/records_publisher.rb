@@ -6,55 +6,56 @@ class RecordsPublisher
   end
 
   def for_each_record(&block)
+    @block = block
     competitions = get_json('/competitions')
     competitions['in_progress'].each do |competition|
-      handle_competition(competition, &block)
+      handle_competition(competition)
     end
   end
 
   private
 
-  def handle_competition(competition, &block)
+  def handle_competition(competition)
     events = get_json('/competitions/%{competition_id}/events' % { competition_id: competition['id'] })
     events.each do |event|
-      handle_event(competition, event, &block)
+      handle_event(competition, event)
     end
   end
 
-  def handle_event(competition, event, &block)
+  def handle_event(competition, event)
     event['rounds'].each do |round|
-      handle_round(competition, event, round, &block)
+      handle_round(competition, event, round)
     end
   end
 
-  def handle_round(competition, event, round, &block)
+  def handle_round(competition, event, round)
     return unless round['event_id'] && round['id']
     return unless round['live']
 
     results = get_json('/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })
 
     results.select { |r| r['average_record'] }.each do |result|
-      handle_average_record(competition, event, round, result, &block)
+      handle_average_record(competition, event, round, result)
     end
 
     results.select { |r| r['best_record'] }.each do |result|
-      handle_best_record(competition, event, round, result, &block)
+      handle_best_record(competition, event, round, result)
     end
   end
 
-  def handle_average_record(competition, event, round, result, &block)
+  def handle_average_record(competition, event, round, result)
     return unless $redis.sadd('published_average_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
 
-    publish_record(competition, event, round, result, "average", &block)
+    publish_record(competition, event, round, result, "average")
   end
 
-  def handle_best_record(competition, event, round, result, &block)
+  def handle_best_record(competition, event, round, result)
     return unless $redis.sadd('published_best_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
 
-    publish_record(competition, event, round, result, "best", &block)
+    publish_record(competition, event, round, result, "best")
   end
 
-  def publish_record(competition, event, round, result, type, &block)
+  def publish_record(competition, event, round, result, type)
     @there_are_new_records = true
 
     description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} %{type} %{record} (%{time}) at %{competition_name}" % {
@@ -73,11 +74,37 @@ class RecordsPublisher
       round_id: round['id']
     }
 
-    block.call description, url
+    @block.call(description, url)
+
+    begin
+      status = [description, url].join(" ")
+      twitter_client.update(status)
+    rescue => e
+      @block.call(description, e.message)
+    end
+  end
+
+  def twitter_client
+    if Rails.env.production?
+      Twitter::REST::Client.new do |config|
+        config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
+        config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
+        config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
+        config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+      end
+    else
+      FakeTwitterClient.new
+    end
   end
 
   def get_json(path)
     response = Net::HTTP.get_response('m.cubecomps.com', "#{path}.json")
     JSON.parse response.body
+  end
+
+  class FakeTwitterClient
+    def update(status, opts = {})
+      puts "I'd post #{status.inspect} with opts #{opts.inspect} if this was running on production"
+    end
   end
 end
