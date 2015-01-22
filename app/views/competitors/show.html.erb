@@ -1,5 +1,5 @@
 <% content_for(:back_button) do %>
-  <%= link_to "Back", competition_competitors_path(@competitor.competition_id), data: { ajax: false, icon: "back" } %>
+  <%= link_to "Back", competition_competitors_path(@competitor.competition_id), data: { icon: "back" } %>
 <% end %>
 
 <% content_for(:title) do %>
@@ -10,9 +10,9 @@
 
 <% content_for(:navbar) do %>
   <ul>
-    <li><%= link_to "Events",      competition_events_path(@competitor.competition_id),      data: { ajax: false, icon: "bars"  } %></li>
-    <li><%= link_to "Competitors", competition_competitors_path(@competitor.competition_id), data: { ajax: false, icon: "user"  }, class: "ui-btn-active" %></li>
-    <li><%= link_to "Schedule",    competition_schedule_path(@competitor.competition_id),    data: { ajax: false, icon: "clock" } %></li>
+    <li><%= link_to "Events",      competition_events_path(@competitor.competition_id),      data: { icon: "bars"  } %></li>
+    <li><%= link_to "Competitors", competition_competitors_path(@competitor.competition_id), data: { icon: "user"  }, class: "ui-btn-active" %></li>
+    <li><%= link_to "Schedule",    competition_schedule_path(@competitor.competition_id),    data: { icon: "clock" } %></li>
   </ul>
 <% end %>
 

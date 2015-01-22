@@ -4,7 +4,7 @@
     <% event.rounds.each do |round| %>
       <li>
         <% if round.setup? %>
-          <%= link_to competition_event_round_results_path(competition, event, round), data: { ajax: false } do %>
+          <%= link_to competition_event_round_results_path(competition, event, round) do %>
             <%= round.name %>
             <%= round_label(round) %>
           <% end %>
