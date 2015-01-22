@@ -54,13 +54,13 @@
       </tr>
     </thead>
     <tbody>
-      <% @round.results.each_with_index do |result, idx| %>
-        <%= render partial: "row", object: result, as: :result, locals: { round: @round, result_counter: idx } %>
+      <% @round.results.each do |result| %>
+        <%= render partial: "row", object: result, as: :result, locals: { round: @round } %>
       <% end %>
     </tbody>
   <% end %>
 
-  <% @round.results.each_with_index do |result, idx| %>
-    <%= render partial: "more_info", object: result, as: :result, locals: { round: @round, result_counter: idx } %>
+  <% @round.results.each do |result| %>
+    <%= render partial: "more_info", object: result, as: :result, locals: { round: @round } %>
   <% end %>
 <% end %>

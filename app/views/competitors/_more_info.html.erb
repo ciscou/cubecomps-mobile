@@ -6,7 +6,8 @@
   <div data-role="content">
     <p>
       <strong>Event</strong><br/>
-      <%= result.event %>
+      <%= result.event %><br/>
+      <%= link_to "All results", competition_event_round_results_path(result.competition_id, result.event_id, result.round_id) %>
     </p>
     <p>
       <strong>Round</strong><br/>
