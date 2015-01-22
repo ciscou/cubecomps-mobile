@@ -1,6 +1,7 @@
 json.cache! [@round, "results"], ccm_cache_options(competition_id: @round.competition_id) do
   json.array! @round.results do |result|
     json.extract! result, :position, :top_position, :name, :country
+    json.extract! result, :competitor_id
 
     json.t1 result.t1 if @round.results.t1?
     json.t2 result.t2 if @round.results.t2?

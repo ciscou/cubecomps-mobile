@@ -44,13 +44,13 @@ class RecordsPublisher
   end
 
   def handle_average_record(competition, event, round, result)
-    return unless $redis.sadd('published_average_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
+    return unless $redis.sadd('published_average_records', [competition['id'], round['event_id'], round['id'], result['competitor_id']].join(':'))
 
     publish_record(competition, event, round, result, "average")
   end
 
   def handle_best_record(competition, event, round, result)
-    return unless $redis.sadd('published_best_records', [competition['id'], round['event_id'], round['id'], result['name']].join(':'))
+    return unless $redis.sadd('published_best_records', [competition['id'], round['event_id'], round['id'], result['competitor_id']].join(':'))
 
     publish_record(competition, event, round, result, "best")
   end
