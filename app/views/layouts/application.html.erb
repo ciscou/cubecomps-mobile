@@ -26,6 +26,11 @@
     <%= yield(:back_button) %>
     <h1><%= yield(:title).strip %></h1>
 
+    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+      <a href="https://www.facebook.com/cubecomps" class="ui-btn ui-btn-icon-notext ui-icon-facebook">Facebook</a>
+      <a href="https://twitter.com/cubecomps" class="ui-btn ui-btn-icon-notext ui-icon-twitter">Twitter</a>
+    </div>
+
     <% if content_for?(:navbar) %>
       <div data-role="navbar">
         <%= yield(:navbar) %>
