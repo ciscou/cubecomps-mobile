@@ -1,4 +1,4 @@
-<%= content_tag :div, id: ["result", event.parameterize, result_counter].join("_"), data: { role: "popup", overlay_theme: "a" } do %>
+<%= content_tag :div, id: ["result", result.event_id, result.round_id].join("_"), data: { role: "popup", overlay_theme: "a" } do %>
   <div data-role="header">
     <h2>#<%= result.position %></h2>
   </div>
