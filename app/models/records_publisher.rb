@@ -61,7 +61,7 @@ class RecordsPublisher
     description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} %{type} %{record} (%{time}) at %{competition_name}" % {
       competitor_name: result['name'],
       competitor_country: result['country'],
-      event_name: event['name'],
+      event_name: publishable_event_name(event['name']),
       type: type == "best" ? "single" : type,
       record: result["#{type}_record"],
       time: result[type],
@@ -82,6 +82,18 @@ class RecordsPublisher
     rescue => e
       @block.call(description, e.message)
     end
+  end
+
+  def publishable_event_name(event_name)
+    {
+      "Rubik's Cube: Blindfolded"          => "3x3x3 Blindfolded",
+      "Rubik's Cube: One-handed"           => "3x3x3 One Handed",
+      "Rubik's Cube: Fewest moves"         => "3x3x3 Fewest Moves",
+      "Rubik's Cube: With Feet"            => "3x3x3 With Feet",
+      "4x4x4 Cube: Blindfolded"            => "4x4x4 Blindfolded",
+      "5x5x5 Cube: Blindfolded"            => "5x5x5 Blindfolded",
+      "Rubik's Cube: Multiple Blindfolded" => "3x3x3 Multi Blind",
+    }.fetch(event_name, event_name)
   end
 
   def twitter_client
