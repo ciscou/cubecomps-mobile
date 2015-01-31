@@ -1,12 +1,5 @@
 class RecordsPublisher
   def run
-    @there_are_new_records = false
-    mailer = RecordsMailer.records(self)
-    mailer.deliver if @there_are_new_records
-  end
-
-  def for_each_record(&block)
-    @block = block
     competitions = get_json('/competitions')
     competitions['in_progress'].each do |competition|
       handle_competition(competition)
@@ -56,8 +49,6 @@ class RecordsPublisher
   end
 
   def publish_record(competition, event, round, result, type)
-    @there_are_new_records = true
-
     description = "%{competitor_name} (from %{competitor_country}) just got the %{event_name} %{type} %{record} (%{time}) at %{competition_name}" % {
       competitor_name: result['name'],
       competitor_country: result['country'],
@@ -74,14 +65,8 @@ class RecordsPublisher
       round_id: round['id']
     }
 
-    @block.call(description, url)
-
-    begin
-      status = [description, url].join(" ")
-      twitter_client.update(status)
-    rescue => e
-      @block.call(description, e.message)
-    end
+    status = [description, url].join(" ")
+    twitter_client.update(status)
   end
 
   def publishable_event_name(event_name)
