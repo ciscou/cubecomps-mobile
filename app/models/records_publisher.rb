@@ -71,13 +71,18 @@ class RecordsPublisher
 
   def publishable_event_name(event_name)
     {
-      "Rubik's Cube: Blindfolded"          => "3x3x3 Blindfolded",
-      "Rubik's Cube: One-handed"           => "3x3x3 One Handed",
-      "Rubik's Cube: Fewest moves"         => "3x3x3 Fewest Moves",
-      "Rubik's Cube: With Feet"            => "3x3x3 With Feet",
-      "4x4x4 Cube: Blindfolded"            => "4x4x4 Blindfolded",
-      "5x5x5 Cube: Blindfolded"            => "5x5x5 Blindfolded",
-      "Rubik's Cube: Multiple Blindfolded" => "3x3x3 Multi Blind",
+      "Rubik's Cube: Blindfolded"          => "3x3x3 Bld",
+      "Rubik's Cube: One-handed"           => "3x3x3 OH",
+      "Rubik's Cube: Fewest moves"         => "3x3x3 FMC",
+      "Rubik's Cube: With Feet"            => "3x3x3 WF",
+      "2x2x2 Cube"                         => "2x2x2",
+      "4x4x4 Cube"                         => "4x4x4",
+      "5x5x5 Cube"                         => "5x5x5",
+      "6x6x6 Cube"                         => "6x6x6",
+      "7x7x7 Cube"                         => "7x7x7",
+      "4x4x4 Cube: Blindfolded"            => "4x4x4 Bld",
+      "5x5x5 Cube: Blindfolded"            => "5x5x5 Bld",
+      "Rubik's Cube: Multiple Blindfolded" => "3x3x3 Multi Bld",
     }.fetch(event_name, event_name)
   end
 
