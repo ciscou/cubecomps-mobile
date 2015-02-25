@@ -1,9 +1,12 @@
 class RecordsPublisher
   def run
     competitions = get_json('/competitions')
+    raise "oh my god!"
     competitions['in_progress'].each do |competition|
       handle_competition(competition)
     end
+  rescue => e
+    ExceptionNotifier.notify_exception(e)
   end
 
   private
