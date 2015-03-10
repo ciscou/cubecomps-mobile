@@ -1,4 +1,8 @@
 class Competitions
+  def initialize(all: false)
+    @all = all
+  end
+
   def in_progress
     @in_progress ||= fetch_in_progress
   end
@@ -39,9 +43,11 @@ class Competitions
     return [] unless index
 
     competitions_tr = doc.css("div.list")[index].css("table tr")
-    competitions_tr.css("td div").map do |competition_div|
+    competition_divs = competitions_tr.css("td div.p0")
+    competition_divs = competitions_tr.css("td div") if competition_divs.empty?
+    competition_divs.map do |competition_div|
       Competition.build_from_competition_div(competition_div)
-    end
+    end.compact
   end
 
   def fetch_competitions_headers
@@ -49,6 +55,6 @@ class Competitions
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "http://cubecomps.com/"
+    @doc ||= Nokogiri::HTML open "http://cubecomps.com/#{"?all=1" if @all}"
   end
 end

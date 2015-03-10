@@ -4,6 +4,6 @@ class CompetitionsController < ApplicationController
   end
 
   def past
-    @competitions = Competitions.new
+    @competitions = Competitions.new(all: true)
   end
 end

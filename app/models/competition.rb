@@ -12,11 +12,15 @@ class Competition
   end
 
   def self.build_from_competition_div(competition_div)
-    competition_url = competition_div.css("b.p a").attr("href").value
+    link = competition_div.css("b a")
+    competition_url = link.attr("href").value
     competition_params = CGI.parse competition_url.split("?").last
+    id = competition_params["cid"].first
+    return nil unless id.present?
+
     new(
-      id:   competition_params["cid"].first,
-      name: competition_div.css("b.p a").text.strip
+      id:   id,
+      name: link.text.strip
     )
   end
 
