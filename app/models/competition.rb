@@ -12,8 +12,8 @@ class Competition
   end
 
   def self.build_from_competition_div(competition_div)
-    link = competition_div.css("b a")
-    competition_url = link.attr("href").value
+    link = competition_div.css("b a").first
+    competition_url = link.attr("href")
     competition_params = CGI.parse competition_url.split("?").last
     id = competition_params["cid"].first
     return nil unless id.present?
