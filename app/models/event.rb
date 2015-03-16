@@ -21,6 +21,21 @@ class Event
     end
   end
 
+  def best_record
+    best_records = rounds.map(&:best_record)
+    best_records.delete("WR") ||
+    best_records.delete("CR") ||
+    best_records.delete("NR")
+  end
+
+  def live?
+    rounds.any?(&:live?)
+  end
+
+  def finished?
+    rounds.all?(&:finished?)
+  end
+
   def to_param
     id.to_s
   end

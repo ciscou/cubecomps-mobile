@@ -1,5 +1,8 @@
 <div id="event-<%= event.id %>" data-role="collapsible">
-  <h2><%= event.name %></h2>
+  <h2>
+    <%= event.name %>
+    <%= event_label(event) %>
+  </h2>
   <ul data-role="listview">
     <% event.rounds.each do |round| %>
       <li>
