@@ -4,7 +4,6 @@ module EventsHelper
 
     label_parts << event.best_record
     label_parts << "Live!" if event.live?
-    label_parts << "Done!" if event.finished?
     label_parts.compact!
 
     unless label_parts.empty?
