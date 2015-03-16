@@ -4,9 +4,6 @@ class RecordsPublisher
     competitions['in_progress'].each do |competition|
       handle_competition(competition)
     end
-    competitions['past'].each do |competition|
-      handle_competition(competition)
-    end
   rescue => e
     ExceptionNotifier.notify_exception(e)
   end
@@ -28,8 +25,7 @@ class RecordsPublisher
 
   def handle_round(competition, event, round)
     return unless round['event_id'] && round['id']
-    return unless round['finished']
-    return unless (3.hours.ago..1.hour.ago).cover? Time.parse(round['updated_at'])
+    return unless round['live']
 
     results = get_json('/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })
 
