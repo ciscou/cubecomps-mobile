@@ -68,7 +68,13 @@ class RecordsPublisher
     }
 
     status = [description, url].join(" ")
+    tweet(status)
+  end
+
+  def tweet(status)
     twitter_client.update(status)
+  rescue => e
+    ExceptionNotifier.notify_exception(e, data: { status: status })
   end
 
   def publishable_event_name(event_name)
