@@ -25,12 +25,15 @@ class RecordsPublisher
 
   def handle_round(competition, event, round)
     return unless round['event_id'] && round['id']
-    return unless round['live']
 
     results = get_json('/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })
 
     results.select { |r| r['average_record'] }.each do |result|
       handle_average_record(competition, event, round, result)
+    end
+
+    results.select { |r| r['mean_record'] }.each do |result|
+      handle_mean_record(competition, event, round, result)
     end
 
     results.select { |r| r['best_record'] }.each do |result|
@@ -44,6 +47,12 @@ class RecordsPublisher
     publish_record(competition, event, round, result, "average")
   end
 
+  def handle_mean_record(competition, event, round, result)
+    return unless $redis.sadd('published_mean_records', [competition['id'], round['event_id'], round['id'], result['competitor_id']].join(':'))
+
+    publish_record(competition, event, round, result, "mean")
+  end
+
   def handle_best_record(competition, event, round, result)
     return unless $redis.sadd('published_best_records', [competition['id'], round['event_id'], round['id'], result['competitor_id']].join(':'))
 
@@ -55,7 +64,7 @@ class RecordsPublisher
       competitor_name: result['name'],
       competitor_country: result['country'],
       event_name: publishable_event_name(event['name']),
-      type: type == "best" ? "single" : type,
+      type: type == "best" ? "single" : "average",
       record: result["#{type}_record"],
       time: result[type],
       competition_name: competition['name']

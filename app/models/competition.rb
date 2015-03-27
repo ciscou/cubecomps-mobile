@@ -58,7 +58,7 @@ class Competition
         end
       end
 
-      %w[published_average_records published_best_records].each do |key|
+      %w[published_average_records published_mean_records published_best_records].each do |key|
         $redis.smembers(key).select { |m| m.start_with? "#{id}:" }.each do |m|
           $redis.sdel(key, m)
         end
