@@ -25,6 +25,7 @@ class RecordsPublisher
 
   def handle_round(competition, event, round)
     return unless round['event_id'] && round['id']
+    return unless round['live']
 
     results = get_json('/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })
 
