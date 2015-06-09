@@ -58,6 +58,10 @@ class Round
     elsif $redis.sismember "national_records", redis_key
       "NR"
     end
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    nil
   end
 
   def started?
@@ -75,6 +79,10 @@ class Round
 
   def past?
     $redis.sismember("past_competition_ids", competition_id)
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    false
   end
 
   def to_param
@@ -132,6 +140,8 @@ class Round
       $redis.hset("times_count", redis_key, times_count)
       $redis.hset("updated_at",  redis_key, Time.now)
     end
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
   end
 
   def check_records(results)
@@ -154,10 +164,16 @@ class Round
     else
       $redis.srem "national_records", redis_key
     end
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
   end
 
   def updated_at
     @updated_at ||= $redis.hget("updated_at", redis_key)
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    nil
   end
 
   def doc

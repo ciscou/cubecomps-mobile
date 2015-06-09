@@ -8,7 +8,11 @@ before_fork do |server, worker|
     Process.kill 'QUIT', Process.pid
   end
 
-  $redis.quit
+  begin
+    $redis.quit
+  rescue Redis::CannotConnectError
+    puts "Could not disconnect from redis!"
+  end
 end
 
 after_fork do |server, worker|

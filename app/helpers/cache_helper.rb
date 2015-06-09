@@ -7,7 +7,11 @@ module CacheHelper
     options.reverse_merge! expires_in: 1.minute, race_condition_ttl: 10
 
     if competition_id = options.delete(:competition_id)
-      options[:expires_in] = 1.week if $redis.sismember("past_competition_ids", competition_id)
+      begin
+        options[:expires_in] = 1.week if $redis.sismember("past_competition_ids", competition_id)
+      rescue Redis::CannotConnectError => e
+        ExceptionNotifier.notify_exception(e)
+      end
     end
 
     options
