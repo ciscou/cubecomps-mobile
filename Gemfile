@@ -8,6 +8,8 @@ gem 'memcachier'
 gem 'dalli'
 gem 'newrelic_rpm'
 
+gem 'rack-cors', require: 'rack/cors'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 gem 'compass-rails'
