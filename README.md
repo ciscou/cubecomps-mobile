@@ -17,7 +17,7 @@ Get a list of competitions.
 
 ```
 {
-  "in\_progress": [
+  "in_progress": [
     {
       "id": "1259",
       "name": "Xi'an Open"
@@ -77,30 +77,30 @@ Get the schedule of a competition.
   {
     "start": "2015-10-09T15:30:00+00:00",
     "end": "2015-10-09T16:00:00+00:00",
-    "event\_code": "reg",
-    "alternate\_text": "REGISTRATION",
-    "round\_name": null,
-    "extra\_info": null,
-    "am\_pm\_format": false
+    "event_code": "reg",
+    "alternate_text": "REGISTRATION",
+    "round_name": null,
+    "extra_info": null,
+    "am_pm_format": false
   },
   {
     "start": "2015-10-09T16:00:00+00:00",
     "end": "2015-10-09T17:00:00+00:00",
-    "event\_code": "777",
-    "alternate\_text": "",
-    "round\_name": "Combined Final",
-    "extra\_info": "Cutoff 6:30",
-    "am\_pm\_format": false
+    "event_code": "777",
+    "alternate_text": "",
+    "round_name": "Combined Final",
+    "extra_info": "Cutoff 6:30",
+    "am_pm_format": false
   },
   ...
   {
     "start": "2015-10-11T20:30:00+00:00",
     "end": "2015-10-11T21:00:00+00:00",
-    "event\_code": "tro",
-    "alternate\_text": "AWARDS",
-    "round\_name": null,
-    "extra\_info": null,
-    "am\_pm\_format": false
+    "event_code": "tro",
+    "alternate_text": "AWARDS",
+    "round_name": null,
+    "extra_info": null,
+    "am_pm_format": false
   }
 ]
 ```
@@ -115,24 +115,24 @@ Get a list of events of a competition.
     "name": "Rubik's Cube",
     "rounds": [
       {
-        "competition\_id": "1094",
-        "event\_id": "1",
+        "competition_id": "1094",
+        "event_id": "1",
         "id": "1",
         "name": "First Round",
         "live": false,
         "finished": true
       },
       {
-        "competition\_id": "1094",
-        "event\_id": "1",
+        "competition_id": "1094",
+        "event_id": "1",
         "id": "2",
         "name": "Second Round",
         "live": false,
         "finished": true
       },
       {
-        "competition\_id": "1094",
-        "event\_id": "1",
+        "competition_id": "1094",
+        "event_id": "1",
         "id": "3",
         "name": "Final",
         "live": false,
@@ -144,24 +144,24 @@ Get a list of events of a competition.
     "name": "4x4x4 Cube",
     "rounds": [
       {
-        "competition\_id": "1094",
-        "event\_id": "3",
+        "competition_id": "1094",
+        "event_id": "3",
         "id": "1",
         "name": "Combined First",
         "live": false,
         "finished": true
       },
       {
-        "competition\_id": "1094",
-        "event\_id": "3",
+        "competition_id": "1094",
+        "event_id": "3",
         "id": "2",
         "name": "Second Round",
         "live": false,
         "finished": true
       },
       {
-        "competition\_id": "1094",
-        "event\_id": "3",
+        "competition_id": "1094",
+        "event_id": "3",
         "id": "3",
         "name": "Final",
         "live": false,
@@ -174,8 +174,8 @@ Get a list of events of a competition.
     "name": "Rubik's Cube: Multiple Blindfolded",
     "rounds": [
       {
-        "competition\_id": "1094",
-        "event\_id": "19",
+        "competition_id": "1094",
+        "event_id": "19",
         "id": "1",
         "name": "Final",
         "live": false,
@@ -194,37 +194,37 @@ Get a list of results for a round.
 [
   {
     "position": "1",
-    "top\_position": true,
+    "top_position": true,
     "name": "Berta Garc\u00eda Parra",
     "country": "Spain",
-    "competitor\_id": "100",
+    "competitor_id": "100",
     "t1": "10\/12\u00a057:13.00",
     "t2": "11\/12\u00a053:41.00",
     "best": "11\/12\u00a053:41.00",
-    "best\_record": null
+    "best_record": null
   },
   {
     "position": "2",
-    "top\_position": true,
+    "top_position": true,
     "name": "Asier Cardoso S\u00e1nchez",
     "country": "Spain",
-    "competitor\_id": "15",
+    "competitor_id": "15",
     "t1": "9\/15\u00a057:31.00",
     "t2": "11\/13\u00a050:06.00",
     "best": "11\/13\u00a050:06.00",
-    "best\_record": null
+    "best_record": null
   },
   ...
   {
     "position": "",
-    "top\_position": false,
+    "top_position": false,
     "name": "Sergi Sabat",
     "country": "Spain",
-    "competitor\_id": "46",
+    "competitor_id": "46",
     "t1": "\u00a0",
     "t2": "\u00a0",
     "best": "\u00a0",
-    "best\_record": null
+    "best_record": null
   }
 ]
 ```
@@ -236,18 +236,18 @@ Get a list of competitors for a competition.
 ```
 [
   {
-    "competition\_id": "1094",
+    "competition_id": "1094",
     "id": "65",
     "name": "Abel P\u00e9rez Gisbert"
   },
   {
-    "competition\_id": "1094",
+    "competition_id": "1094",
     "id": "108",
     "name": "Adri\u00e1n Barrag\u00e1n N\u00fa\u00f1ez"
   },
   ...
   {
-    "competition\_id": "1094",
+    "competition_id": "1094",
     "id": "48",
     "name": "Victor Sanchez Redondo"
   }
@@ -262,61 +262,61 @@ Get a list of results for a competitor.
 [
   {
     "position": "29",
-    "top\_position": true,
+    "top_position": true,
     "event": "Rubik's Cube",
     "round": "First Round",
-    "event\_id": "1",
-    "round\_id": "1",
+    "event_id": "1",
+    "round_id": "1",
     "t1": "16.36",
     "t2": "13.84",
     "t3": "18.52",
     "t4": "17.70",
     "t5": "16.51",
     "average": "16.86",
-    "average\_record": null,
+    "average_record": null,
     "mean": null,
-    "mean\_record": null,
+    "mean_record": null,
     "best": "13.84",
-    "best\_record": null
+    "best_record": null
   },
   {
     "position": "43",
-    "top\_position": false,
+    "top_position": false,
     "event": "Rubik's Cube",
     "round": "Second Round",
-    "event\_id": "1",
-    "round\_id": "2",
+    "event_id": "1",
+    "round_id": "2",
     "t1": "22.52",
     "t2": "17.72",
     "t3": "18.61",
     "t4": "20.90",
     "t5": "20.91",
     "average": "20.14",
-    "average\_record": null,
+    "average_record": null,
     "mean": null,
-    "mean\_record": null,
+    "mean_record": null,
     "best": "17.72",
-    "best\_record": null
+    "best_record": null
   },
   ...
   {
     "position": "8",
-    "top\_position": false,
+    "top_position": false,
     "event": "Rubik's Cube: Multiple Blindfolded",
     "round": "Final",
-    "event\_id": "19",
-    "round\_id": "1",
+    "event_id": "19",
+    "round_id": "1",
     "t1": "DNF",
     "t2": "4\/5\u00a042:05.00",
     "t3": null,
     "t4": null,
     "t5": null,
     "average": null,
-    "average\_record": null,
+    "average_record": null,
     "mean": null,
-    "mean\_record": null,
+    "mean_record": null,
     "best": "4\/5\u00a042:05.00",
-    "best\_record": "PB"
+    "best_record": "PB"
   }
 ]
 ```
