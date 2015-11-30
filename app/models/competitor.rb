@@ -42,7 +42,7 @@ class Competitor
   private
 
   def fetch_name
-    doc.css("div.main font").first.text
+    doc.at_css("div.main font").text
   end
 
   def fetch_results
