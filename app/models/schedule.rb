@@ -17,7 +17,7 @@ class Schedule
     "333fm"  => "3x3x3 Fewest Moves",
     "333bf"  => "3x3x3 Blindfolded",
     "444bf"  => "4x4x4 Blindfolded",
-    "555bf"  => "4x4x4 Blindfolded",
+    "555bf"  => "5x5x5 Blindfolded",
     "333mbf" => "3x3x3 Multiple Blindfolded",
     "skewb"  => "Skewb",
     "reg"    => "REGISTRATION",
