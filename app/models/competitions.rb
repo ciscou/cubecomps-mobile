@@ -42,12 +42,10 @@ class Competitions
   def fetch_competitions_at(index)
     return [] unless index
 
-    competitions_tr = doc.css("div.list")[index].css("table tr")
-    competition_divs = competitions_tr.css("td div.p0")
-    competition_divs = competitions_tr.css("td div") if competition_divs.empty?
-    competition_divs.map do |competition_div|
-      Competition.build_from_competition_div(competition_div)
-    end.compact
+    competitions_trs = doc.css("div.list")[index].css("table tr")
+    competitions_trs.map do |competition_tr|
+      Competition.build_from_competition_tr(competition_tr)
+    end
   end
 
   def fetch_competitions_headers

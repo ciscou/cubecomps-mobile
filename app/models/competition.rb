@@ -1,5 +1,5 @@
 class Competition
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :city, :date
 
   def initialize(args)
     args.each do |k, v|
@@ -11,16 +11,21 @@ class Competition
     new(id: id)
   end
 
-  def self.build_from_competition_div(competition_div)
-    link = competition_div.at_css("b a")
+  def self.build_from_competition_tr(competition_tr)
+    link = competition_tr.at_css("td div.p0 b a")
     competition_url = link.attr("href")
     competition_params = CGI.parse competition_url.split("?").last
     id = competition_params["cid"].first
     return nil unless id.present?
 
+    date = competition_tr.at_css("td div.p1 b").text
+    city = competition_tr.at_css("td div.p2 b").text
+
     new(
       id:   id,
-      name: link.text.strip
+      name: link.text.strip,
+      date: date,
+      city: city
     )
   end
 
