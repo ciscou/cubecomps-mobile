@@ -42,7 +42,10 @@ class Competitor
   private
 
   def fetch_name
-    doc.at_css("div.main font").text
+    node = doc.at_css("div.main font")
+    raise NotFoundException unless node
+
+    node.text
   end
 
   def fetch_results
