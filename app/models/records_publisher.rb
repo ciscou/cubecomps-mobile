@@ -77,7 +77,7 @@ class RecordsPublisher
       round_id: round['id']
     }
 
-    status = [description, url].join(" ")
+    status = [description.truncate(140 - " ".length - "https://t.co/XwMi94X4tR".length), url].join(" ")
     tweet(status)
   end
 
