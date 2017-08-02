@@ -12,7 +12,7 @@ class ScheduleParser
 
     am_pm_format = @file.gets.chomp
 
-    date = Time.new
+    date = Time.at(0)
 
     @file.read.lines.map do |s|
       s.chomp!
