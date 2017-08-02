@@ -38,6 +38,8 @@ class ScheduleParser
     round_name,
     extra_info = s.split(",")
 
+    return nil unless start_hour && end_hour
+
     Schedule.new(
       start: date.change(hour: start_hour[0, 2].to_i, min: start_hour[2, 2].to_i, sec: start_hour[4, 2].to_i),
       end:   date.change(hour:   end_hour[0, 2].to_i, min:   end_hour[2, 2].to_i, sec:   end_hour[4, 2].to_i),
