@@ -1,12 +1,12 @@
 class Schedule
   EVENTS = {
-    "333" => "Rubik's Cube",
+    "333" => "3x3x3 Cube",
     "222" => "2x2x2 Cube",
     "444" => "4x4x4 Cube",
     "555" => "5x5x5 Cube",
     "666" => "6x6x6 Cube",
     "777" => "7x7x7 Cube",
-    "clock" => "Rubik's Clock",
+    "clock" => "Clock",
     "magic" => "Magic",
     "mmagic" => "Master Magic",
     "minx"   => "Megaminx",
