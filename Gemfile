@@ -35,6 +35,8 @@ gem 'redis'
 
 gem 'twitter'
 
+gem 'json', '~> 1.8.6'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
