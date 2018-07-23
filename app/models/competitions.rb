@@ -21,7 +21,7 @@ class Competitions
 
   def archive_old!
     competitions = past
-    competitions.shift(10)
+    competitions.shift(50)
     competitions.count(&:archive!)
   end
 
