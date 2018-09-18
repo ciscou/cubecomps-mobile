@@ -11,6 +11,7 @@ CubecompsMobile::Application.routes.draw do
   end
 
   get "/.well-known/acme-challenge/BYoDNGRW5magGqeiHOSjBtcrrw0nJyuzwu8yX69Q33I", to: "certbot_challenge#show"
+  get "/.well-known/acme-challenge/81KbcArZH9YYm4xuZW0xa6c5eyQvGdKM2rWYUixGnxY", to: "certbot_challenge#show2"
 
   root to: "competitions#index"
 end
