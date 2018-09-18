@@ -10,5 +10,7 @@ CubecompsMobile::Application.routes.draw do
     get :past, on: :collection
   end
 
+  get "/.well-known/acme-challenge/BYoDNGRW5magGqeiHOSjBtcrrw0nJyuzwu8yX69Q33I", to: "certbot_challenge#show"
+
   root to: "competitions#index"
 end
