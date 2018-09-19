@@ -1,0 +1,140 @@
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=15
+Date: Wed, 19 Sep 2018 15:44:42 GMT
+Server: Apache
+X-Powered-By: PHP/5.6.37
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Set-Cookie: PHPSESSID=c83d22cb0a988d96da8b5372d1fff96b; path=/
+
+<html>
+<head>
+<TITLE>Canarias Open 2018</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+	body {font-family:arial,sans-serif;background-color:#2b355a;color:white;margin:0;}
+	a {color:black;text-decoration:none;font-weight:bold;}
+	a:hover {color:red;}
+	.a_white {color:white;}
+
+	.event, .c_event, .event_top, .blank, .extra {width:286px;height:18px;background:url('img/shadow-v.gif') right repeat-y;font-size:15px;font-weight:bold;background-color:#000022;color:white;padding:2px 0 2px 10px;}
+	.event, .c_event {cursor:pointer;}
+	.c_event {color:#888;}
+	.event:hover, .c_event:hover {background-color:#12182E;}
+	.extra {height:100%;font-size:12px;font-weight:normal;}
+	.event_top {width:300px;background:url('img/shadow-c.gif') right no-repeat;background-color:#000022;}
+
+	.round, .c_round {width:260px;height:18px;font-size:13px;font-weight:bold;color:black;padding:0 0 0 30px;background-color:#FFFFCC;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+	.round {cursor:pointer;}
+	.c_round {color:#888;}
+	.round:hover, .c_round:hover {background-color:#f9d395;}
+
+	.collapser, .collapser_c {width:280px;display:none;overflow:hidden;margin:0;padding:0;}
+	.collapser_c {overflow-y:auto;overflow-x:hidden;}
+	.top {height:100px;
+background:url('uploads/cc_ban.gif') top right no-repeat;	background-color:#000022;padding:0 10px;font-weight:bold;color:#CCFF00;}
+	.top a {color:white}
+	.main {height:100%;background:url('img/shadow-h.gif') top repeat-x;font-weight:bold;font-size:12px;}
+	.pb, .nr, .cr, .wr {font-size:7px;font-weight:bold;color:black;margin-right:4px;}
+	.pb {background-color:#CDD5FF;}
+	.nr {background-color:#82ff7f;}
+	.cr {background-color:#fff16f;}
+	.wr {background-color:#ff6450;color:white;}
+</style>
+</head>
+<body>
+<script>
+
+var cllsNoR;
+var cllId;
+var timerCll;
+var step;
+
+function getHeight(obj)
+{
+	if (!obj.style.display)
+		return 0;
+	else
+		return (obj.height ? obj.height : obj.offsetHeight);
+}
+
+function setHeight(obj,h)
+{
+	if (h)
+	{
+		obj.style.height = h+"px";
+		if (!obj.style.display) obj.style.display = "block";
+	}
+	else
+		obj.style.display = "";
+}
+
+function expandOneStep()
+{
+	var alldone = true;
+	var x = 0;
+	do {
+		x++;
+		var obj = document.getElementById("cll"+x);
+		if (obj)
+		{
+			var h = getHeight(obj);
+			if (x==cllId)
+			{
+				if (h < cllsNoR[x]*18)
+				{
+					h = Math.min(cllsNoR[x]*18, h+step);
+					alldone = false;
+				}
+			}
+			else
+			{
+				if (h > 0)
+				{
+					h = Math.max(0, h-step);
+					alldone = false;
+				}
+			}
+			setHeight(obj,h);
+		}
+	} while (obj);
+	if (!alldone) 
+	{
+		setTimeout("expandOneStep();",50);
+		if (step < 8) step = step*2;
+	}
+}
+
+function expand(id,immediate)
+{
+	if (immediate)
+		setHeight(document.getElementById("cll"+id), cllsNoR[id]*18);
+	else
+	{
+		step = 1;
+		cllId = id;
+		expandOneStep();
+	}
+}
+</script>
+<TABLE width=100% height=100% cellspacing=0 cellpadding=0><TR valign=top><TD colspan=2><div class=top><br>Canarias Open 2018<br>Las Palmas de Gran Canaria<br>Spain</div></TD></TR><TR valign=top><TD><table height=100% cellspacing=0 cellpadding=0><tr><td><div class=event_top>&nbsp;</div></td></tr><tr valign=top><td><div class=event onclick='expand(1,false);'>3x3x3 Cube</div><div id=cll1 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=1&rnd=1"'>First Round</div><div class=round onclick='window.location="live.php?cid=3545&cat=1&rnd=2"'>Second Round</div><div class=round onclick='window.location="live.php?cid=3545&cat=1&rnd=3"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(2,false);'>2x2x2 Cube</div><div id=cll2 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=2&rnd=1"'>First Round</div><div class=round onclick='window.location="live.php?cid=3545&cat=2&rnd=2"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(3,false);'>4x4x4 Cube</div><div id=cll3 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=3&rnd=1"'>Combined First</div><div class=round onclick='window.location="live.php?cid=3545&cat=3&rnd=2"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(4,false);'>5x5x5 Cube</div><div id=cll4 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=4&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(5,false);'>3x3x3 Blindfolded</div><div id=cll5 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=16&rnd=1"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(6,false);'>3x3x3 One-Handed</div><div id=cll6 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=13&rnd=1"'>Combined First</div><div class=round onclick='window.location="live.php?cid=3545&cat=13&rnd=2"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(7,false);'>Megaminx</div><div id=cll7 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=10&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(8,false);'>Pyraminx</div><div id=cll8 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=11&rnd=1"'>First Round</div><div class=round onclick='window.location="live.php?cid=3545&cat=11&rnd=2"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(9,false);'>Clock</div><div id=cll9 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=7&rnd=1"'>Combined Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(10,false);'>Skewb</div><div id=cll10 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=20&rnd=1"'>First Round</div><div class=round onclick='window.location="live.php?cid=3545&cat=20&rnd=2"'>Final</div></div></td></tr><tr valign=top><td><div class=event onclick='expand(11,false);'>Square-1</div><div id=cll11 class=collapser><div class=round onclick='window.location="live.php?cid=3545&cat=12&rnd=1"'>Combined Final</div></div></td></tr><tr><td><div class=blank>&nbsp;</div></td></tr><tr valign=top><td><div class=event onclick='expand(12,false);'>Competitors</div><div id=cll12 class=collapser_c><div class=round onclick='window.location="live.php?cid=3545&compid=25"'>Adrià García Fernández</div><div class=round onclick='window.location="live.php?cid=3545&compid=18"'>Aitor Fernández Trujillo</div><div class=round onclick='window.location="live.php?cid=3545&compid=17"'>Alberto Rodríguez Santana</div><div class=round onclick='window.location="live.php?cid=3545&compid=47"'>Alejandro Borges Deniz</div><div class=round onclick='window.location="live.php?cid=3545&compid=46"'>Alejandro Gallar Caballero</div><div class=round onclick='window.location="live.php?cid=3545&compid=27"'>Álvaro González Vizuete</div><div class=round onclick='window.location="live.php?cid=3545&compid=44"'>Ángel Rodríguez Santana</div><div class=round onclick='window.location="live.php?cid=3545&compid=4"'>Arturo Flores Orihuela</div><div class=round onclick='window.location="live.php?cid=3545&compid=54"'>Asier Álvarez Chromy</div><div class=round onclick='window.location="live.php?cid=3545&compid=30"'>Carlos Borges León</div><div class=round onclick='window.location="live.php?cid=3545&compid=21"'>Carlos Francisco Suárez Sauca</div><div class=round onclick='window.location="live.php?cid=3545&compid=24"'>Carlos Montes Moreno</div><div class=round onclick='window.location="live.php?cid=3545&compid=48"'>Carlos Torres Araya</div><div class=round onclick='window.location="live.php?cid=3545&compid=11"'>César Pérez García</div><div class=round onclick='window.location="live.php?cid=3545&compid=16"'>Daniel Gracia Ortiz</div><div class=round onclick='window.location="live.php?cid=3545&compid=53"'>Daniel Martin Ferres</div><div class=round onclick='window.location="live.php?cid=3545&compid=9"'>Daniel Neo Santamaría</div><div class=round onclick='window.location="live.php?cid=3545&compid=3"'>Daniel Ortega Pastor</div><div class=round onclick='window.location="live.php?cid=3545&compid=10"'>David García Rodas</div><div class=round onclick='window.location="live.php?cid=3545&compid=12"'>Eduardo Afonso Santiago</div><div class=round onclick='window.location="live.php?cid=3545&compid=29"'>Ernesto Cristo González Alemán</div><div class=round onclick='window.location="live.php?cid=3545&compid=20"'>Francisco Javier Suárez García</div><div class=round onclick='window.location="live.php?cid=3545&compid=41"'>Gabriel Gil Izcara</div><div class=round onclick='window.location="live.php?cid=3545&compid=32"'>Gianpierre Ponce</div><div class=round onclick='window.location="live.php?cid=3545&compid=43"'>Himar Déniz Lorenzo</div><div class=round onclick='window.location="live.php?cid=3545&compid=33"'>Ian Piniés</div><div class=round onclick='window.location="live.php?cid=3545&compid=45"'>Indira Nanwani Rodriguez</div><div class=round onclick='window.location="live.php?cid=3545&compid=31"'>Jaime Martín Ferres</div><div class=round onclick='window.location="live.php?cid=3545&compid=1"'>Javier Tirado Ortiz</div><div class=round onclick='window.location="live.php?cid=3545&compid=8"'>Jennifer Rodríguez Domínguez</div><div class=round onclick='window.location="live.php?cid=3545&compid=7"'>Jordan Gabriel Roque Cruz</div><div class=round onclick='window.location="live.php?cid=3545&compid=22"'>Jozef Pohorelec Viña</div><div class=round onclick='window.location="live.php?cid=3545&compid=49"'>Lucía González García</div><div class=round onclick='window.location="live.php?cid=3545&compid=51"'>Lucía Montenegro</div><div class=round onclick='window.location="live.php?cid=3545&compid=38"'>Orlando Quevedo Sosa</div><div class=round onclick='window.location="live.php?cid=3545&compid=40"'>Pablo Nicolás Oshiro Mondoñedo</div><div class=round onclick='window.location="live.php?cid=3545&compid=2"'>Paola González Santana</div><div class=round onclick='window.location="live.php?cid=3545&compid=26"'>Pol González Sierras</div><div class=round onclick='window.location="live.php?cid=3545&compid=34"'>Roberto Morales Fumero</div><div class=round onclick='window.location="live.php?cid=3545&compid=42"'>Rubén Pestano Rodríguez</div><div class=round onclick='window.location="live.php?cid=3545&compid=52"'>Sara Quintana Guerra</div><div class=round onclick='window.location="live.php?cid=3545&compid=50"'>Saul Arechavaleta</div><div class=round onclick='window.location="live.php?cid=3545&compid=36"'>Sergi Sabat</div><div class=round onclick='window.location="live.php?cid=3545&compid=19"'>Sergio Luzardo de la Hoz</div><div class=round onclick='window.location="live.php?cid=3545&compid=37"'>Ting Sheng Bao Yang</div><div class=round onclick='window.location="live.php?cid=3545&compid=35"'>Ulises Montesdeoca Domínguez</div><div class=round onclick='window.location="live.php?cid=3545&compid=6"'>Vittorio Maria Perucatti</div><div class=round onclick='window.location="live.php?cid=3545&compid=14"'>Zayyan Perera Sosa</div></div></td></tr><tr><td><div class=blank>&nbsp;</div></td></tr><tr><td><div class=blank><a class=a_white href='live.php?cid=3545&compid=16'>[refresh]</a><br><br><a class=a_white href='/' title='home - switch competition'><img src='img/home.png'/></a></div></td></tr><tr height=100%><td style='height:100%;'><div class=extra></div></td></tr></table></TD><TD width=100% height=100%><div class=main><br><font size=+1>Daniel Gracia Ortiz</font> &nbsp;&nbsp;·&nbsp;&nbsp; Spain &nbsp;&nbsp;·&nbsp;&nbsp; see his <a href='http://worldcubeassociation.org/results/p.php?i=2009ORTI01' target=_blank class=a_white>WCA's official results</a><br><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>2</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=1&rnd=1'>3x3x3 Cube - First Round</a></div></td><td class=col_tm style='width:60px;'>10.84</td><td class=col_tm style='width:60px;'>11.26</td><td class=col_tm style='width:60px;'>9.05</td><td class=col_tm style='width:60px;'>10.66</td><td class=col_tm style='width:60px;'>9.69</td><td style='width:60px;'><b>10.40</b></td><td style='width:60px;'>9.05</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=1&rnd=2'>3x3x3 Cube - Second Round</a></div></td><td class=col_tm style='width:60px;'>9.99</td><td class=col_tm style='width:60px;'>11.26</td><td class=col_tm style='width:60px;'>8.50</td><td class=col_tm style='width:60px;'>9.19</td><td class=col_tm style='width:60px;'>10.74</td><td style='width:60px;'><b>9.97</b></td><td style='width:60px;'>8.50</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>2</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=1&rnd=3'>3x3x3 Cube - Final</a></div></td><td class=col_tm style='width:60px;'>10.99</td><td class=col_tm style='width:60px;'>10.14</td><td class=col_tm style='width:60px;'>10.64</td><td class=col_tm style='width:60px;'>12.20</td><td class=col_tm style='width:60px;'>11.21</td><td style='width:60px;'><b>10.95</b></td><td style='width:60px;'>10.14</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>2</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=2&rnd=1'>2x2x2 Cube - First Round</a></div></td><td class=col_tm style='width:60px;'>4.37</td><td class=col_tm style='width:60px;'>4.76</td><td class=col_tm style='width:60px;'>3.31</td><td class=col_tm style='width:60px;'>4.00</td><td class=col_tm style='width:60px;'>2.25</td><td style='width:60px;'><b>3.89</b></td><td style='width:60px;'>2.25</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>3</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=2&rnd=2'>2x2x2 Cube - Final</a></div></td><td class=col_tm style='width:60px;'>4.01</td><td class=col_tm style='width:60px;'>2.37</td><td class=col_tm style='width:60px;'>6.70</td><td class=col_tm style='width:60px;'>2.43</td><td class=col_tm style='width:60px;'>5.13</td><td style='width:60px;'><b>3.86</b></td><td style='width:60px;'>2.37</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=3&rnd=1'>4x4x4 Cube - Combined First - cutoff 1:30.00</a></div></td><td class=col_tm style='width:60px;'>39.16</td><td class=col_tm style='width:60px;'>37.22</td><td class=col_tm style='width:60px;'>46.22</td><td class=col_tm style='width:60px;'>44.46</td><td class=col_tm style='width:60px;'>32.06</td><td style='width:60px;'><b>40.28</b></td><td style='width:60px;'>32.06</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=3&rnd=2'>4x4x4 Cube - Final</a></div></td><td class=col_tm style='width:60px;'>49.44</td><td class=col_tm style='width:60px;'>36.10</td><td class=col_tm style='width:60px;'>40.28</td><td class=col_tm style='width:60px;'>38.76</td><td class=col_tm style='width:60px;'>35.08</td><td style='width:60px;'><b>38.38</b></td><td style='width:60px;'>35.08</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>3</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=4&rnd=1'>5x5x5 Cube - Combined Final - cutoff 3:00.00</a></div></td><td class=col_tm style='width:60px;'>1:41.19</td><td class=col_tm style='width:60px;'>1:15.62</td><td class=col_tm style='width:60px;'>1:28.72</td><td class=col_tm style='width:60px;'>1:19.75</td><td class=col_tm style='width:60px;'>1:33.72</td><td style='width:60px;'><b>1:27.40</b></td><td style='width:60px;'>1:15.62</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:60px;'>best</th><th style='width:60px;'>mean</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=16&rnd=1'>3x3x3 Blindfolded - Final</a></div></td><td class=col_tm style='width:60px;'>DNF</td><td class=col_tm style='width:60px;'>1:33.16</td><td class=col_tm style='width:60px;'>DNF</td><td style='width:60px;'><b>1:33.16</b></td><td style='width:60px;'>&nbsp;</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>2</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=13&rnd=1'>3x3x3 One-Handed - Combined First - cutoff 1:30.00</a></div></td><td class=col_tm style='width:60px;'>19.02</td><td class=col_tm style='width:60px;'>22.98</td><td class=col_tm style='width:60px;'>22.46</td><td class=col_tm style='width:60px;'>15.12</td><td class=col_tm style='width:60px;'>20.43</td><td style='width:60px;'><b>20.64</b></td><td style='width:60px;'>15.12</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>3</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=13&rnd=2'>3x3x3 One-Handed - Final</a></div></td><td class=col_tm style='width:60px;'>23.65</td><td class=col_tm style='width:60px;'>18.89</td><td class=col_tm style='width:60px;'>22.15</td><td class=col_tm style='width:60px;'>21.51</td><td class=col_tm style='width:60px;'>22.76</td><td style='width:60px;'><b>22.14</b></td><td style='width:60px;'>18.89</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>2</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=10&rnd=1'>Megaminx - Combined Final - cutoff 3:00.00</a></div></td><td class=col_tm style='width:60px;'>1:24.15</td><td class=col_tm style='width:60px;'>1:25.12</td><td class=col_tm style='width:60px;'>1:28.78</td><td class=col_tm style='width:60px;'>1:36.25</td><td class=col_tm style='width:60px;'>1:26.06</td><td style='width:60px;'><span class=pb title='personal best'>&nbsp;PB&nbsp;</span><b>1:26.65</b></td><td style='width:60px;'>1:24.15</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=11&rnd=1'>Pyraminx - First Round</a></div></td><td class=col_tm style='width:60px;'>6.04</td><td class=col_tm style='width:60px;'>5.45</td><td class=col_tm style='width:60px;'>8.28</td><td class=col_tm style='width:60px;'>4.32</td><td class=col_tm style='width:60px;'>6.11</td><td style='width:60px;'><b>5.87</b></td><td style='width:60px;'>4.32</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=11&rnd=2'>Pyraminx - Final</a></div></td><td class=col_tm style='width:60px;'>4.59</td><td class=col_tm style='width:60px;'>4.96</td><td class=col_tm style='width:60px;'>4.00</td><td class=col_tm style='width:60px;'>9.30</td><td class=col_tm style='width:60px;'>6.59</td><td style='width:60px;'><b>5.38</b></td><td style='width:60px;'>4.00</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>3</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=7&rnd=1'>Clock - Combined Final - cutoff 1:00.00</a></div></td><td class=col_tm style='width:60px;'>9.76</td><td class=col_tm style='width:60px;'>11.18</td><td class=col_tm style='width:60px;'>11.91</td><td class=col_tm style='width:60px;'>13.94</td><td class=col_tm style='width:60px;'>23.63</td><td style='width:60px;'><span class=pb title='personal best'>&nbsp;PB&nbsp;</span><b>12.34</b></td><td style='width:60px;'><span class=pb title='personal best'>&nbsp;PB&nbsp;</span>9.76</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=20&rnd=1'>Skewb - First Round</a></div></td><td class=col_tm style='width:60px;'>2.98</td><td class=col_tm style='width:60px;'>5.00</td><td class=col_tm style='width:60px;'>6.00</td><td class=col_tm style='width:60px;'>4.77</td><td class=col_tm style='width:60px;'>5.68</td><td style='width:60px;'><b>5.15</b></td><td style='width:60px;'>2.98</td></tr><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=20&rnd=2'>Skewb - Final</a></div></td><td class=col_tm style='width:60px;'>4.56</td><td class=col_tm style='width:60px;'>4.27</td><td class=col_tm style='width:60px;'>5.23</td><td class=col_tm style='width:60px;'>4.26</td><td class=col_tm style='width:60px;'>3.14</td><td style='width:60px;'><b>4.36</b></td><td style='width:60px;'>3.14</td></tr></table><br><table class=TH cellspacing=0 border=0><tr><th class=col_cl>#</th><th style='width:301px;text-align:left;'>event / round</th><th style='width:61px;'>t1</td><th style='width:61px;'>t2</td><th style='width:61px;'>t3</td><th style='width:61px;'>t4</td><th style='width:61px;'>t5</td><th style='width:60px;'>average</th><th style='width:60px;'>best</th></tr></table><table class=TD cellspacing=0 border=0><tr class=row_even><td class=col_cl style='background-color:#CCFF00;'><b>1</b></td><td><div class=col_ct style='width:300px'><a href='live.php?cid=3545&cat=12&rnd=1'>Square-1 - Combined Final - cutoff 1:30.00</a></div></td><td class=col_tm style='width:60px;'>12.02</td><td class=col_tm style='width:60px;'>13.43</td><td class=col_tm style='width:60px;'>24.19</td><td class=col_tm style='width:60px;'>15.34</td><td class=col_tm style='width:60px;'>10.41</td><td style='width:60px;'><b>13.60</b></td><td style='width:60px;'>10.41</td></tr></table><br><font size=1>Personal, national, continental and world records are calculated from a copy of the official results, of which the <a href='http://www.worldcubeassociation.org/results' style='color:white;' target=_blank> <img src='img/wca_small_logo.gif' style='vertical-align:middle;'> <u>World Cube Association</u></a> is source and owner<br>This copy could be not actual or not up to date</font><style>
+	table.TH, table.TD {color:black;font-size:12px;-webkit-box-shadow: 6px 6px 5px #000022; box-shadow: 6px 6px 5px #000022;}
+	table.TH th {color:#FFFFCC;background-color:#4471CC;}
+	.row_odd {background-color:#ddd;}
+	.row_odd:hover {background-color:#bbf;}
+	.row_even {background-color:#fff;}
+	.row_even:hover {background-color:#bbf;}
+	.col_cl {width:26px;text-align:right;}
+	.col_nm {width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;}
+	.col_ct {width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;border-width:0 1px 0 0;border-style:solid;border-color:black;}
+	.col_tm {border-width:0 1px 0 0;border-style:solid;border-color:black;}
+	table.TH {font-size:12px;color:black;border-width:5px 5px 0 5px;}
+	table.TD {font-size:12px;color:black;border-width:0 5px 5px 5px;}
+	table.TD td, table.TH th {padding:0 3px;text-align:right;}
+</style>
+</div></TD></TR></TABLE><script>cllsNoR = new Array(0,3,2,2,1,1,2,1,2,1,2,1,10);expand(12,true);document.getElementById('cll12').scrollTop = 252;</script></body>
+</html>

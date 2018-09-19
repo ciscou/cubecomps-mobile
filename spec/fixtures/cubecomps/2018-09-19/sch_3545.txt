@@ -1,0 +1,38 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 719
+Connection: keep-alive
+Keep-Alive: timeout=15
+Date: Wed, 19 Sep 2018 15:32:39 GMT
+Server: Apache
+Last-Modified: Thu, 16 Aug 2018 11:32:05 GMT
+ETag: "2cf-5738bcaeb4054"
+Accept-Ranges: bytes
+
+01
+BRT
+GMT-3
+1
+20180921
+1300,1345,333oh,,Combined Final,Cutoff 1:30
+1345,1430,555,,Combined Final,Cutoff 3:00
+1430,1515,minx,,Combined Final,Cutoff 3:00
+1515,1600,666,,Combined Final,Cutoff 5:00
+1600,1645,333ft,,Combined Final,Cutoff 3:00
+1645,1730,777,,Combined Final,Cutoff 7:00
+1730,1800,sq1,,Combined Final,Cutoff 1:30
+20180922
+0900,0945,444,,Combined First,Cutoff 2:00
+0945,1045,222,,First Round
+1045,1200,333,,First Round
+1200,1300,lun,LUNCH
+1300,1340,pyram,,First Round
+1340,1420,222,,Second Round
+1420,1500,skewb,,First Round
+1500,1530,333,,Second Round
+1530,1600,444,,Final
+1600,1630,pyram,,Final
+1630,1700,222,,Final
+1700,1730,skewb,,Final
+1730,1800,333,,Final
+1800,1900,tro,AWARDS

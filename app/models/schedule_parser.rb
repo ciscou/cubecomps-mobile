@@ -15,8 +15,6 @@ class ScheduleParser
     date = Time.at(0)
 
     @file.read.lines.map do |s|
-      puts s
-
       s.chomp!
 
       if s.blank?
