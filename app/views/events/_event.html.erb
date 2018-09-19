@@ -1,20 +1,18 @@
-<div id="event-<%= event.id %>" data-role="collapsible">
-  <h2>
-    <%= event.name %>
-    <%= event_label(event) %>
-  </h2>
-  <ul data-role="listview">
-    <% event.rounds.each do |round| %>
-      <li>
-        <% if round.setup? %>
-          <%= link_to competition_event_round_results_path(competition, event, round) do %>
-            <%= round.name %>
-            <%= round_label(round) %>
-          <% end %>
-        <% else %>
-          <em class="muted"><%= round.name %></em>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<h2>
+  {{name}}
+  {{eventLabels this}}
+</h2>
+<ul data-role="listview">
+  {{#each rounds}}
+    <li>
+      {{#ifRoundIsSetup this}}
+        <a href="/competitions/{{competition_id}}/events/{{event_id}}/rounds/{{id}}/results">
+          {{name}}
+          {{roundLabels this}}
+        </a>
+      {{else}}
+        <em class="muted">{{name}}</em>
+      {{/ifRoundIsSetup}}
+    </li>
+  {{/each}}
+</ul>

@@ -18,12 +18,9 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% ccm_cache [@competition, "events"], competition_id: @competition.id do %>
-  <% if @competition.events.any? %>
-    <%= content_tag :div, data: { role: "collapsible-set", inset: false, generated_at: Time.now.to_s(:db) } do %>
-      <% render partial: "event", collection: @competition.events, locals: { competition: @competition } %>
-    <% end %>
-  <% else %>
-    <p>No available events (yet!)</p>
-  <% end %>
-<% end %>
+<script id="event-template" type="text/x-handlebars-template">
+  <%= render "event" %>
+</script>
+
+<div id="events-region" data-competition-id="<%= @competition.id %>">
+</div>
