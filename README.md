@@ -7,9 +7,7 @@ Just like http://www.cubecomps.com, but optimized for small screens!
 Want to develop your own cubecomps application? No need to
 re-scrap cubecomps.com! Just use our API.
 
-### API examples
-
-Get a list of competitions.
+### Get a list of competitions.
 
 ```curl https://m.cubecomps.com/api/v1/competitions```
 
@@ -66,7 +64,7 @@ Get a list of competitions.
 Past competitions returns last 10. You can GET /api/v1/competitions/past
 to get the full list of past competitions.
 
-Get the events, competitors and schedule of a competition.
+### Get the events, competitors and schedule of a competition.
 
 ```curl https://m.cubecomps.com/api/v1/competitions/1094```
 
@@ -199,7 +197,7 @@ Get the events, competitors and schedule of a competition.
 
 ```
 
-Get a list of results for a round.
+### Get a list of results for a round.
 
 ```curl https://m.cubecomps.com/api/v1/competitions/1094/events/19/rounds/1```
 
@@ -247,7 +245,7 @@ Get a list of results for a round.
 }
 ```
 
-Get a list of results for a competitor.
+### Get a list of results for a competitor.
 
 ```curl https://m.cubecomps.com/api/v1/competitions/1094/competitors/43```
 
