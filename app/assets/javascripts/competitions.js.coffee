@@ -1,12 +1,18 @@
 $ ->
-  if $("#competitions-region").length
+  if $("#competitions-region").length > 0
+    allPast = $("#competitions-region").hasClass("past")
+
     Competition = Backbone.Model.extend({})
 
     Competitions = Backbone.Collection.extend
       model: Competition
 
     Homepage = Backbone.Model.extend
-      url: "/api/v1/competitions"
+      url: ->
+        if allPast
+          "/api/v1/competitions/past"
+        else
+          "/api/v1/competitions"
 
     CompetitionsApp = Marionette.Application.extend
       region: "#competitions-region"
@@ -48,9 +54,7 @@ $ ->
             CompetitionSeparatorView
           else
             CompetitionView
-      childViewEvents:
-        "attach": "onChildViewAttach"
-      onChildViewAttach: ->
+      listviewRefresh: ->
         @$el.listview("refresh")
 
     competitions = new Competitions()
@@ -68,11 +72,12 @@ $ ->
         past        = homepage.get("past")
         upcoming    = homepage.get("upcoming")
 
-        competitions.add(new Competition(id: "in-progress-separator", name: "Competitions in progress"))
-        if in_progress.length > 0
-          competitions.add(in_progress)
-        else
-          competitions.add(new Competition(id: "in-progress-empty", name: "No competitions in progress (yet!)"))
+        unless allPast
+          competitions.add(new Competition(id: "in-progress-separator", name: "Competitions in progress"))
+          if in_progress.length > 0
+            competitions.add(in_progress)
+          else
+            competitions.add(new Competition(id: "in-progress-empty", name: "No competitions in progress (yet!)"))
 
         competitions.add(new Competition(id: "past-separator", name: "Past competitions"))
         if past.length > 0
@@ -81,10 +86,13 @@ $ ->
         else
           competitions.add(new Competition(id: "past-empty", name: "No past competitions (yet!)"))
 
-        competitions.add(new Competition(id: "upcoming-separator", name: "Upcoming competitions"))
-        if upcoming.length > 0
-          competitions.add(upcoming)
-        else
-          competitions.add(new Competition(id: "upcoming-empty", name: "No upcoming competitions (yet!)"))
+        unless allPast
+          competitions.add(new Competition(id: "upcoming-separator", name: "Upcoming competitions"))
+          if upcoming.length > 0
+            competitions.add(upcoming)
+          else
+            competitions.add(new Competition(id: "upcoming-empty", name: "No upcoming competitions (yet!)"))
+
+        competitionsView.listviewRefresh()
       .fail ->
         alert("Failed to load competitions!")
