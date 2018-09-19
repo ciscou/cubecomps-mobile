@@ -2,35 +2,33 @@ require 'spec_helper'
 
 feature "List competition events" do
   before do
-    FakeWeb.register_uri :get, "http://cubecomps.com/", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "home.html")
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=418&dnrd=1", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html")
+    FakeWeb.register_uri :get, "http://cubecomps.com/", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "home.html")
+    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=3545&dnrd=1", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open.html")
 
     visit root_path
-    click_link "Delhi Open"
+    click_link "Canarias Open"
   end
 
   it "should list competition events" do
     [
-      "Rubik's Cube",
+      "3x3x3 Cube",
       "4x4x4 Cube",
       "5x5x5 Cube",
       "2x2x2 Cube",
-      "Rubik's Cube: Blindfolded",
-      "Rubik's Cube: One-handed",
-      "Rubik's Cube: Fewest moves",
+      "3x3x3 Blindfolded",
+      "3x3x3 One-Handed",
       "Megaminx",
       "Pyraminx",
       "Clock",
-      "Skewb",
-      "4x4x4 Cube: Blindfolded"
+      "Skewb"
     ].each do |event_name|
       expect(page).to have_css("h2", text: event_name)
     end
 
     within("#event-1") do
-      expect(page).to have_link "Combined First"
-      expect(page).to have_css "em.muted", text: "Second Round"
-      expect(page).to have_css "em.muted", text: "Final"
+      expect(page).to have_link "First Round"
+      expect(page).to have_link "Second Round"
+      expect(page).to have_link "Final"
     end
   end
 end
