@@ -9,6 +9,10 @@ gem 'memcachier'
 gem 'dalli'
 gem 'newrelic_rpm'
 
+gem 'rake', '< 11.0'
+gem 'test-unit'
+gem 'minitest'
+
 gem 'rack-cors', require: 'rack/cors'
 
 # Use SCSS for stylesheets
