@@ -2,7 +2,10 @@ require 'spec_helper'
 
 feature "List competitions" do
   before do
-    FakeWeb.register_uri :get, "http://cubecomps.com/", response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "home.html")
+    FakeWeb.register_uri :get, "http://cubecomps.com/", [
+      { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "home.html") },
+      { body: "Too Many Requests", status: [429, "Too Many Requests"] }
+    ]
 
     visit root_path
   end
