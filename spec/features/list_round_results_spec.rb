@@ -8,10 +8,11 @@ feature "List round results" do
 
     visit root_path
     click_link "Canarias Open"
-    find("#event-1").click_link "First Round"
+    click_link "3x3x3 Cube"
+    click_link "First Round"
   end
 
-  it "should list round results" do
+  it "should list round results", js: true do
     within("table#results tbody tr:nth-child(1)") do
       expect(page).to have_css "td.top-position:nth-child(1)", text: "1"
       expect(page).to have_css "td:nth-child(2)",  text: "Sergi Sabat"

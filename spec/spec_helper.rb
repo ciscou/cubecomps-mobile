@@ -12,7 +12,7 @@ require 'rspec/rails'
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-FakeWeb.allow_net_connect = false
+FakeWeb.allow_net_connect = %r{^http://127\.0\.0\.1:}
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -34,3 +34,6 @@ RSpec.configure do |config|
     $redis.flushdb
   end
 end
+
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist

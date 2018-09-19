@@ -9,7 +9,7 @@ feature "List competition events" do
     click_link "Canarias Open"
   end
 
-  it "should list competition events" do
+  it "should list competition events", js: true do
     [
       "3x3x3 Cube",
       "4x4x4 Cube",
@@ -25,10 +25,9 @@ feature "List competition events" do
       expect(page).to have_css("h2", text: event_name)
     end
 
-    within("#event-1") do
-      expect(page).to have_link "First Round"
-      expect(page).to have_link "Second Round"
-      expect(page).to have_link "Final"
-    end
+    click_link "3x3x3 Cube"
+    expect(page).to have_link "First Round"
+    expect(page).to have_link "Second Round"
+    expect(page).to have_link "Final"
   end
 end

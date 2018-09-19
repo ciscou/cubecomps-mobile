@@ -7,7 +7,7 @@ feature "List competitions" do
     visit root_path
   end
 
-  it "should list competitions in progress" do
+  it "should list competitions in progress", js: true do
     [
       # TODO download again this weekend!
     ].each do |competition_name|
@@ -15,7 +15,7 @@ feature "List competitions" do
     end
   end
 
-  it "should list past competitions" do
+  it "should list past competitions", js: true do
     [
       "Cube Factory Częstochowa",
       "KSF Semey City",
@@ -27,7 +27,7 @@ feature "List competitions" do
     end
   end
 
-  it "should list upcoming competitions" do
+  it "should list upcoming competitions", js: true do
     [
       "Villa Open",
       "Swiss Nationals",
