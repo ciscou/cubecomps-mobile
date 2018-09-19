@@ -23,6 +23,10 @@ class Competitor
     )
   end
 
+  def competition_name
+    @competition_name ||= fetch_competition_name
+  end
+
   def name
     @name ||= fetch_name
   end
@@ -40,6 +44,13 @@ class Competitor
   end
 
   private
+
+  def fetch_competition_name
+    text_nodes = doc.css("div.top").children.select do |node|
+      node.is_a? Nokogiri::XML::Text
+    end
+    text_nodes.first.text
+  end
 
   def fetch_name
     node = doc.at_css("div.main font")

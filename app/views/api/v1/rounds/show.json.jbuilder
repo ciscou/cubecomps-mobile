@@ -1,4 +1,7 @@
 json.cache! ['api', 'v1', @round], ccm_cache_options(competition_id: @round.competition_id) do
+  json.competition_name @round.competition_name
+  json.event_name @round.event_name
+  json.round_name @round.name
   json.results @round.results do |result|
     json.extract! result, :position, :top_position, :name, :country
     json.extract! result, :competitor_id

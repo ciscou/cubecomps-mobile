@@ -10,6 +10,12 @@ describe "Show competitor" do
 
   let(:json) { JSON.parse(response.body) }
 
+  it "should show competition's name" do
+    get api_v1_competition_competitor_path(3545, 16)
+
+    expect(json["competition_name"]).to eq "Canarias Open 2018"
+  end
+
   it "should show competitor's name" do
     get api_v1_competition_competitor_path(3545, 16)
 

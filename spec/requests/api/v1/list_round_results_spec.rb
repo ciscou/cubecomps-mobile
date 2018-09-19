@@ -10,6 +10,24 @@ describe "List round results" do
 
   let(:json) { JSON.parse(response.body) }
 
+  it "should show competition's name" do
+    get api_v1_competition_event_round_path(3545, 1, 1)
+
+    expect(json["competition_name"]).to eq "Canarias Open 2018"
+  end
+
+  it "should show events's name" do
+    get api_v1_competition_event_round_path(3545, 1, 1)
+
+    expect(json["event_name"]).to eq "3x3x3 Cube"
+  end
+
+  it "should show rounds's name" do
+    get api_v1_competition_event_round_path(3545, 1, 1)
+
+    expect(json["round_name"]).to eq "First Round"
+  end
+
   it "should list round results" do
     get api_v1_competition_event_round_path(3545, 1, 1)
 
