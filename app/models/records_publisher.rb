@@ -1,17 +1,19 @@
 class RecordsPublisher
   def run
-    competitions = get_json('/competitions')
+    competitions = get_json('/api/v1/competitions')
     competitions['in_progress'].each do |competition|
       handle_competition(competition)
     end
   rescue => e
+    puts e.message
+    puts e.backtrace
     ExceptionNotifier.notify_exception(e)
   end
 
   private
 
   def handle_competition(competition)
-    events = get_json('/competitions/%{competition_id}/events' % { competition_id: competition['id'] })
+    events = get_json('/api/v1/competitions/%{competition_id}' % { competition_id: competition['id'] })["events"]
     events.each do |event|
       handle_event(competition, event)
     end
@@ -27,7 +29,7 @@ class RecordsPublisher
     return unless round['event_id'] && round['id']
     return unless round['live']
 
-    results = get_json('/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}/results' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })
+    results = get_json('/api/v1/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })["results"]
 
     results.select { |r| r['average_record'] }.each do |result|
       handle_average_record(competition, event, round, result)
@@ -118,8 +120,12 @@ class RecordsPublisher
   end
 
   def get_json(path)
-    response = Net::HTTP.get_response('m.cubecomps.com', "#{path}.json")
-    JSON.parse response.body
+    uri = URI("https://m.cubecomps.com#{path}")
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+      JSON.parse response.body
+    end
   end
 
   class FakeTwitterClient

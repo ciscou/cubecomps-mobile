@@ -23,6 +23,8 @@ class Competitions
     competitions = past
     competitions.shift(50)
     competitions.count(&:archive!)
+  rescue => e
+    ExceptionNotifier.notify_exception(e)
   end
 
   private
