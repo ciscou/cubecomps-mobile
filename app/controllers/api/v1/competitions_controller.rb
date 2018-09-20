@@ -1,5 +1,6 @@
 class Api::V1::CompetitionsController < ApplicationController
   def index
+    sleep 5
     @competitions = Competitions.new
   end
 
