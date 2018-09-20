@@ -28,7 +28,7 @@ $ ->
     CompetitorEmptyView = Marionette.View.extend
       template: false
       tagName: "p"
-      onRender: ->
+      onAttach: ->
         @$el.text("No available competitors (yet!)")
 
     setTimeout(

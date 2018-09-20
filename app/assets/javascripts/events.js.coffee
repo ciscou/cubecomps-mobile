@@ -69,7 +69,7 @@ $ ->
     EventEmptyView = Marionette.View.extend
       template: false
       tagName: "p"
-      onRender: ->
+      onAttach: ->
         @$el.text("No available events (yet!)")
 
     setTimeout(

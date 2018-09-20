@@ -22,6 +22,12 @@ $ ->
       table: ->
         @$("table").table()
 
+    ScheduleEmptyView = Marionette.View.extend
+      template: false
+      tagName: "p"
+      onAttach: ->
+        @$el.text("No available schedule (yet!)")
+
     setTimeout(
       -> $.mobile.loading("show")
       0
@@ -45,7 +51,10 @@ $ ->
         _.each _.keys(schedule), (key) ->
           scheduleDays.add(day: key, rows: schedule[key])
 
-        scheduleDaysView.table()
+        if scheduleDays.length > 0
+          scheduleDaysView.table()
+        else
+          scheduleApp.showView(new ScheduleEmptyView())
       .fail ->
         alert("Failed to load schedule!")
       .always ->
