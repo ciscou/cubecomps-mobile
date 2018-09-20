@@ -54,35 +54,23 @@ $ ->
       template: Handlebars.compile($("#event-template").html())
       id: ->
         "event-#{@model.id}"
-      attributes:
-        "data-role": "collapsible"
       ui:
-        listview: '[data-role="listview"]'
+        listview: 'ul'
       onRender: ->
+        @$el.collapsible(inset: false)
         @getUI("listview").listview()
 
     EventsView = Marionette.CollectionView.extend
       template: false
       childView: EventView
-      attributes:
-        "data-role": "collapsible-set"
-        "data-inset": false
-      collapsiblesetRefresh: ->
-        @$el.collapsibleset("refresh")
+      collapsibleset: ->
+        @$el.collapsibleset()
 
-    EventEmptyView = Marionette.CollectionView.extend
+    EventEmptyView = Marionette.View.extend
       template: false
       tagName: "p"
       onRender: ->
         @$el.text("No available events (yet!)")
-
-    events = new CubecompsEvents()
-    eventsView = new EventsView(collection: events)
-
-    eventsApp = new EventsApp()
-    eventsApp.on "start", ->
-      eventsApp.showView(eventsView)
-    eventsApp.start()
 
     competition = new Competition(id: competitionId)
     competition.fetch()
@@ -90,9 +78,17 @@ $ ->
         $("h1.header-title").text(competition.get("name"))
         $("title").text(competition.get("name"))
 
+        events = new CubecompsEvents()
+        eventsView = new EventsView(collection: events)
+
+        eventsApp = new EventsApp()
+        eventsApp.on "start", ->
+          eventsApp.showView(eventsView)
+        eventsApp.start()
+
         if competition.get("events").length > 0
           events.set(competition.get("events"))
-          eventsView.collapsiblesetRefresh()
+          eventsView.collapsibleset()
         else
           eventsApp.showView(new EventEmptyView())
       .fail ->

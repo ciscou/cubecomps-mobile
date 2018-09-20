@@ -42,8 +42,6 @@ $ ->
     CompetitionsView = Marionette.CollectionView.extend
       template: false
       tagName: "ul"
-      attributes:
-        "data-role": "listview"
       childView: (model) ->
         switch model.id
           when "past-link"
@@ -54,20 +52,20 @@ $ ->
             CompetitionSeparatorView
           else
             CompetitionView
-      listviewRefresh: ->
-        @$el.listview("refresh")
-
-    competitions = new Competitions()
-    competitionsView = new CompetitionsView(collection: competitions)
-
-    competitionsApp = new CompetitionsApp()
-    competitionsApp.on "start", ->
-      competitionsApp.showView(competitionsView)
-    competitionsApp.start()
+      listview: ->
+        @$el.listview()
 
     homepage = new Homepage()
     homepage.fetch()
       .done ->
+        competitions = new Competitions()
+        competitionsView = new CompetitionsView(collection: competitions)
+
+        competitionsApp = new CompetitionsApp()
+        competitionsApp.on "start", ->
+          competitionsApp.showView(competitionsView)
+        competitionsApp.start()
+
         in_progress = homepage.get("in_progress")
         past        = homepage.get("past")
         upcoming    = homepage.get("upcoming")
@@ -93,6 +91,6 @@ $ ->
           else
             competitions.add(new Competition(id: "upcoming-empty", name: "No upcoming competitions (yet!)"))
 
-        competitionsView.listviewRefresh()
+        competitionsView.listview()
       .fail ->
         alert("Failed to load competitions!")

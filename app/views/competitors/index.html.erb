@@ -3,9 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% ccm_cache [@competition, "name"], competition_id: @competition.id, expires_in: 1.hour do %>
-    <%= @competition.name.html_safe %>
-  <% end %>
+  Loading...
 <% end %>
 
 <% content_for(:navbar) do %>
@@ -18,14 +16,9 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% ccm_cache [@competition, "competitors"], competition_id: @competition.id do %>
-  <% if @competition.competitors.any? %>
-    <%= content_tag :ul, data: { role: "listview", filter: true, generated_at: Time.now.to_s(:db) } do %>
-      <% @competition.competitors.each do |competitor| %>
-        <li><%= link_to competitor.name, competition_competitor_path(@competition, competitor) %></li>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>No available competitors (yet!)</p>
-  <% end %>
-<% end %>
+<script id="competitor-template" type="text/x-handlebars-template">
+  <a href="/competitions/{{competition_id}}/competitors/{{id}}">{{name}}</a>
+</script>
+
+<div id="competitors-region" data-competition-id="<%= @competition.id %>">
+</div>
