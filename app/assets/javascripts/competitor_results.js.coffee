@@ -125,6 +125,12 @@ $ ->
         @$el.popup()
         @$el.popup("open")
 
+    EventEmptyView = Marionette.View.extend
+      template: false
+      tagName: "p"
+      onAttach: ->
+        @$el.text("No available results for #{@model.get("name")} (yet!)")
+
     setTimeout(
       -> $.mobile.loading("show")
       0
@@ -155,8 +161,11 @@ $ ->
         resultsApp.start()
 
         results = competitor.get("results")
-        _.each _.keys(results), (key) ->
-          events.add name: key, results: results[key]
+        if _.isEmpty(results)
+          resultsApp.showView(new EventEmptyView(model: competitor))
+        else
+          _.each _.keys(results), (key) ->
+            events.add name: key, results: results[key]
       .fail ->
         alert("Failed to load results!")
       .always ->
