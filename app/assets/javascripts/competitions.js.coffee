@@ -52,6 +52,8 @@ $ ->
             CompetitionSeparatorView
           else
             CompetitionView
+      filterable: ->
+        @$el.filterable()
       listview: ->
         @$el.listview()
 
@@ -96,6 +98,7 @@ $ ->
           else
             competitions.add(new Competition(id: "upcoming-empty", name: "No upcoming competitions (yet!)"))
 
+        competitionsView.filterable() if allPast
         competitionsView.listview()
       .fail ->
         alert("Failed to load competitions!")
