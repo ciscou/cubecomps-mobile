@@ -58,7 +58,6 @@ $ ->
       triggers:
         "click @ui.moreInfoLink": "show:more:info"
       templateContext: ->
-        console.log(@getOption("round"))
         competition_id: @getOption("round").get("competition_id")
         hasT1: @getOption("results").hasT1()
         hasT2: @getOption("results").hasT2()
