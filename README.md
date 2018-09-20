@@ -13,55 +13,53 @@ re-scrap cubecomps.com! Just use our API.
 
 ```
 {
-  "in_progress": [
-    {
-      "id": "1259",
-      "name": "Xi'an Open"
-    },
-    {
-      "id": "1257",
-      "name": "Johannesburg Open"
-    },
-    ...
-    {
-      "id": "1261",
-      "name": "Rubik La Verapaz"
-    }
-  ],
+  "in_progress": [],
   "past": [
     {
-      "id": "1256",
-      "name": "Toronto Open Fall"
+      "id": "3547",
+      "name": "Cube Factory Częstochowa",
+      "city": "Częstochowa - Poland",
+      "date": "Sep 15-16, 2018"
     },
     {
-      "id": "1255",
-      "name": "Tescup Speedcubing Open"
+      "id": "3546",
+      "name": "KSF Semey City",
+      "city": "Semey - Kazakhstan",
+      "date": "Sep 15-16, 2018"
     },
     ...
     {
-      "id": "1251",
-      "name": "Florida Feast"
+      "id": "3531",
+      "name": "Hillsboro Open",
+      "city": "Hillsboro, Oregon - United States",
+      "date": "Sep 15, 2018"
     }
   ],
   "upcoming": [
     {
-      "id": "1212",
-      "name": "Danish Special"
+      "id": "3468",
+      "name": "Villa Open",
+      "city": "Salvador, Bahia - Brazil",
+      "date": "Sep 21-22, 2018"
     },
     {
-      "id": "1221",
-      "name": "INABIF Open"
+      "id": "3499",
+      "name": "Swiss Nationals",
+      "city": "Thun - Switzerland",
+      "date": "Sep 21-23, 2018"
     },
     ...
     {
-      "id": "1245",
-      "name": "Open Cube Project"
+      "id": "3445",
+      "name": "Manchester Open",
+      "city": "Manchester - United Kingdom",
+      "date": "Feb 16-17, 2019"
     }
   ]
 }
 ```
 
-Past competitions returns last 10. You can GET /api/v1/competitions/past
+Past competitions returns last 10. You can `GET /api/v1/competitions/past`
 to get the full list of past competitions.
 
 ### Get the events, competitors and schedule of a competition.
@@ -73,88 +71,36 @@ to get the full list of past competitions.
   "name": "Spanish Championship 2015",
   "events": [
     {
-      "name": "Rubik's Cube",
+      "id": "1",
+      "name": "3x3x3 Cube",
+      "best_record": "NR",
+      "live": false,
+      "finished": true,
       "rounds": [
         {
           "competition_id": "1094",
           "event_id": "1",
           "id": "1",
           "name": "First Round",
+          "best_record": null,
           "live": false,
           "finished": true
         },
-        {
-          "competition_id": "1094",
-          "event_id": "1",
-          "id": "2",
-          "name": "Second Round",
-          "live": false,
-          "finished": true
-        },
-        {
-          "competition_id": "1094",
-          "event_id": "1",
-          "id": "3",
-          "name": "Final",
-          "live": false,
-          "finished": true
-        }
-      ]
-    },
-    {
-      "name": "4x4x4 Cube",
-      "rounds": [
-        {
-          "competition_id": "1094",
-          "event_id": "3",
-          "id": "1",
-          "name": "Combined First",
-          "live": false,
-          "finished": true
-        },
-        {
-          "competition_id": "1094",
-          "event_id": "3",
-          "id": "2",
-          "name": "Second Round",
-          "live": false,
-          "finished": true
-        },
-        {
-          "competition_id": "1094",
-          "event_id": "3",
-          "id": "3",
-          "name": "Final",
-          "live": false,
-          "finished": true
-        }
+        ...
       ]
     },
     ...
-    {
-      "name": "Rubik's Cube: Multiple Blindfolded",
-      "rounds": [
-        {
-          "competition_id": "1094",
-          "event_id": "19",
-          "id": "1",
-          "name": "Final",
-          "live": false,
-          "finished": true
-        }
-      ]
-    }
   ],
   "competitors": [
     {
       "competition_id": "1094",
       "id": "65",
-      "name": "Abel P\u00e9rez Gisbert"
+      "name": "Abel Pérez Gisbert"
     },
     {
       "competition_id": "1094",
       "id": "108",
-      "name": "Adri\u00e1n Barrag\u00e1n N\u00fa\u00f1ez"
+      "name": "Adrián Barragán Núñez"
     },
     ...
     {
@@ -163,38 +109,45 @@ to get the full list of past competitions.
       "name": "Victor Sanchez Redondo"
     }
   ],
-  "schedule": [
-    {
-      "start": "2015-10-09T15:30:00+00:00",
-      "end": "2015-10-09T16:00:00+00:00",
-      "event_code": "reg",
-      "alternate_text": "REGISTRATION",
-      "round_name": null,
-      "extra_info": null,
-      "am_pm_format": false
-    },
-    {
-      "start": "2015-10-09T16:00:00+00:00",
-      "end": "2015-10-09T17:00:00+00:00",
-      "event_code": "777",
-      "alternate_text": "",
-      "round_name": "Combined Final",
-      "extra_info": "Cutoff 6:30",
-      "am_pm_format": false
-    },
+  "schedule": {
+    "October  9, 2015": [
+      {
+        "start": "2015-10-09T15:30:00+00:00",
+        "end": "2015-10-09T16:00:00+00:00",
+        "formatted_start": "15:30",
+        "formatted_end": "16:00",
+        "event_code": "reg",
+        "event_id": 21,
+        "event_name": "REGISTRATION",
+        "alternate_text": "REGISTRATION",
+        "round_name": null,
+        "round_id": 1,
+        "extra_info": null,
+        "am_pm_format": false,
+        "round_started": true,
+        "competition_id": "1094"
+      },
+      {
+        "start": "2015-10-09T16:00:00+00:00",
+        "end": "2015-10-09T17:00:00+00:00",
+        "formatted_start": "16:00",
+        "formatted_end": "17:00",
+        "event_code": "777",
+        "event_id": 6,
+        "event_name": "7x7x7 Cube",
+        "alternate_text": "",
+        "round_name": "Combined Final",
+        "round_id": 1,
+        "extra_info": "Cutoff 6:30",
+        "am_pm_format": false,
+        "round_started": true,
+        "competition_id": "1094"
+      },
+      ...
+    ],
     ...
-    {
-      "start": "2015-10-11T20:30:00+00:00",
-      "end": "2015-10-11T21:00:00+00:00",
-      "event_code": "tro",
-      "alternate_text": "AWARDS",
-      "round_name": null,
-      "extra_info": null,
-      "am_pm_format": false
-    }
-  ]
+  }
 }
-
 ```
 
 ### Get a list of results for a round.
@@ -206,27 +159,27 @@ to get the full list of past competitions.
   "competition_name": "Spanish Championship 2015",
   "event_name": "3x3x3 Multi-Blind",
   "round_name": "Final",
-  "results":[
+  "results": [
     {
       "position": "1",
       "top_position": true,
-      "name": "Berta Garc\u00eda Parra",
+      "name": "Berta García Parra",
       "country": "Spain",
       "competitor_id": "100",
-      "t1": "10\/12\u00a057:13.00",
-      "t2": "11\/12\u00a053:41.00",
-      "best": "11\/12\u00a053:41.00",
+      "t1": "10/12 57:13.00",
+      "t2": "11/12 53:41.00",
+      "best": "11/12 53:41.00",
       "best_record": null
     },
     {
       "position": "2",
       "top_position": true,
-      "name": "Asier Cardoso S\u00e1nchez",
+      "name": "Asier Cardoso Sánchez",
       "country": "Spain",
       "competitor_id": "15",
-      "t1": "9\/15\u00a057:31.00",
-      "t2": "11\/13\u00a050:06.00",
-      "best": "11\/13\u00a050:06.00",
+      "t1": "9/15 57:31.00",
+      "t2": "11/13 50:06.00",
+      "best": "11/13 50:06.00",
       "best_record": null
     },
     ...
@@ -236,9 +189,9 @@ to get the full list of past competitions.
       "name": "Sergi Sabat",
       "country": "Spain",
       "competitor_id": "46",
-      "t1": "\u00a0",
-      "t2": "\u00a0",
-      "best": "\u00a0",
+      "t1": " ",
+      "t2": " ",
+      "best": " ",
       "best_record": null
     }
   ]
@@ -257,7 +210,7 @@ to get the full list of past competitions.
     {
       "position": "29",
       "top_position": true,
-      "event": "Rubik's Cube",
+      "event": "3x3x3 Cube",
       "round": "First Round",
       "event_id": "1",
       "round_id": "1",
@@ -276,7 +229,7 @@ to get the full list of past competitions.
     {
       "position": "43",
       "top_position": false,
-      "event": "Rubik's Cube",
+      "event": "3x3x3 Cube",
       "round": "Second Round",
       "event_id": "1",
       "round_id": "2",
@@ -293,25 +246,6 @@ to get the full list of past competitions.
       "best_record": null
     },
     ...
-    {
-      "position": "8",
-      "top_position": false,
-      "event": "Rubik's Cube: Multiple Blindfolded",
-      "round": "Final",
-      "event_id": "19",
-      "round_id": "1",
-      "t1": "DNF",
-      "t2": "4\/5\u00a042:05.00",
-      "t3": null,
-      "t4": null,
-      "t5": null,
-      "average": null,
-      "average_record": null,
-      "mean": null,
-      "mean_record": null,
-      "best": "4\/5\u00a042:05.00",
-      "best_record": "PB"
-    }
   ]
 }
 ```
