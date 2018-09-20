@@ -3,9 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% ccm_cache [@round, "competition_name"], competition_id: @round.competition_id, expires_in: 1.hour do %>
-    <%= @round.competition_name.html_safe %>
-  <% end %>
+  Loading...
 <% end %>
 
 <% content_for(:navbar) do %>
@@ -28,39 +26,61 @@
   </div>
 </div>
 
-<% ccm_cache [@round, "results"], competition_id: @round.competition_id do %>
-  <h2><%= @round.event_name %> - <%= @round.name %></h2>
+<script id="result-template" type="text/x-handlebars-template">
+  <%= render "row" %>
+</script>
 
-  <%= content_tag :table, id: "results", class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
+<script id="results-template" type="text/x-handlebars-template">
+  <table id="results" class="results-table table-stripe" data-role="table" data-mode="columntoggle">
     <thead>
       <tr>
         <th class="number">#</th>
         <th>Name</th>
         <th data-priority="3">Country</th>
-        <% (1..5).each do |i| %>
-          <% if @round.results.send("t#{i}?") %>
-            <th class="number" data-priority="2">T<%= i %></th>
-          <% end %>
-        <% end %>
-        <% if @round.results.average? %>
+        {{#if hasT1}}
+          <th class="number" data-priority="2">T1</th>
+        {{/if}}
+        {{#if hasT2}}
+          <th class="number" data-priority="2">T2</th>
+        {{/if}}
+        {{#if hasT3}}
+          <th class="number" data-priority="2">T3</th>
+        {{/if}}
+        {{#if hasT4}}
+          <th class="number" data-priority="2">T4</th>
+        {{/if}}
+        {{#if hasT5}}
+          <th class="number" data-priority="2">T5</th>
+        {{/if}}
+        {{#if hasAverage}}
           <th class="number" data-priority="1">Average</th>
-        <% end %>
-        <% if @round.results.mean? %>
+        {{/if}}
+        {{#if hasMean}}
           <th class="number" data-priority="1">Mean</th>
-        <% end %>
-        <% if @round.results.best? %>
+        {{/if}}
+        {{#if hasBest}}
           <th class="number" data-priority="1">Best</th>
-        <% end %>
+        {{/if}}
       </tr>
     </thead>
     <tbody>
-      <% @round.results.each do |result| %>
-        <%= render partial: "row", object: result, as: :result, locals: { round: @round } %>
-      <% end %>
     </tbody>
-  <% end %>
+  </table>
+</script>
 
-  <% @round.results.each do |result| %>
-    <%= render partial: "more_info", object: result, as: :result, locals: { round: @round } %>
-  <% end %>
-<% end %>
+<script id="round-template" type="text/x-handlebars-template">
+  <h2>{{event_name}} - {{round_name}}</h2>
+
+  <div class="results-region">
+  </div>
+
+  <div class="more-info-region">
+  </div>
+</script>
+
+<script id="more-info-template" type="text/x-handlebars-template">
+  <%= render "more_info" %>
+</script>
+
+<div id="round-results-region" data-competition-id="<%= @round.competition_id %>" data-event-id="<%= @round.event_id %>" data-round-id="<%= @round.id %>">
+</div>
