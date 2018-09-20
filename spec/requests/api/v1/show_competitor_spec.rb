@@ -25,6 +25,6 @@ describe "Show competitor" do
   it "should list competitor's resuls" do
     get api_v1_competition_competitor_path(3545, 16)
 
-    expect(json["results"]).to include hash_including("position"=>"2", "top_position"=>true, "event"=>"3x3x3 Cube", "round"=>"First Round")
+    expect(json["results"]["3x3x3 Cube"]).to include hash_including("position"=>"2", "top_position"=>true, "event"=>"3x3x3 Cube", "round"=>"First Round")
   end
 end
