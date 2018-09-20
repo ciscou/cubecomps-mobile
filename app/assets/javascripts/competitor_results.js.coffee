@@ -1,8 +1,7 @@
 $ ->
-  if $("#round-results-region").length > 0
-    competitionId = $("#round-results-region").data("competition-id")
-    eventId       = $("#round-results-region").data("event-id")
-    roundId       = $("#round-results-region").data("round-id")
+  if $("#competitor-results-region").length > 0
+    competitionId = $("#competitor-results-region").data("competition-id")
+    competitorId  = $("#competitor-results-region").data("competitor-id")
 
     Handlebars.registerHelper "formatRecord", (record) ->
       humanizedTable =
@@ -22,6 +21,11 @@ $ ->
         times.join(", ")
       else
         "-"
+
+    CubecompsEvent = Backbone.Model.extend({})
+
+    Events = Backbone.Collection.extend
+      model: CubecompsEvent
 
     Result = Backbone.Model.extend({})
 
@@ -44,11 +48,11 @@ $ ->
       hasBest: ->
         @any (result) -> result.has("best")
 
-    Round = Backbone.Model.extend
-      urlRoot: -> "/api/v1/competitions/#{@get("competition_id")}/events/#{@get("event_id")}/rounds"
+    Competitor = Backbone.Model.extend
+      urlRoot: -> "/api/v1/competitions/#{@get("competition_id")}/competitors"
 
     ResultsApp = Marionette.Application.extend
-      region: "#round-results-region"
+      region: "#competitor-results-region"
 
     ResultView = Marionette.View.extend
       template: Handlebars.compile($("#result-template").html())
@@ -58,7 +62,7 @@ $ ->
       triggers:
         "click @ui.moreInfoLink": "show:more:info"
       templateContext: ->
-        competition_id: @getOption("round").get("competition_id")
+        competition_id: @getOption("competitor").get("competition_id")
         hasT1: @getOption("results").hasT1()
         hasT2: @getOption("results").hasT2()
         hasT3: @getOption("results").hasT3()
@@ -72,7 +76,7 @@ $ ->
       template: Handlebars.compile($("#results-template").html())
       childView: ResultView
       childViewOptions: ->
-        round: @getOption("round")
+        competitor: @getOption("competitor")
         results: @collection
       childViewContainer: "tbody"
       childViewTriggers:
@@ -91,11 +95,15 @@ $ ->
       table: ->
         @$("table").table()
 
-    RoundView = Marionette.View.extend
-      template: Handlebars.compile($("#round-template").html())
+    EventView = Marionette.View.extend
+      template: Handlebars.compile($("#event-template").html())
       regions:
         results: ".results-region"
         moreInfo: ".more-info-region"
+
+    EventsView = Marionette.CollectionView.extend
+      template: false
+      childView: EventView
 
     MoreInfoView = Marionette.View.extend
       template: Handlebars.compile($("#more-info-template").html())
@@ -103,7 +111,7 @@ $ ->
         "data-role": "popup"
         "data-overlay-theme": "a"
       templateContext: ->
-        competition_id: @getOption("round").get("competition_id")
+        competition_id: @getOption("competitor").get("competition_id")
         hasT1: @getOption("results").hasT1()
         hasT2: @getOption("results").hasT2()
         hasT3: @getOption("results").hasT3()
@@ -122,29 +130,33 @@ $ ->
       0
     )
 
-    round = new Round(competition_id: competitionId, event_id: eventId, id: roundId)
-    round.fetch()
+    competitor = new Competitor(competition_id: competitionId, id: competitorId)
+    competitor.fetch()
       .done ->
-        $("h1.header-title").text(round.get("competition_name"))
-        $("title").text(round.get("competition_name"))
+        $("h1.header-title").text(competitor.get("name"))
+        $("title").text(competitor.get("name"))
 
-        results = new Results()
-        roundView = new RoundView(model: round)
-        resultsView = new ResultsView(collection: results, round: round)
-
-        resultsView.on "show:more:info", (view) ->
-          moreInfoView = new MoreInfoView(model: view.model, round: round, results: results)
-          roundView.showChildView("moreInfo", moreInfoView)
+        events = new Events()
+        eventsView = new EventsView(collection: events)
 
         resultsApp = new ResultsApp()
         resultsApp.on "start", ->
-          roundView.on "render", ->
-            roundView.showChildView("results", resultsView)
-          resultsApp.showView(roundView)
+          eventsView.on "add:child", (cv, iv) ->
+            results = new Results(iv.model.get("results"))
+            resultsView = new ResultsView(collection: results, competitor: competitor)
+
+            resultsView.on "show:more:info", (view) ->
+              moreInfoView = new MoreInfoView(model: view.model, competitor: competitor, results: results)
+              iv.showChildView("moreInfo", moreInfoView)
+
+            iv.showChildView("results", resultsView)
+            resultsView.table()
+          resultsApp.showView(eventsView)
         resultsApp.start()
 
-        results.reset(round.get("results"))
-        resultsView.table()
+        results = competitor.get("results")
+        _.each _.keys(results), (key) ->
+          events.add name: key, results: results[key]
       .fail ->
         alert("Failed to load results!")
       .always ->

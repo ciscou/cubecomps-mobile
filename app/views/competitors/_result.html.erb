@@ -1,33 +1,41 @@
-<tr>
-  <td class="number <%= "top-position" if result.top_position? %>"><%= result.position %></td>
-  <td><%= link_to result.round, "#result_#{result.event_id}_#{result.round_id}", data: { rel: "popup", position_to: "window" } %></td>
-  <% (1..5).each do |i| %>
-    <% if results.send("t#{i}?") %>
-      <td class="number"><%= result.send("t#{i}") %></td>
-    <% end %>
-  <% end %>
-  <% if results.mean? %>
-    <td class="number">
-      <% if result.mean_record.present? %>
-        <%= format_record result.mean_record %>
-      <% end %>
-      <%= result.mean %>
-    </td>
-  <% end %>
-  <% if results.average? %>
-    <td class="number">
-      <% if result.average_record.present? %>
-        <%= format_record result.average_record %>
-      <% end %>
-      <%= result.average %>
-    </td>
-  <% end %>
-  <% if results.best? %>
-    <td class="number">
-      <% if result.best_record.present? %>
-        <%= format_record result.best_record %>
-      <% end %>
-      <%= result.best %>
-    </td>
-  <% end %>
-</tr>
+<td class="number {{#if top_position}}top-position{{/if}}">{{position}}</td>
+<td><a href="/competitions/{{competition_id}}/events/{{event_id}}/rounds/{{round_id}}/results" class="more-info">{{round}}</a></td>
+{{#if hasT1}}
+  <td class="number">{{t1}}</td>
+{{/if}}
+{{#if hasT2}}
+  <td class="number">{{t2}}</td>
+{{/if}}
+{{#if hasT3}}
+  <td class="number">{{t3}}</td>
+{{/if}}
+{{#if hasT4}}
+  <td class="number">{{t4}}</td>
+{{/if}}
+{{#if hasT5}}
+  <td class="number">{{t5}}</td>
+{{/if}}
+{{#if hasAverage}}
+  <td class="number">
+    {{#if average_record}}
+      {{formatRecord average_record}}
+    {{/if}}
+    {{average}}
+  </td>
+{{/if}}
+{{#if hasMean}}
+  <td class="number">
+    {{#if mean_record}}
+      {{formatRecord mean_record}}
+    {{/if}}
+    {{mean}}
+  </td>
+{{/if}}
+{{#if hasBest}}
+  <td class="number">
+    {{#if best_record}}
+      {{formatRecord best_record}}
+    {{/if}}
+    {{best}}
+  </td>
+{{/if}}

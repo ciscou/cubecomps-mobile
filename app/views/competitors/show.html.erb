@@ -3,9 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% ccm_cache [@competitor, "name"], competition_id: @competitor.competition_id, expires_in: 1.hour do %>
-    <%= @competitor.name.html_safe %>
-  <% end %>
+  Loading...
 <% end %>
 
 <% content_for(:navbar) do %>
@@ -28,44 +26,60 @@
   </div>
 </div>
 
-<% ccm_cache [@competitor, "results"], competition_id: @competitor.competition_id do %>
-  <% @competitor.results.by_event.each do |event, results| %>
-    <h2><%= event %></h2>
+<script id="result-template" type="text/x-handlebars-template">
+  <%= render "result" %>
+</script>
 
-    <%= content_tag :table, class: "results-table table-stripe", data: { role: "table", mode: "columntoggle", generated_at: Time.now.to_s(:db) } do %>
-      <thead>
-        <tr>
-          <th class="number">#</th>
-          <th>Round</th>
-          <% (1..5).each do |i| %>
-            <% if results.send("t#{i}?") %>
-              <th class="number" data-priority="2">T<%= i %></th>
-            <% end %>
-          <% end %>
-          <% if results.mean? %>
-            <th class="number" data-priority="1">Mean</th>
-          <% end %>
-          <% if results.average? %>
-            <th class="number" data-priority="1">Average</th>
-          <% end %>
-          <% if results.best? %>
-            <th class="number" data-priority="1">Best</th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% results.each do |result| %>
-          <%= render partial: "result", object: result, as: :result, locals: { results: results, event: event } %>
-        <% end %>
-      </tbody>
-    <% end %>
+<script id="results-template" type="text/x-handlebars-template">
+  <table id="results" class="results-table table-stripe" data-role="table" data-mode="columntoggle">
+    <thead>
+      <tr>
+        <th class="number">#</th>
+        <th>Round</th>
+        {{#if hasT1}}
+          <th class="number" data-priority="2">T1</th>
+        {{/if}}
+        {{#if hasT2}}
+          <th class="number" data-priority="2">T2</th>
+        {{/if}}
+        {{#if hasT3}}
+          <th class="number" data-priority="2">T3</th>
+        {{/if}}
+        {{#if hasT4}}
+          <th class="number" data-priority="2">T4</th>
+        {{/if}}
+        {{#if hasT5}}
+          <th class="number" data-priority="2">T5</th>
+        {{/if}}
+        {{#if hasAverage}}
+          <th class="number" data-priority="1">Average</th>
+        {{/if}}
+        {{#if hasMean}}
+          <th class="number" data-priority="1">Mean</th>
+        {{/if}}
+        {{#if hasBest}}
+          <th class="number" data-priority="1">Best</th>
+        {{/if}}
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</script>
 
-    <% results.each do |result| %>
-      <%= render partial: "more_info", object: result, as: :result, locals: { results: results, event: event } %>
-    <% end %>
-  <% end %>
+<script id="event-template" type="text/x-handlebars-template">
+  <h2>{{name}}</h2>
 
-  <% if @competitor.results.empty? %>
-    <p>No available results for <%= @competitor.name %> (yet!)</p>
-  <% end %>
-<% end %>
+  <div class="results-region">
+  </div>
+
+  <div class="more-info-region">
+  </div>
+</script>
+
+<script id="more-info-template" type="text/x-handlebars-template">
+  <%= render "more_info" %>
+</script>
+
+<div id="competitor-results-region" data-competition-id="<%= @competitor.competition_id %>" data-competitor-id="<%= @competitor.id %>">
+</div>

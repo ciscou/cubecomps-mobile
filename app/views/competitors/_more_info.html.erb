@@ -1,48 +1,58 @@
-<%= content_tag :div, id: ["result", result.event_id, result.round_id].join("_"), data: { role: "popup", overlay_theme: "a" } do %>
-  <div data-role="header">
-    <h2>#<%= result.position %></h2>
-  </div>
+<div data-role="header">
+  <h2>#{{position}}</h2>
+</div>
 
-  <div data-role="content">
+<div data-role="content" class="ui-content">
+  <p>
+    <strong>Event</strong><br/>
+    {{event}}<br/>
+    <a href="/competitions/{{competition_id}}/events/{{event_id}}/rounds/{{round_id}}/results">All results</a>
+  </p>
+  <p>
+    <strong>Round</strong><br/>
+    {{round}}
+  </p>
+  <p>
+    <strong>Times</strong><br/>
+    {{joinTimes this}}
+  </p>
+  {{#if hasAverage}}
     <p>
-      <strong>Event</strong><br/>
-      <%= result.event %><br/>
-      <%= link_to "All results", competition_event_round_results_path(result.competition_id, result.event_id, result.round_id) %>
+      <strong>Average</strong><br/>
+      {{#if average_record}}
+        {{formatRecord average_record}}
+      {{/if}}
+      {{#if average}}
+        {{average}}
+      {{else}}
+        -
+      {{/if}}
     </p>
+  {{/if}}
+  {{#if hasMean}}
     <p>
-      <strong>Round</strong><br/>
-      <%= result.round %>
+      <strong>Mean</strong><br/>
+      {{#if mean_record}}
+        {{formatRecord mean_record}}
+      {{/if}}
+      {{#if mean}}
+        {{mean}}
+      {{else}}
+        -
+      {{/if}}
     </p>
+  {{/if}}
+  {{#if hasBest}}
     <p>
-      <strong>Times</strong><br/>
-      <%= [ result.t1, result.t2, result.t3, result.t4, result.t5 ].select(&:present?).join(", ").presence || "-" %>
+      <strong>Best</strong><br/>
+      {{#if best_record}}
+        {{formatRecord best_record}}
+      {{/if}}
+      {{#if best}}
+        {{best}}
+      {{else}}
+        -
+      {{/if}}
     </p>
-    <% if results.average? %>
-      <p>
-        <strong>Average</strong><br/>
-          <% if result.average_record.present? %>
-            <%= format_record result.average_record %>
-          <% end %>
-          <%= result.average.presence || "-" %>
-      </p>
-    <% end %>
-    <% if results.mean? %>
-      <p>
-        <strong>Mean</strong><br/>
-          <% if result.mean_record.present? %>
-            <%= format_record result.mean_record %>
-          <% end %>
-          <%= result.mean.presence || "-" %>
-      </p>
-    <% end %>
-    <% if results.best? %>
-      <p>
-        <strong>Best</strong><br/>
-          <% if result.best_record.present? %>
-            <%= format_record result.best_record %>
-          <% end %>
-          <%= result.best.presence || "-"%>
-      </p>
-    <% end %>
-  </div>
-<% end %>
+  {{/if}}
+</div>
