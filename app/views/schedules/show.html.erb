@@ -3,9 +3,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <% ccm_cache [@competition, "name"], competition_id: @competition.id, expires_in: 1.hour do %>
-    <%= @competition.name.html_safe %>
-  <% end %>
+  Loading...
 <% end %>
 
 <% content_for(:navbar) do %>
@@ -18,47 +16,52 @@
 
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
-<% ccm_cache [@competition, "schedule"], competition_id: @competition.id do %>
-  <% if @competition.schedule.any? %>
-    <% @competition.schedule.group_by { |row| row.start.to_date }.each do |date, rows| %>
-      <h2><%= date.to_s(:long) %></h2>
+<script id="schedule-day-template" type="text/x-handlebars-template">
+  <h2>{{day}}</h2>
 
-      <%= content_tag :table, class: "schedule-table table-stripe", data: { role: "table", mode: "reflow", generated_at: Time.now.to_s(:db) } do %>
-        <thead>
-          <tr>
-            <th class="hour">Hour</th>
-            <th class="event">Event</th>
-            <th class="round">Round</th>
-            <th class="extra_info">Extra info</th>
-          </tr>
-        </thead>
+  <table class="schedule-table table-stripe" data-role="table" data-mode="reflow">
+    <thead>
+      <tr>
+        <th class="hour">Hour</th>
+        <th class="event">Event</th>
+        <th class="round">Round</th>
+        <th class="extra_info">Extra info</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td class="hour">
+            {{formatted_start}}
+            -
+            {{formatted_end}}
+          </td>
+          <td class="event">
+            {{#if alternate_text}}
+              {{alternate_text}}
+            {{else}}
+              {{event_name}}
+            {{/if}}
+          </td>
+          <td class="round">
+            {{#if round_name}}
+              {{#if round_started}}
+                <a href="/competitions/{{competition_id}}/events/{{event_id}}/rounds/{{round_id}}/results">{{round_name}}</a>
+              {{else}}
+                {{round_name}}
+              {{/if}}
+            {{/if}}
+          </td>
+          <td class="extra_info">
+            {{#if extra_info}}
+              <em class="muted">{{extra_info}}</em>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</script>
 
-        <tbody>
-          <% rows.sort_by { |row| [row.start, row.end] }.each do |row| %>
-            <tr>
-              <td class="hour">
-                <%= row.formatted_start %>
-                -
-                <%= row.formatted_end %>
-              </td>
-              <td class="event">
-                <%= row.alternate_text.presence || row.event %>
-              </td>
-              <td class="round">
-                <% round = Round.new(competition_id: @competition.id, event_id: row.event_id, id: row.round_id) %>
-                <%= link_to_if round.started?, row.round_name, competition_event_round_results_path(@competition, row.event_id, row.round_id) if row.round_name.present? %>
-              </td>
-              <td class="extra_info">
-                <% if row.extra_info.present? %>
-                  <em class="muted"><%= row.extra_info %></em>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p>No available schedule (yet!)</p>
-  <% end %>
-<% end %>
+<div id="schedule-region" data-competition-id="<%= @competition.id %>">
+</div>

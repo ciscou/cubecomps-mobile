@@ -54,7 +54,11 @@ class Schedule
     index + 1
   end
 
-  def event
+  def event_name
     EVENTS.fetch(event_code) { event_code }
+  end
+
+  def round_started?(competition_id)
+    Round.new(competition_id: competition_id, event_id: event_id, id: round_id).started?
   end
 end

@@ -13,7 +13,15 @@ json.cache! ['api', 'v1', @competition], ccm_cache_options do
   json.competitors @competition.competitors do |competitor|
     json.extract! competitor, :competition_id, :id, :name
   end
-  json.schedule @competition.schedule do |row|
-    json.extract! row, :start, :end, :event_code, :alternate_text, :round_name, :extra_info, :am_pm_format
+  json.schedule do
+    @competition.schedule.group_by { |row| row.start.to_date.to_s(:long) }.each do |date, rows|
+      json.set! date do
+        json.array! rows.sort_by { |row| [row.start, row.end] } do |row|
+          json.extract! row, :start, :end, :formatted_start, :formatted_end, :event_code, :event_id, :event_name, :alternate_text, :round_name, :round_id, :extra_info, :am_pm_format
+          json.round_started row.round_started?(@competition.id)
+          json.competition_id @competition.id
+        end
+      end
+    end
   end
 end
