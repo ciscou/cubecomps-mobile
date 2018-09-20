@@ -36,6 +36,6 @@ describe "Show competition" do
   it "should show competition's schedule" do
     get api_v1_competition_path(3545)
 
-    expect(json["schedule"]).to include hash_including("event_code"=>"333oh", "round_name"=>"Combined Final")
+    expect(json["schedule"]["September 21, 2018"]).to include hash_including("event_code"=>"333oh", "round_name"=>"Combined Final")
   end
 end
