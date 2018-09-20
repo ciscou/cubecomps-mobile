@@ -1,0 +1,40 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 756
+Connection: keep-alive
+Keep-Alive: timeout=15
+Date: Thu, 20 Sep 2018 00:10:04 GMT
+Server: Apache
+Last-Modified: Sun, 23 Feb 2014 21:15:51 GMT
+ETag: "2f4-4f3195c0e0fc0"
+Accept-Ranges: bytes
+
+01
+IST
+GMT+5.5
+1
+20140228
+0945,1100,reg,REGISTRATION
+1100,1300,333,,Combined First,Cutoff 1:00
+1100,1300,clock,,Combined Final,Cutoff 45.00
+1300,1400,222,,Combined First,Cutoff 20.00
+1400,1500,lun,LUNCH
+1500,1630,444,,Combined First,Cutoff 2:00
+1500,1630,444bf,,Final
+1630,1700,skewb,,Combined Final,Cutoff 1:00
+1700,1800,333bf,,First Round
+1800,1845,pyram,,Combined First,Cutoff 20.00
+1845,2000,333fm,,Final
+20140301
+1000,1045,555,,Combined First,Cutoff 3:00
+1045,1130,minx,,Combined Final,Cutoff 3:30
+1130,1215,333oh,,Combined First,Cutoff 1:00
+1215,1300,333,,Second Round
+1300,1330,555,,Final
+1330,1400,222,,Second Round
+1400,1420,333bf,,Final
+1420,1440,pyram,,Final
+1440,1510,444,,Final
+1510,1540,333oh,,Final
+1540,1600,222,,Final
+1600,1630,333,,Final
