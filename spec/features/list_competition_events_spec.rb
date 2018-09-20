@@ -10,6 +10,10 @@ feature "List competition events" do
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
+    FakeWeb.register_uri :get, "http://cubecomps.com/uploads/sch_3545.txt", [
+      { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "sch_3545.txt") },
+      { body: "Too Many Requests", status: [429, "Too Many Requests"] }
+    ]
 
     visit root_path
     click_link "Canarias Open"

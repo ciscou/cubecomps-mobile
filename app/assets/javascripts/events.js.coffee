@@ -87,6 +87,8 @@ $ ->
     competition = new Competition(id: competitionId)
     competition.fetch()
       .done ->
+        $("h1.header-title").text(competition.get("name"))
+
         if competition.get("events").length > 0
           events.set(competition.get("events"))
           eventsView.collapsiblesetRefresh()
