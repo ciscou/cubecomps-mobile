@@ -55,6 +55,11 @@ $ ->
       listview: ->
         @$el.listview()
 
+    setTimeout(
+      -> $.mobile.loading("show")
+      0
+    )
+
     homepage = new Homepage()
     homepage.fetch()
       .done ->
@@ -94,3 +99,8 @@ $ ->
         competitionsView.listview()
       .fail ->
         alert("Failed to load competitions!")
+      .always ->
+        setTimeout(
+          -> $.mobile.loading("hide")
+          0
+        )

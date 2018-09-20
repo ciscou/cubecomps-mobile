@@ -31,6 +31,11 @@ $ ->
       onRender: ->
         @$el.text("No available competitors (yet!)")
 
+    setTimeout(
+      -> $.mobile.loading("show")
+      0
+    )
+
     competition = new Competition(id: competitionId)
     competition.fetch()
       .done ->
@@ -53,3 +58,8 @@ $ ->
           competitorsApp.showView(new CompetitorEmptyView())
       .fail ->
         alert("Failed to load competitors!")
+      .always ->
+        setTimeout(
+          -> $.mobile.loading("hide")
+          0
+        )

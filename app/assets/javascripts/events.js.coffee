@@ -72,6 +72,11 @@ $ ->
       onRender: ->
         @$el.text("No available events (yet!)")
 
+    setTimeout(
+      -> $.mobile.loading("show")
+      0
+    )
+
     competition = new Competition(id: competitionId)
     competition.fetch()
       .done ->
@@ -93,3 +98,8 @@ $ ->
           eventsApp.showView(new EventEmptyView())
       .fail ->
         alert("Failed to load events!")
+      .always ->
+        setTimeout(
+          -> $.mobile.loading("hide")
+          0
+        )
