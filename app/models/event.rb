@@ -21,8 +21,8 @@ class Event
     end
   end
 
-  def best_record
-    best_records = rounds.map(&:best_record)
+  def best_record(records_cache = nil)
+    best_records = rounds.map { |round| round.best_record(records_cache) }
     best_records.delete("WR") ||
     best_records.delete("CR") ||
     best_records.delete("NR")

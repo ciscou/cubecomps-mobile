@@ -58,6 +58,14 @@ class Competition
     id.to_s
   end
 
+  def records_cache
+    @records_cache ||= {
+      "world_records"       => fetch_records_cache("world_records"),
+      "continental_records" => fetch_records_cache("continental_records"),
+      "national_records"    => fetch_records_cache("national_records")
+    }
+  end
+
   def cache_key
     ["competitions", id].join("/")
   end
@@ -81,6 +89,15 @@ class Competition
   end
 
   private
+
+  def fetch_records_cache(records_key)
+    puts "$redis.smembers(\"#{records_key}:#{id}\")"
+    $redis.smembers("#{records_key}:#{id}")
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    []
+  end
 
   def fetch_name_city_and_country
     text_nodes = doc.css("div.top").children.select do |node|

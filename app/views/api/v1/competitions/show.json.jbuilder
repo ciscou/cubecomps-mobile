@@ -4,11 +4,13 @@ json.cache! ['api', 'v1', @competition], ccm_cache_options do
   json.country @competition.country
   json.date @competition.date
   json.events @competition.events do |event|
-    json.extract! event, :id, :name, :best_record
+    json.extract! event, :id, :name
+    json.best_record event.best_record(@competition.records_cache)
     json.live event.live?
     json.finished event.finished?
     json.rounds event.rounds do |round|
-      json.extract! round, :competition_id, :event_id, :id, :name, :best_record
+      json.extract! round, :competition_id, :event_id, :id, :name
+      json.best_record round.best_record(@competition.records_cache)
       json.live round.live?
       json.finished round.finished?
     end

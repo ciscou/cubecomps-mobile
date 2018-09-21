@@ -50,18 +50,14 @@ class Round
     (Time.parse(updated_at) + 15.minutes).future?
   end
 
-  def best_record
-    if $redis.sismember "world_records", redis_key
+  def best_record(records_cache = nil)
+    if get_record_from(records_cache, "world_records", redis_key)
       "WR"
-    elsif $redis.sismember "continental_records", redis_key
+    elsif get_record_from(records_cache, "continental_records", redis_key)
       "CR"
-    elsif $redis.sismember "national_records", redis_key
+    elsif get_record_from(records_cache, "national_records", redis_key)
       "NR"
     end
-  rescue Redis::CannotConnectError => e
-    ExceptionNotifier.notify_exception(e)
-
-    nil
   end
 
   def started?
@@ -98,6 +94,18 @@ class Round
   end
 
   private
+
+  def get_record_from(records_cache, records_key, redis_key)
+    if records_cache.nil?
+      $redis.sismember "#{records_key}:#{competition_id}", redis_key
+    else
+      records_cache[records_key].include?(redis_key)
+    end
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    false
+  end
 
   def fetch_competition_name
     text_nodes = doc.css("div.top").children.select do |node|
