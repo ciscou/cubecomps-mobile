@@ -40,6 +40,7 @@ gem 'redis'
 
 gem 'twitter'
 
+gem 'oj'
 gem 'json', '~> 1.8.6'
 
 group :doc do

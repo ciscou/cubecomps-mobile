@@ -96,6 +96,7 @@ GEM
     newrelic_rpm (5.2.0.345)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    oj (3.6.10)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -214,6 +215,7 @@ DEPENDENCIES
   minitest
   newrelic_rpm
   nokogiri
+  oj
   poltergeist
   rack-cors
   rails (= 4.0.3)
