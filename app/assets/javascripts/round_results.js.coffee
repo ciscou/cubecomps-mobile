@@ -18,6 +18,7 @@ $ ->
 
     Handlebars.registerHelper "joinTimes", (result) ->
       times = _.chain([result.t1, result.t2, result.t3, result.t4, result.t5])
+        .compact()
         .map((t) -> t.trim())
         .compact()
         .value()
