@@ -156,26 +156,20 @@ class Round
     return false if past?
 
     if results.any?(&:world_record?)
-      $redis.sadd "world_records", redis_key
       $redis.sadd "world_records:#{competition_id}", redis_key
     else
-      $redis.srem "world_records", redis_key
       $redis.srem "world_records:#{competition_id}", redis_key
     end
 
     if results.any?(&:continental_record?)
-      $redis.sadd "continental_records", redis_key
       $redis.sadd "continental_records:#{competition_id}", redis_key
     else
-      $redis.srem "continental_records", redis_key
       $redis.srem "continental_records:#{competition_id}", redis_key
     end
 
     if results.any?(&:national_record?)
-      $redis.sadd "national_records", redis_key
       $redis.sadd "national_records:#{competition_id}", redis_key
     else
-      $redis.srem "national_records", redis_key
       $redis.srem "national_records:#{competition_id}", redis_key
     end
   rescue Redis::CannotConnectError => e
