@@ -17,7 +17,11 @@ $ ->
       new Handlebars.SafeString(span)
 
     Handlebars.registerHelper "joinTimes", (result) ->
-      times = _.compact([result.t1, result.t2, result.t3, result.t4, result.t5])
+      times = _.chain([result.t1, result.t2, result.t3, result.t4, result.t5])
+        .map((t) -> t.trim())
+        .compact()
+        .value()
+
       if times.length > 0
         times.join(", ")
       else
