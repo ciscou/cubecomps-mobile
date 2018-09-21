@@ -28,12 +28,12 @@ class Event
     best_records.delete("NR")
   end
 
-  def live?
-    rounds.any?(&:live?)
+  def live?(past_cache = nil)
+    rounds.any? { |round| round.live?(past_cache) }
   end
 
-  def finished?
-    rounds.all?(&:finished?)
+  def finished?(past_cache = nil)
+    rounds.all? { |round| round.finished?(past_cache) }
   end
 
   def to_param

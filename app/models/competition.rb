@@ -66,6 +66,15 @@ class Competition
     }
   end
 
+  def past?
+    return @past if defined?(@past)
+    @past = $redis.sismember("past_competition_ids", id)
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    false
+  end
+
   def cache_key
     ["competitions", id].join("/")
   end

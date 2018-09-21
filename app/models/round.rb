@@ -43,13 +43,6 @@ class Round
     @results ||= fetch_results
   end
 
-  def live?
-    return false if past?
-    return false unless updated_at
-
-    (Time.parse(updated_at) + 15.minutes).future?
-  end
-
   def best_record(records_cache = nil)
     if get_record_from(records_cache, "world_records", redis_key)
       "WR"
@@ -60,21 +53,30 @@ class Round
     end
   end
 
-  def started?
-    return true if past?
+  def live?(past_cache = nil)
+    return false if past?(past_cache)
+    return false unless updated_at
+
+    (Time.parse(updated_at) + 15.minutes).future?
+  end
+
+  def started?(past_cache = nil)
+    return true if past?(past_cache)
 
     !! updated_at
   end
 
-  def finished?
-    return true if past?
+  def finished?(past_cache = nil)
+    return true if past?(past_cache)
 
     finished = updated_at && !live?
     !!finished
   end
 
-  def past?
-    $redis.sismember("past_competition_ids", competition_id)
+  def past?(past_cache = nil)
+    return past_cache unless past_cache.nil?
+    return @past if defined?(@past)
+    @past = $redis.sismember("past_competition_ids", competition_id)
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
 

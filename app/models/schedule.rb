@@ -58,7 +58,7 @@ class Schedule
     EVENTS.fetch(event_code) { event_code }
   end
 
-  def round_started?(competition_id)
-    Round.new(competition_id: competition_id, event_id: event_id, id: round_id).started?
+  def round_started?(competition)
+    Round.new(competition_id: competition.id, event_id: event_id, id: round_id).started?(competition.past?)
   end
 end
