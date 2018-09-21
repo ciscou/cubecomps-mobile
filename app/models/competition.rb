@@ -1,5 +1,5 @@
 class Competition
-  attr_accessor :id, :name, :city, :date
+  attr_accessor :id, :name, :city, :country, :date
 
   def initialize(args)
     args.each do |k, v|
@@ -19,18 +19,27 @@ class Competition
     return nil unless id.present?
 
     date = competition_tr.at_css("td div.p1 b").text
-    city = competition_tr.at_css("td div.p2 b").text
+    city, country = competition_tr.at_css("td div.p2 b").text.split(" - ")
 
     new(
       id:   id,
       name: link.text.strip,
       date: date,
-      city: city
+      city: city,
+      country: country
     )
   end
 
   def name
     @name ||= fetch_name
+  end
+
+  def city
+    @city ||= fetch_city
+  end
+
+  def country
+    @country ||= fetch_country
   end
 
   def events
@@ -73,11 +82,23 @@ class Competition
 
   private
 
-  def fetch_name
+  def fetch_name_city_and_country
     text_nodes = doc.css("div.top").children.select do |node|
       node.is_a? Nokogiri::XML::Text
     end
-    text_nodes.first.text.strip
+    text_nodes.map(&:text).map(&:strip)
+  end
+
+  def fetch_name
+    fetch_name_city_and_country.first
+  end
+
+  def fetch_city
+    fetch_name_city_and_country.second
+  end
+
+  def fetch_country
+    fetch_name_city_and_country.third
   end
 
   def fetch_events

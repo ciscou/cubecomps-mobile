@@ -17,7 +17,7 @@
 <% content_for(:desktop_version_url) { "http://www.cubecomps.com/live.php?cid=#{@competition.id}&desktop=1" } %>
 
 <script id="schedule-day-template" type="text/x-handlebars-template">
-  <h2>{{day}}</h2>
+  <h3>{{day}}</h3>
 
   <table class="schedule-table table-stripe" data-role="table" data-mode="reflow">
     <thead>
@@ -61,6 +61,13 @@
       {{/each}}
     </tbody>
   </table>
+</script>
+
+<script id="schedule-template" type="text/x-handlebars-template">
+  <h2>{{city}} ({{country}})</h2>
+
+  <div class="schedule-days-region">
+  </div>
 </script>
 
 <div id="schedule-region" data-competition-id="<%= @competition.id %>">
