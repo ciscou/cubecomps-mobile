@@ -115,6 +115,10 @@ $ ->
       attributes:
         "data-role": "popup"
         "data-overlay-theme": "a"
+      ui:
+        "allResultsLinks": "a.all-results"
+      events:
+        "click @ui.allResultsLinks": "seeAllResults"
       templateContext: ->
         competition_id: @getOption("competitor").get("competition_id")
         hasT1: @getOption("results").hasT1()
@@ -126,9 +130,16 @@ $ ->
         hasMean: @getOption("results").hasMean()
         hasBest: @getOption("results").hasBest()
       onAttach: ->
+        moreInfoView = this
         @$el.enhanceWithin()
-        @$el.popup()
+        @$el.popup
+          afterclose: -> moreInfoView.trigger("closed")
         @$el.popup("open")
+      seeAllResults: (e) ->
+        @close()
+        window.location.href = e.target.href
+      close: ->
+        @$el.popup("close")
 
     EventEmptyView = Marionette.View.extend
       template: false
@@ -158,6 +169,14 @@ $ ->
 
             resultsView.on "show:more:info", (view) ->
               moreInfoView = new MoreInfoView(model: view.model, competitor: competitor, results: results)
+              window.location.hash = "#popup"
+              moreInfoView.on "closed", ->
+                if window.location.hash == "#popup"
+                  window.history.back()
+              onHashChange = ->
+                if window.location.hash == ""
+                  moreInfoView.close()
+              window.onhashchange = onHashChange
               iv.showChildView("moreInfo", moreInfoView)
 
             iv.showChildView("results", resultsView)

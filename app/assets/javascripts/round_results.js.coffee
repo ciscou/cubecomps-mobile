@@ -104,6 +104,10 @@ $ ->
       attributes:
         "data-role": "popup"
         "data-overlay-theme": "a"
+      ui:
+        "allResultsLinks": "a.all-results"
+      events:
+        "click @ui.allResultsLinks": "seeAllResults"
       templateContext: ->
         competition_id: @getOption("round").get("competition_id")
         hasT1: @getOption("results").hasT1()
@@ -120,6 +124,9 @@ $ ->
         @$el.popup
           afterclose: -> moreInfoView.trigger("closed")
         @$el.popup("open")
+      seeAllResults: (e) ->
+        @close()
+        window.location.href = e.target.href
       close: ->
         @$el.popup("close")
 
