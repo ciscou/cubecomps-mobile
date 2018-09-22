@@ -115,9 +115,13 @@ $ ->
         hasMean: @getOption("results").hasMean()
         hasBest: @getOption("results").hasBest()
       onAttach: ->
+        moreInfoView = this
         @$el.enhanceWithin()
-        @$el.popup()
+        @$el.popup
+          afterclose: -> moreInfoView.trigger("closed")
         @$el.popup("open")
+      close: ->
+        @$el.popup("close")
 
     setTimeout(
       -> $.mobile.loading("show")
@@ -136,6 +140,14 @@ $ ->
 
         resultsView.on "show:more:info", (view) ->
           moreInfoView = new MoreInfoView(model: view.model, round: round, results: results)
+          window.location.hash = "#popup"
+          moreInfoView.on "closed", ->
+            if window.location.hash == "#popup"
+              window.history.back()
+          onHashChange = ->
+            if window.location.hash == ""
+              moreInfoView.close()
+          window.onhashchange = onHashChange
           roundView.showChildView("moreInfo", moreInfoView)
 
         resultsApp = new ResultsApp()
