@@ -13,7 +13,7 @@ $ ->
       extraClass = Handlebars.Utils.escapeExpression(record.toLowerCase())
       humanizedRecord = Handlebars.Utils.escapeExpression(humanizedTable[record] || "")
 
-      span  = "<span class=\"record #{extraClass}\" title=\"humanizedRecord\">#{record}</span>"
+      span  = "<span class=\"record #{extraClass}\" title=\"#{humanizedRecord}\">#{record}</span>"
       new Handlebars.SafeString(span)
 
     Handlebars.registerHelper "joinTimes", (result) ->
