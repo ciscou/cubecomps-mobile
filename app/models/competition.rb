@@ -1,5 +1,5 @@
 class Competition
-  attr_accessor :id, :name, :city, :country, :date
+  attr_accessor :id, :name, :city, :country, :country_code, :date
 
   def initialize(args)
     args.each do |k, v|
@@ -18,6 +18,10 @@ class Competition
     id = competition_params["cid"].first
     return nil unless id.present?
 
+    img = link.at_css("img.flag")
+    flag = img.attr("src")
+    country_code = flag.split("/").last.split(".").first
+
     date = competition_tr.at_css("td div.p1 b").text
     city, country = competition_tr.at_css("td div.p2 b").text.split(" - ")
 
@@ -26,7 +30,8 @@ class Competition
       name: link.text.strip,
       date: date,
       city: city,
-      country: country
+      country: country,
+      country_code: country_code
     )
   end
 
