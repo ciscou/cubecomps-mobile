@@ -19,8 +19,12 @@ class Competition
     return nil unless id.present?
 
     img = link.at_css("img.flag")
-    flag = img.attr("src")
-    country_code = flag.split("/").last.split(".").first
+    country_code = if img
+                      flag = img.attr("src")
+                      country_code = flag.split("/").last.split(".").first
+                   else
+                     "xx"
+                   end
 
     date = competition_tr.at_css("td div.p1 b").text
     city, country = competition_tr.at_css("td div.p2 b").text.split(" - ")
