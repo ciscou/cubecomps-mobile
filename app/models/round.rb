@@ -27,6 +27,14 @@ class Round
     @competition_name ||= fetch_competition_name
   end
 
+  def competition_city
+    @competition_city ||= fetch_competition_city
+  end
+
+  def competition_country
+    @competition_country ||= fetch_competition_country
+  end
+
   def event_name
     @event_name ||= fetch_event_name
   end
@@ -109,11 +117,23 @@ class Round
     false
   end
 
-  def fetch_competition_name
+  def fetch_competition_name_city_and_country
     text_nodes = doc.css("div.top").children.select do |node|
       node.is_a? Nokogiri::XML::Text
     end
-    text_nodes.first.text
+    text_nodes.map(&:text).map(&:strip)
+  end
+
+  def fetch_competition_name
+    fetch_competition_name_city_and_country.first
+  end
+
+  def fetch_competition_city
+    fetch_competition_name_city_and_country.second
+  end
+
+  def fetch_competition_country
+    fetch_competition_name_city_and_country.third
   end
 
   def fetch_event_and_round
