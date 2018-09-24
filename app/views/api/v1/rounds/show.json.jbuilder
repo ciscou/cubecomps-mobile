@@ -3,7 +3,8 @@ json.cache! ['api', 'v1', @round], ccm_cache_options(competition_id: @round.comp
   json.competition_city @round.competition_city
   json.competition_country @round.competition_country
   json.event_name @round.event_name
-  json.round_name @round.name
+  json.name @round.name
+  json.round_name @round.name # XXX deprecate this
   json.results @round.results do |result|
     json.extract! result, :position, :top_position, :name, :country
     json.extract! result, :competitor_id
