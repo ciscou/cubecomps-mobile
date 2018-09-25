@@ -1,4 +1,32 @@
 class Event
+  ID_TO_NAME = {
+    "333"    => "3x3x3 Cube",
+    "222"    => "2x2x2 Cube",
+    "444"    => "4x4x4 Cube",
+    "555"    => "5x5x5 Cube",
+    "666"    => "6x6x6 Cube",
+    "777"    => "7x7x7 Cube",
+    "clock"  => "Clock",
+    "magic"  => "Magic",
+    "mmagic" => "Master Magic",
+    "minx"   => "Megaminx",
+    "pyram"  => "Pyraminx",
+    "sq1"    => "Square-1",
+    "333oh"  => "3x3x3 One Handed",
+    "333ft"  => "3x3x3 With Feet",
+    "333fm"  => "3x3x3 Fewest Moves",
+    "333bf"  => "3x3x3 Blindfolded",
+    "444bf"  => "4x4x4 Blindfolded",
+    "555bf"  => "5x5x5 Blindfolded",
+    "333mbf" => "3x3x3 Multiple Blindfolded",
+    "skewb"  => "Skewb",
+    "reg"    => "REGISTRATION",
+    "lun"    => "LUNCH",
+    "tro"    => "AWARDS"
+  }
+
+  NAME_TO_ID = ID_TO_NAME.invert
+
   attr_accessor :id, :name, :rounds
 
   def initialize(args)
@@ -13,8 +41,11 @@ class Event
       event_rounds = event_td.css("div.round, div.c_round").map do |round_div|
         Round.build_from_round_div(round_div)
       end
+
+      event_id = event_rounds.first.event_id || NAME_TO_ID[event_name]
+
       new(
-        id:     event_rounds.first.event_id,
+        id:     event_id,
         name:   event_name,
         rounds: event_rounds
       )
