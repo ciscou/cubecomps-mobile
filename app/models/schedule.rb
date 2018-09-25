@@ -24,12 +24,12 @@ class Schedule
   end
 
   def event_id
-    index = Event::ID_TO_NAME.keys.index(event_code) || 999
+    index = Event::CODE_TO_NAME.keys.index(event_code) || 999
     index + 1
   end
 
   def event_name
-    Event::ID_TO_NAME.fetch(event_code) { event_code }
+    Event::CODE_TO_NAME.fetch(event_code) { event_code }
   end
 
   def round_started?(competition)

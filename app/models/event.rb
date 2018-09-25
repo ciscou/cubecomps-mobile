@@ -1,5 +1,5 @@
 class Event
-  ID_TO_NAME = {
+  CODE_TO_NAME = {
     "333"    => "3x3x3 Cube",
     "222"    => "2x2x2 Cube",
     "444"    => "4x4x4 Cube",
@@ -25,7 +25,9 @@ class Event
     "tro"    => "AWARDS"
   }
 
-  NAME_TO_ID = ID_TO_NAME.invert
+  NAME_TO_ID = Hash[CODE_TO_NAME.map.with_index do |(code, name), index|
+    [name, index + 1]
+  end]
 
   attr_accessor :id, :name, :rounds
 
