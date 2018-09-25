@@ -12,7 +12,7 @@ class Event
     "minx"   => "Megaminx",
     "pyram"  => "Pyraminx",
     "sq1"    => "Square-1",
-    "333oh"  => "3x3x3 One Handed",
+    "333oh"  => "3x3x3 One-Handed",
     "333ft"  => "3x3x3 With Feet",
     "333fm"  => "3x3x3 Fewest Moves",
     "333bf"  => "3x3x3 Blindfolded",
