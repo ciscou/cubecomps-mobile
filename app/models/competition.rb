@@ -75,6 +75,10 @@ class Competition
     }
   end
 
+  def updated_at_cache
+    @updated_at_cache ||= $redis.hgetall("updated_at:#{id}")
+  end
+
   def past?
     return @past if defined?(@past)
     @past = $redis.sismember("past_competition_ids", id)

@@ -31,8 +31,4 @@ class Schedule
   def event_name
     Event::CODE_TO_NAME.fetch(event_code) { event_code }
   end
-
-  def round_started?(competition_id)
-    Round.new(competition_id: competition_id, event_id: event_id, id: round_id).started?
-  end
 end

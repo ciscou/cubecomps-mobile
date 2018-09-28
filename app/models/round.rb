@@ -92,7 +92,6 @@ class Round
 
   def fetch_past
     if @past_cache.nil?
-      puts "ZOMG @past_cache was nil!!!"
       $redis.sismember("past_competition_ids", competition_id)
     else
       @past_cache
@@ -118,11 +117,10 @@ class Round
   private
 
   def fetch_best_record(records_key)
-    if @records_cache.nil?
-      puts "ZOMG @records_cache was nil!!!"
+    if @best_record_cache.nil?
       $redis.sismember "#{records_key}:#{competition_id}", redis_key
     else
-      @records_cache[records_key].include?(redis_key)
+      @best_record_cache[records_key].include?(redis_key)
     end
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
@@ -222,7 +220,6 @@ class Round
 
   def fetch_updated_at
     if @updated_at_cache.nil?
-      puts "ZOMG @updated_at_cache was nil!!!"
       $redis.hget("updated_at:#{competition_id}", redis_key)
     else
       @updated_at_cache[redis_key]
