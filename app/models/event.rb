@@ -54,19 +54,19 @@ class Event
     end
   end
 
-  def best_record(records_cache = nil)
-    best_records = rounds.map { |round| round.best_record(records_cache) }
+  def best_record
+    best_records = rounds.map(&:best_record)
     best_records.delete("WR") ||
     best_records.delete("CR") ||
     best_records.delete("NR")
   end
 
-  def live?(past_cache = nil)
-    rounds.any? { |round| round.live?(past_cache) }
+  def live?
+    rounds.any?(&:live?)
   end
 
-  def finished?(past_cache = nil)
-    rounds.all? { |round| round.finished?(past_cache) }
+  def finished?
+    rounds.all?(&:finished?)
   end
 
   def to_param

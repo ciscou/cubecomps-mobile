@@ -1,5 +1,5 @@
 class Round
-  attr_accessor :competition_id, :event_id, :id, :event_name, :name
+  attr_accessor :competition_id, :event_id, :id, :event_name, :name, :past_cache, :updated_at_cache, :best_record_cache
 
   def initialize(args)
     args.each do |k, v|
@@ -51,40 +51,52 @@ class Round
     @results ||= fetch_results
   end
 
-  def best_record(records_cache = nil)
-    if get_record_from(records_cache, "world_records", redis_key)
+  def best_record
+    if fetch_best_record("world_records")
       "WR"
-    elsif get_record_from(records_cache, "continental_records", redis_key)
+    elsif fetch_best_record("continental_records")
       "CR"
-    elsif get_record_from(records_cache, "national_records", redis_key)
+    elsif fetch_best_record("national_records")
       "NR"
     end
   end
 
-  def live?(past_cache = nil)
-    return false if past?(past_cache)
+  def live?
+    return false if past?
     return false unless updated_at
 
     (Time.parse(updated_at) + 15.minutes).future?
   end
 
-  def started?(past_cache = nil)
-    return true if past?(past_cache)
+  def started?
+    return true if past?
 
     !! updated_at
   end
 
-  def finished?(past_cache = nil)
-    return true if past?(past_cache)
+  def finished?
+    return true if past?
 
     finished = updated_at && !live?
     !!finished
   end
 
-  def past?(past_cache = nil)
-    return past_cache unless past_cache.nil?
+  def past?
     return @past if defined?(@past)
-    @past = $redis.sismember("past_competition_ids", competition_id)
+    @past = fetch_past
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    false
+  end
+
+  def fetch_past
+    if @past_cache.nil?
+      puts "ZOMG @past_cache was nil!!!"
+      $redis.sismember("past_competition_ids", competition_id)
+    else
+      @past_cache
+    end
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
 
@@ -105,11 +117,12 @@ class Round
 
   private
 
-  def get_record_from(records_cache, records_key, redis_key)
-    if records_cache.nil?
+  def fetch_best_record(records_key)
+    if @records_cache.nil?
+      puts "ZOMG @records_cache was nil!!!"
       $redis.sismember "#{records_key}:#{competition_id}", redis_key
     else
-      records_cache[records_key].include?(redis_key)
+      @records_cache[records_key].include?(redis_key)
     end
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
@@ -169,6 +182,7 @@ class Round
     if times_count > $redis.hget("times_count", redis_key).to_i
       $redis.hset("times_count", redis_key, times_count)
       $redis.hset("updated_at",  redis_key, Time.now)
+      $redis.hset("updated_at:#{competition_id}", redis_key, Time.now)
     end
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
@@ -199,11 +213,24 @@ class Round
   end
 
   def updated_at
-    @updated_at ||= $redis.hget("updated_at", redis_key)
+    @updated_at ||= fetch_updated_at
   rescue Redis::CannotConnectError => e
     ExceptionNotifier.notify_exception(e)
 
     nil
+  end
+
+  def fetch_updated_at
+    if @updated_at_cache.nil?
+      puts "ZOMG @updated_at_cache was nil!!!"
+      $redis.hget("updated_at:#{competition_id}", redis_key)
+    else
+      @updated_at_cache[redis_key]
+    end
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    false
   end
 
   def doc
