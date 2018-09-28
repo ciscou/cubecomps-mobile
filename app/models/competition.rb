@@ -76,7 +76,7 @@ class Competition
   end
 
   def updated_at_cache
-    @updated_at_cache ||= $redis.hgetall("updated_at:#{id}")
+    @updated_at_cache ||= fetch_updated_at_cache
   end
 
   def past?
@@ -118,6 +118,14 @@ class Competition
     ExceptionNotifier.notify_exception(e)
 
     []
+  end
+
+  def fetch_updated_at_cache
+    $redis.hgetall("updated_at:#{id}")
+  rescue Redis::CannotConnectError => e
+    ExceptionNotifier.notify_exception(e)
+
+    {}
   end
 
   def fetch_name_city_and_country
