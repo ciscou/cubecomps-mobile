@@ -96,13 +96,6 @@ class Competition
     if $redis.sadd "past_competition_ids", id
       puts "Archiving competition #{name} (#{id})"
 
-      # XXX not needed when migrated to updated_at:{id} and times_count:{id}
-      %w[updated_at times_count].each do |key|
-        $redis.hkeys(key).select { |k| k.start_with? "#{id}:" }.each do |k|
-          $redis.hdel key, k
-        end
-      end
-
       $redis.del("updated_at:#{id}")
       $redis.del("times_count:#{id}")
 

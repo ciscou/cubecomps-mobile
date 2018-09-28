@@ -178,8 +178,6 @@ class Round
     end.count(&:present?)
 
     if times_count > $redis.hget("times_count:#{competition_id}", redis_key).to_i
-      $redis.hset("times_count", redis_key, times_count)
-      $redis.hset("updated_at",  redis_key, Time.now)
       $redis.hset("times_count:#{competition_id}", redis_key, times_count)
       $redis.hset("updated_at:#{competition_id}", redis_key, Time.now)
     end
