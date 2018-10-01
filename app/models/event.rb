@@ -18,7 +18,7 @@ class Event
     "333bf"  => "3x3x3 Blindfolded",
     "444bf"  => "4x4x4 Blindfolded",
     "555bf"  => "5x5x5 Blindfolded",
-    "333mbf" => "3x3x3 Multiple Blindfolded",
+    "333mbf" => "3x3x3 Multi-Blind",
     "skewb"  => "Skewb",
     "reg"    => "REGISTRATION",
     "lun"    => "LUNCH",
