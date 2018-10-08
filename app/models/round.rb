@@ -1,4 +1,15 @@
 class Round
+  CODE_TO_NAME = {
+    "cmbfirst"  => "Combined First",
+    "first"     => "First Round",
+    "second"    => "Second Round",
+    "semifinal" => "Semi Final",
+    "cmbfinal"  => "Combined Final",
+    "final"     => "Final"
+  }
+
+  NAME_TO_CODE = CODE_TO_NAME.invert
+
   attr_accessor :competition_id, :event_id, :id, :event_name, :name, :past_cache, :updated_at_cache, :best_record_cache
 
   def initialize(args)
@@ -21,6 +32,14 @@ class Round
       id:             round_params["rnd"].first,
       name:           round_div.text
     )
+  end
+
+  def code
+    NAME_TO_CODE[name]
+  end
+
+  def event_code
+    Event::CODE_TO_NAME.keys[event_id.to_i - 1]
   end
 
   def competition_name

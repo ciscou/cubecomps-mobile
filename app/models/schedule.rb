@@ -7,6 +7,10 @@ class Schedule
     end
   end
 
+  def round_code
+    Round::NAME_TO_CODE[round_name]
+  end
+
   def formatted_start
     start.strftime(time_format)
   end

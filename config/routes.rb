@@ -20,6 +20,15 @@ CubecompsMobile::Application.routes.draw do
         get :past, on: :collection
       end
     end
+    namespace "v2" do
+      resources :competitions, only: [:index, :show] do
+        resources :competitors, only: :show
+        resources :events, only: [] do
+          resources :rounds, only: :show
+        end
+        get :past, on: :collection
+      end
+    end
   end
 
   root to: "competitions#index"

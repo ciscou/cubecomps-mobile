@@ -45,6 +45,14 @@ class Result
     end
   end
 
+  def event_code
+    Event::CODE_TO_NAME.keys[event_id.to_i - 1]
+  end
+
+  def round_code
+    Round::NAME_TO_CODE[round]
+  end
+
   def event
     evt_rnd.split(" - ").first
   end

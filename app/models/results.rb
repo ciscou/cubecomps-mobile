@@ -16,6 +16,11 @@ class Results
     h.merge(h) { |k, v| self.class.new(v) }
   end
 
+  def by_event_code
+    h = group_by(&:event_code)
+    h.merge(h) { |k, v| self.class.new(v) }
+  end
+
   def each(&block)
     @results.each(&block)
   end

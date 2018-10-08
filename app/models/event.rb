@@ -54,6 +54,10 @@ class Event
     end
   end
 
+  def code
+    CODE_TO_NAME.keys[id.to_i - 1]
+  end
+
   def best_record
     best_records = rounds.map(&:best_record)
     best_records.delete("WR") ||

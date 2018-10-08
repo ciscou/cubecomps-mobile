@@ -35,15 +35,15 @@ describe "List round results" do
   end
 
   it "should update live and finished labels" do
-    get api_v1_competition_path(3545, 1, 1)
+    get api_v2_competition_path(3545, 1, 1)
     expect(json_333["live"]    ).to be false
     expect(json_333["finished"]).to be false
     expect(json_333_1["live"]    ).to be false
     expect(json_333_1["finished"]).to be false
 
-    get api_v1_competition_event_round_path(3545, 1, 1)
+    get api_v2_competition_event_round_path(3545, 1, 1)
 
-    get api_v1_competition_path(3545, 1, 1)
+    get api_v2_competition_path(3545, 1, 1)
     expect(json_333["live"]    ).to be true
     expect(json_333["finished"]).to be false
     expect(json_333_1["live"]    ).to be true
@@ -51,7 +51,7 @@ describe "List round results" do
 
     Delorean.time_travel_to 13.minutes.from_now
 
-    get api_v1_competition_path(3545, 1, 1)
+    get api_v2_competition_path(3545, 1, 1)
     expect(json_333["live"]    ).to be true
     expect(json_333["finished"]).to be false
     expect(json_333_1["live"]    ).to be true
@@ -59,7 +59,7 @@ describe "List round results" do
 
     Delorean.time_travel_to 2.minutes.from_now
 
-    get api_v1_competition_path(3545, 1, 1)
+    get api_v2_competition_path(3545, 1, 1)
     expect(json_333["live"]    ).to be false
     expect(json_333["finished"]).to be false
     expect(json_333_1["live"]    ).to be false
