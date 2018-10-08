@@ -27,7 +27,7 @@ json.cache! ['api', 'v1', @competition], ccm_cache_options(competition_id: @comp
       json.day day
       json.rows rows.sort_by { |row| [row.start, row.end] } do |row|
         json.extract! row, :formatted_start, :formatted_end, :event_id, :event_code, :round_id, :round_code, :alternate_text, :extra_info
-        unless %w[reg lun tro].include? row.round_code
+        unless row.event_code.empty? && %w[reg lun tro].include?(row.event_code)
           json.round_started Round.new(competition_id: @competition.id, event_id: row.event_id, id: row.round_id, past_cache: @competition.past?, updated_at_cache: @competition.updated_at_cache, best_record_cache: @competition.records_cache).started?
         end
       end
