@@ -1,4 +1,4 @@
-json.cache! ['api', 'v1', @competition], ccm_cache_options(competition_id: @competition.id) do
+json.cache! ['api', 'v2', @competition], ccm_cache_options(competition_id: @competition.id) do
   json.name @competition.name
   json.city @competition.city
   json.country @competition.country
