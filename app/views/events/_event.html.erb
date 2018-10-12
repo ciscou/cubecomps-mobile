@@ -6,7 +6,7 @@
   {{#each rounds}}
     <li>
       {{#ifRoundIsSetup this}}
-        <a href="/competitions/{{competition_id}}/events/{{event_id}}/rounds/{{id}}/results">
+        <a href="/competitions/{{../competition_id}}/events/{{event_id}}/rounds/{{id}}/results">
           {{name}}
           {{roundLabels this}}
         </a>

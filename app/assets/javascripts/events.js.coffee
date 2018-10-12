@@ -3,7 +3,7 @@ $ ->
     competitionId = $("#events-region").data("competition-id")
 
     Handlebars.registerHelper "ifRoundIsSetup", (round, options) ->
-      if round.competition_id && round.event_id && round.id
+      if round.event_id && round.id
         options.fn(this)
       else
         options.inverse(this)
@@ -45,7 +45,7 @@ $ ->
       model: CubecompsEvent
 
     Competition = Backbone.Model.extend
-      urlRoot: "/api/v1/competitions"
+      urlRoot: "/api/v2/competitions"
 
     EventsApp = Marionette.Application.extend
       region: "#events-region"
@@ -56,6 +56,8 @@ $ ->
         "event-#{@model.id}"
       ui:
         listview: 'ul'
+      templateContext: ->
+        competition_id: @getOption("competition").id
       onRender: ->
         @$el.collapsible(inset: false)
         @getUI("listview").listview()
@@ -63,6 +65,8 @@ $ ->
     EventsView = Marionette.CollectionView.extend
       template: false
       childView: EventView
+      childViewOptions: ->
+        competition: @getOption("competition")
       collapsibleset: ->
         @$el.collapsibleset()
 
@@ -84,7 +88,7 @@ $ ->
         $("title").text(competition.get("name"))
 
         events = new CubecompsEvents()
-        eventsView = new EventsView(collection: events)
+        eventsView = new EventsView(collection: events, competition: competition)
 
         eventsApp = new EventsApp()
         eventsApp.on "start", ->

@@ -54,7 +54,7 @@ $ ->
         @any (result) -> result.has("best")
 
     Competitor = Backbone.Model.extend
-      urlRoot: -> "/api/v1/competitions/#{@get("competition_id")}/competitors"
+      urlRoot: -> "/api/v2/competitions/#{@get("competition_id")}/competitors"
 
     ResultsApp = Marionette.Application.extend
       region: "#competitor-results-region"
@@ -188,8 +188,7 @@ $ ->
         if _.isEmpty(results)
           resultsApp.showView(new EventEmptyView(model: competitor))
         else
-          _.each _.keys(results), (key) ->
-            events.add name: key, results: results[key]
+          events.reset(results)
       .fail ->
         alert("Failed to load results!")
       .always ->

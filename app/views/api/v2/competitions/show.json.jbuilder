@@ -8,12 +8,12 @@ json.cache! ['api', 'v2', @competition], ccm_cache_options(competition_id: @comp
       round.best_record_cache = @competition.records_cache
       round.updated_at_cache  = @competition.updated_at_cache
     end
-    json.extract! event, :id, :code
+    json.extract! event, :id, :code, :name
     json.best_record event.best_record
     json.live event.live?
     json.finished event.finished?
     json.rounds event.rounds do |round|
-      json.extract! round, :id, :code, :event_id, :event_code
+      json.extract! round, :id, :code, :name, :event_id, :event_code
       json.best_record round.best_record
       json.live round.live?
       json.finished round.finished?
@@ -26,7 +26,7 @@ json.cache! ['api', 'v2', @competition], ccm_cache_options(competition_id: @comp
     json.array! @competition.schedule.group_by { |row| row.start.to_date.to_s(:long) } do |day, rows|
       json.day day
       json.rows rows.sort_by { |row| [row.start, row.end] } do |row|
-        json.extract! row, :formatted_start, :formatted_end, :event_id, :event_code, :round_id, :round_code, :alternate_text, :extra_info
+        json.extract! row, :formatted_start, :formatted_end, :event_id, :event_code, :event_name, :round_id, :round_code, :round_name, :alternate_text, :extra_info
         unless row.event_code.empty? || %w[reg lun tro].include?(row.event_code)
           json.round_started Round.new(competition_id: @competition.id, event_id: row.event_id, id: row.round_id, past_cache: @competition.past?, updated_at_cache: @competition.updated_at_cache, best_record_cache: @competition.records_cache).started?
         end

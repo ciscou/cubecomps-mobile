@@ -1,6 +1,6 @@
 class RecordsPublisher
   def run
-    competitions = get_json('/api/v1/competitions')
+    competitions = get_json('/api/v2/competitions')
     competitions['in_progress'].each do |competition|
       handle_competition(competition)
     end
@@ -13,7 +13,7 @@ class RecordsPublisher
   private
 
   def handle_competition(competition)
-    events = get_json('/api/v1/competitions/%{competition_id}' % { competition_id: competition['id'] })["events"]
+    events = get_json('/api/v2/competitions/%{competition_id}' % { competition_id: competition['id'] })["events"]
     events.each do |event|
       handle_event(competition, event)
     end
@@ -29,7 +29,7 @@ class RecordsPublisher
     return unless round['event_id'] && round['id']
     return unless round['live']
 
-    results = get_json('/api/v1/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })["results"]
+    results = get_json('/api/v2/competitions/%{competition_id}/events/%{event_id}/rounds/%{round_id}' % { competition_id: competition['id'], event_id: round['event_id'], round_id: round['id'] })["results"]
 
     results.select { |r| r['average_record'] }.each do |result|
       handle_average_record(competition, event, round, result)

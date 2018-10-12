@@ -8,17 +8,21 @@ $ ->
       model: ScheduleDay
 
     Competition = Backbone.Model.extend
-      urlRoot: "/api/v1/competitions"
+      urlRoot: "/api/v2/competitions"
 
     ScheduleApp = Marionette.Application.extend
       region: "#schedule-region"
 
     ScheduleDayView = Marionette.CollectionView.extend
       template: Handlebars.compile($("#schedule-day-template").html())
+      templateContext: ->
+        competition_id: @getOption("competition").id
 
     ScheduleDaysView = Marionette.CollectionView.extend
       template: false
       childView: ScheduleDayView
+      childViewOptions: ->
+        competition: @getOption("competition")
       table: ->
         @$("table").table()
 
@@ -46,7 +50,7 @@ $ ->
         $("title").text(competition.get("name"))
 
         scheduleDays = new ScheduleDays()
-        scheduleDaysView = new ScheduleDaysView(collection: scheduleDays)
+        scheduleDaysView = new ScheduleDaysView(collection: scheduleDays, competition: competition)
         scheduleView = new ScheduleView(model: competition)
 
         scheduleApp = new ScheduleApp()
@@ -57,8 +61,7 @@ $ ->
         scheduleApp.start()
 
         schedule = competition.get("schedule")
-        _.each _.keys(schedule), (key) ->
-          scheduleDays.add(day: key, rows: schedule[key])
+        scheduleDays.reset(schedule)
 
         if scheduleDays.length > 0
           scheduleDaysView.table()

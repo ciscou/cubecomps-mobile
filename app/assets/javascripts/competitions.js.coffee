@@ -10,9 +10,9 @@ $ ->
     Homepage = Backbone.Model.extend
       url: ->
         if allPast
-          "/api/v1/competitions/past"
+          "/api/v2/competitions/past"
         else
-          "/api/v1/competitions"
+          "/api/v2/competitions"
 
     CompetitionsApp = Marionette.Application.extend
       region: "#competitions-region"

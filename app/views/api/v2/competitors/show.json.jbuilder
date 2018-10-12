@@ -4,8 +4,9 @@ json.cache! ['api', 'v2', @competitor], ccm_cache_options(competition_id: @compe
   json.results do
     json.array! @competitor.results.by_event_code do |event_code, results|
       json.event_code event_code
+      json.event_name results.first.event
       json.results results do |result|
-        json.extract! result, :event_id, :event_code, :round_id, :round_code, :position, :top_position
+        json.extract! result, :event_id, :event_code, :event, :round_id, :round_code, :round, :position, :top_position
 
         json.t1 format_time(result.t1) if @competitor.results.t1?
         json.t2 format_time(result.t2) if @competitor.results.t2?

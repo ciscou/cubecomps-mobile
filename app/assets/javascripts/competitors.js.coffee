@@ -8,7 +8,7 @@ $ ->
       model: Competitor
 
     Competition = Backbone.Model.extend
-      urlRoot: "/api/v1/competitions"
+      urlRoot: "/api/v2/competitions"
 
     CompetitorsApp = Marionette.Application.extend
       region: "#competitors-region"

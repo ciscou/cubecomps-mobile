@@ -47,7 +47,7 @@ $ ->
         @any (result) -> result.has("best")
 
     Round = Backbone.Model.extend
-      urlRoot: -> "/api/v1/competitions/#{@get("competition_id")}/events/#{@get("event_id")}/rounds"
+      urlRoot: -> "/api/v2/competitions/#{@get("competition_id")}/events/#{@get("event_id")}/rounds"
 
     ResultsApp = Marionette.Application.extend
       region: "#round-results-region"
