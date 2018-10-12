@@ -50,7 +50,7 @@ end
 
 group :development, :test do
   gem 'capybara'
-  gem "poltergeist"
+  gem "selenium-webdriver"
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem "fakeweb", "~> 1.3"
   gem "launchy"
