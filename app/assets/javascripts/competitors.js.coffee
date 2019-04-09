@@ -16,10 +16,14 @@ $ ->
     CompetitorView = Marionette.View.extend
       template: Handlebars.compile($("#competitor-template").html())
       tagName: "li"
+      templateContext: ->
+        competition_id: @getOption("competitionId")
 
     CompetitorsView = Marionette.CollectionView.extend
       template: false
       childView: CompetitorView
+      childViewOptions: ->
+        competitionId: @getOption("competitionId")
       filterable: ->
         @$el.filterable()
       listview: ->
@@ -43,7 +47,7 @@ $ ->
         $("title").text(competition.get("name"))
 
         competitors = new Competitors()
-        competitorsView = new CompetitorsView(collection: competitors)
+        competitorsView = new CompetitorsView(competitionId: competitionId, collection: competitors)
 
         competitorsApp = new CompetitorsApp()
         competitorsApp.on "start", ->
