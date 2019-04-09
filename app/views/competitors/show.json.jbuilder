@@ -1,4 +1,4 @@
-json.cache! [@competitor, "results"], ccm_cache_options(competition_id: @competitor.competition_id) do
+json.cache! [Tenant.current, @competitor, "results"], ccm_cache_options(competition_id: @competitor.competition_id) do
   json.array! @competitor.results do |result|
     json.extract! result, :position, :top_position, :event, :round
     json.extract! result, :event_id, :round_id

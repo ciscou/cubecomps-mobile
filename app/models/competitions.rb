@@ -16,7 +16,7 @@ class Competitions
   end
 
   def cache_key
-    [Tenant.current, "competitions"]
+    "competitions"
   end
 
   def archive_old!
