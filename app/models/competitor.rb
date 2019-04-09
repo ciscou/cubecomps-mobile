@@ -75,7 +75,7 @@ class Competitor
   end
 
   def fetch_doc
-    doc = Nokogiri::HTML open "http://cubecomps.com/live.php?cid=#{competition_id}&compid=#{id}&dnrd=1"
+    doc = Nokogiri::HTML open "#{Tenant.cubecomps_host}/live.php?cid=#{competition_id}&compid=#{id}&dnrd=1"
     raise NotFoundException if doc.css("body").text.include? "That competition is not available any more."
     raise NotFoundException if doc.css("div.main").text.include? "No such competitor in this competition!"
 

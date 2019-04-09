@@ -16,7 +16,7 @@ class Competitions
   end
 
   def cache_key
-    "competitions"
+    [Tenant.current, "competitions"]
   end
 
   def archive_old!
@@ -55,6 +55,6 @@ class Competitions
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "http://cubecomps.com/#{"?all=1" if @all}"
+    @doc ||= Nokogiri::HTML open "#{Tenant.cubecomps_host}/#{"?all=1" if @all}"
   end
 end
