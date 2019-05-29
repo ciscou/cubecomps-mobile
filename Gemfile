@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.3'
+gem 'rails', '4.2.11.1'
 gem 'nokogiri'
 gem 'unicorn'
 gem 'memcachier'
@@ -48,7 +48,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-group :development, :test do
+group :test do
   gem 'capybara'
   gem "selenium-webdriver"
   gem 'rspec-rails', '~> 3.0.0.beta'
