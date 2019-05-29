@@ -5,7 +5,7 @@ Just like http://www.cubecomps.com, but optimized for small screens!
 ## API included!
 
 Want to develop your own cubecomps application? No need to
-re-scrap cubecomps.com! Just use our API.
+re-scrape cubecomps.com! Just use our API.
 
 ### Get a list of competitions.
 
