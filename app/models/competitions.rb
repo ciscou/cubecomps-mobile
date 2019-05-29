@@ -63,9 +63,7 @@ class Competitions
     Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       request = Net::HTTP::Get.new uri
       response = http.request request
-      res = response.body
-      puts res
-      res
+      response.body
     end
   end
 end
