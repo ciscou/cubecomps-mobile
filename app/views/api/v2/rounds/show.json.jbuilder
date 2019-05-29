@@ -1,4 +1,4 @@
-json.cache! [Tenant.current, 'api', 'v2', @round], ccm_cache_options(competition_id: @round.competition_id) do
+json.cache! ['api', 'v2', @round], ccm_cache_options(competition_id: @round.competition_id) do
   json.competition_name @round.competition_name
   json.competition_city @round.competition_city
   json.competition_country @round.competition_country
