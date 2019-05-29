@@ -8,12 +8,4 @@ class ApplicationController < ActionController::Base
   rescue_from NotFoundException, ActionView::MissingTemplate do |ex|
     raise ActionController::RoutingError.new("Not Found")
   end
-
-  before_action :set_tenant
-
-  private
-
-  def set_tenant
-    Tenant.set_for_host(request.host)
-  end
 end
