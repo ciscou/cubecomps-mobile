@@ -1,6 +1,6 @@
 class Tenant
   HOSTS = {
-    wca:  "https://cubecomps.worldcubeassociation.org",
+    wca:  "https://m.cubecomps.worldcubeassociation.org",
     luis: "http://cubecomps.com"
   }.with_indifferent_access.freeze
 
