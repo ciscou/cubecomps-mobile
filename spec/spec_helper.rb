@@ -33,6 +33,8 @@ RSpec.configure do |config|
     FakeWeb.clean_registry
     $redis.flushdb
   end
+
+  config.infer_spec_type_from_file_location!
 end
 
 Capybara.register_driver :selenium_chrome do |app|
@@ -40,3 +42,5 @@ Capybara.register_driver :selenium_chrome do |app|
 end
 
 Capybara.javascript_driver = :selenium_chrome
+
+Capybara.server = :webrick

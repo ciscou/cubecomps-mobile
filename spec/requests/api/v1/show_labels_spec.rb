@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe "List round results" do
   before do
-    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=3545&dnrd=1", [
+    FakeWeb.register_uri :get, "https://www.cubecomps.com/live.php?cid=3545&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open.html") }
     ]
-    FakeWeb.register_uri :get, "https://cubecomps.com/uploads/sch_3545.txt", [
+    FakeWeb.register_uri :get, "https://www.cubecomps.com/uploads/sch_3545.txt", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "sch_3545.txt") }
     ]
-    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=3545&cat=1&rnd=1&dnrd=1", [
+    FakeWeb.register_uri :get, "https://www.cubecomps.com/live.php?cid=3545&cat=1&rnd=1&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open", "rubiks-cube", "first-round-not-complete.html") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open", "rubiks-cube", "first-round.html") }
     ]
