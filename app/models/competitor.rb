@@ -84,7 +84,7 @@ class Competitor
 
   def get_html(path)
     uri = URI("https://www.cubecomps.com#{path}")
-    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true, ssl_version: :SSLv23) do |http|
       request = Net::HTTP::Get.new uri
       response = http.request request
       response.body
