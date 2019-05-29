@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Live results" do
   before do
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=418&dnrd=1", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=418&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html") },
@@ -10,12 +10,12 @@ feature "Live results" do
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=418&cat=1&rnd=1&dnrd=1", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=418&cat=1&rnd=1&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open", "rubiks-cube", "combined-first-not-full.html") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "delhi-open", "rubiks-cube", "combined-first.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
-    FakeWeb.register_uri :get, "http://cubecomps.com/uploads/sch_418.txt", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/uploads/sch_418.txt", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "sch_418.txt") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "sch_418.txt") },
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2014-02-28", "sch_418.txt") },

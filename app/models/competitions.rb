@@ -55,6 +55,6 @@ class Competitions
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "http://cubecomps.com/#{"?all=1" if @all}"
+    @doc ||= Nokogiri::HTML open "https://cubecomps.com/#{"?all=1" if @all}"
   end
 end

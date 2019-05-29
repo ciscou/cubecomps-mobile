@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Show competitor" do
   before do
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=3545&compid=16&dnrd=1", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=3545&compid=16&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open", "competitors", "daniel-gracia.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]

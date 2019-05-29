@@ -2,15 +2,15 @@ require 'spec_helper'
 
 feature "List competition events" do
   before do
-    FakeWeb.register_uri :get, "http://cubecomps.com/", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "home.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
-    FakeWeb.register_uri :get, "http://cubecomps.com/live.php?cid=3545&dnrd=1", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/live.php?cid=3545&dnrd=1", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "canarias-open.html") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
-    FakeWeb.register_uri :get, "http://cubecomps.com/uploads/sch_3545.txt", [
+    FakeWeb.register_uri :get, "https://cubecomps.com/uploads/sch_3545.txt", [
       { response: File.read(Rails.root.join "spec", "fixtures", "cubecomps", "2018-09-19", "sch_3545.txt") },
       { body: "Too Many Requests", status: [429, "Too Many Requests"] }
     ]
