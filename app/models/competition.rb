@@ -160,12 +160,7 @@ class Competition
   end
 
   def fetch_schedule
-    @sch ||= begin
-               f = open("https://cubecomps.com/uploads/sch_#{id}.txt", redirect: false)
-               ScheduleParser.new(f).parse
-             rescue OpenURI::HTTPError
-               []
-             end
+    []
   end
 
   def doc
@@ -173,9 +168,18 @@ class Competition
   end
 
   def fetch_doc
-    doc = Nokogiri::HTML open "https://cubecomps.com/live.php?cid=#{id}&dnrd=1"
+    doc = Nokogiri::HTML get_html "/live.php?cid=#{id}&dnrd=1"
     raise NotFoundException if doc.css("body").text.include? "That competition is not available any more."
 
     doc
+  end
+
+  def get_html(path)
+    uri = URI("https://www.cubecomps.com#{path}")
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+      response.body
+    end
   end
 end

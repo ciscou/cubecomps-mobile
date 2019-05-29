@@ -55,6 +55,17 @@ class Competitions
   end
 
   def doc
-    @doc ||= Nokogiri::HTML open "https://cubecomps.com/#{"?all=1" if @all}"
+    @doc ||= Nokogiri::HTML get_html "/#{"?all=1" if @all}"
+  end
+
+  def get_html(path)
+    uri = URI("https://www.cubecomps.com#{path}")
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+      res = response.body
+      puts res
+      res
+    end
   end
 end

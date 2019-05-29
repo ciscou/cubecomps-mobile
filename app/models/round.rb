@@ -253,9 +253,18 @@ class Round
   end
 
   def fetch_doc
-    doc = Nokogiri::HTML open "https://cubecomps.com/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}&dnrd=1"
+    doc = Nokogiri::HTML get_html "/live.php?cid=#{competition_id}&cat=#{event_id}&rnd=#{id}&dnrd=1"
     raise NotFoundException if doc.css("body").text.include? "That competition is not available any more."
 
     doc
+  end
+
+  def get_html(path)
+    uri = URI("https://www.cubecomps.com#{path}")
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      request = Net::HTTP::Get.new uri
+      response = http.request request
+      response.body
+    end
   end
 end
