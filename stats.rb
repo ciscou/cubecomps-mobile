@@ -121,6 +121,10 @@ web   = 0
 
 requests_by_fwd = Hash.new(0)
 
+requests_by_path = Hash.new(0)
+
+requests_by_competition_id = Hash.new(0)
+
 active_users = {}
 
 begin
@@ -141,11 +145,19 @@ begin
         web += 1
       end
 
+      requests_by_path[path] += 1
+
       fwd = $~[:fwd]
 
       requests_by_fwd[fwd] += 1
 
       active_users[fwd] = Time.now.to_i
+
+      if path =~ %r{/competitions/(\d+)}
+        competition_id = $~[1]
+
+        requests_by_competition_id[competition_id] += 1
+      end
     end
 
     case s
@@ -187,5 +199,19 @@ puts
 
 puts "Most requests by IP"
 requests_by_fwd.sort_by { |_k, v| v }.reverse.first(10).each do |k, v|
+  puts "#{v}: #{k}"
+end
+
+puts
+
+puts "Most requests by path"
+requests_by_path.sort_by { |_k, v| v }.reverse.first(10).each do |k, v|
+  puts "#{v}: #{k}"
+end
+
+puts
+
+puts "Most requests by competition"
+requests_by_competition_id.sort_by { |_k, v| v }.reverse.first(10).each do |k, v|
   puts "#{v}: #{k}"
 end
