@@ -1,4 +1,7 @@
-info_log_re = %r{
+# Usage:
+# $ heroku logs --app cubecomps-mobile --num 0 --source heroku --tail | ruby stats.rb
+
+INFO_RE = %r{
   \A
   (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}\+\d{2}:\d{2})
   \s
@@ -8,7 +11,7 @@ info_log_re = %r{
   \s
   method=([A-Z]+)
   \s
-  path="([^"]+)"
+  path="(?<path>[^"]+)"
   \s
   host=m\.cubecomps\.com
   \s
@@ -30,7 +33,7 @@ info_log_re = %r{
   \z
 }x
 
-warning_log_re = %r{
+WARNING_RE = %r{
   \A
   (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}\+\d{2}:\d{2})
   \s
@@ -42,11 +45,11 @@ warning_log_re = %r{
   \s
   code=(H\d+)
   \s
-  desc=("[^"]+")
+  desc="([^"]+)"
   \s
   method=([A-Z]+)
   \s
-  path=("[^"]+")
+  path="(?<path>[^"]+)"
   \s
   host=m\.cubecomps\.com
   \s
@@ -68,7 +71,7 @@ warning_log_re = %r{
   \z
 }x
 
-error_log_re = %r{
+ERROR_RE = %r{
   \A
   (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}\+\d{2}:\d{2})
   \s
@@ -80,11 +83,11 @@ error_log_re = %r{
   \s
   code=(H\d+)
   \s
-  desc=("[^"]+")
+  desc="([^"]+)"
   \s
   method=([A-Z]+)
   \s
-  path=("[^"]+")
+  path="(?<path>[^"]+)"
   \s
   host=m\.cubecomps\.com
   \s
@@ -106,46 +109,62 @@ error_log_re = %r{
   \z
 }x
 
-ignore_log_re = %r{
-  \A
-  (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}\+\d{2}:\d{2})
-  \s
-  (heroku\[scheduler.\d+\]|app\[scheduler.\d+\]|app[api]):
-  \s
-  .*
-  \z
-}x
-
 info    = 0
 warning = 0
 error   = 0
-ignored = 0
 unknown = 0
 
-fwds = []
+apiv2 = 0
+apiv1 = 0
+apiv0 = 0
+web   = 0
+
+requests_by_fwd = Hash.new(0)
+
+active_users = {}
 
 begin
   while s = gets
     s.chomp!
 
     case s
-      when info_log_re, warning_log_re, error_log_re
-        fwds << $~[:fwd]
+    when INFO_RE, WARNING_RE, ERROR_RE
+      path = $~[:path]
+
+      if path.start_with?("/api/v2")
+        apiv2 += 1
+      elsif path.start_with?("/api/v1")
+        apiv1 += 1
+      elsif path.end_with?(".json")
+        apiv0 += 1
+      else
+        web += 1
+      end
+
+      fwd = $~[:fwd]
+
+      requests_by_fwd[fwd] += 1
+
+      active_users[fwd] = Time.now.to_i
     end
 
     case s
-    when info_log_re
+    when INFO_RE
       info += 1
-    when warning_log_re
+    when WARNING_RE
       warning += 1
-    when error_log_re
+    when ERROR_RE
       error += 1
-    when ignored_log_re
-      ignored += 1
     else
       unknown += 1
+      puts "Unknown line format:"
       puts s
     end
+
+    active_users.delete_if do |k, v|
+      Time.now.to_i - v > 120
+    end
+    puts "Active users: #{active_users.count}"
   end
 rescue Interrupt
   puts
@@ -155,5 +174,18 @@ end
 puts "Info:    #{info}"
 puts "Warning: #{warning}"
 puts "Error:   #{error}"
-puts "Ignored: #{ignored}"
 puts "Unknown: #{unknown}"
+
+puts
+
+puts "Api v2: #{apiv2}"
+puts "Api v1: #{apiv1}"
+puts "Api v0: #{apiv0}"
+puts "Web:    #{web}"
+
+puts
+
+puts "Most requests by IP"
+requests_by_fwd.sort_by { |_k, v| v }.reverse.first(10).each do |k, v|
+  puts "#{v}: #{k}"
+end
