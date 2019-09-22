@@ -1,5 +1,5 @@
 class Competitor
-  attr_accessor :competition_id, :id, :name
+  attr_accessor :competition_id, :id, :name, :wca_id
 
   def initialize(args)
     args.each do |k, v|
@@ -31,6 +31,10 @@ class Competitor
     @name ||= fetch_name
   end
 
+  def wca_id
+    @wca_id ||= fetch_wca_id
+  end
+
   def results
     @results ||= fetch_results
   end
@@ -57,6 +61,15 @@ class Competitor
     raise NotFoundException unless node
 
     node.text
+  end
+
+  def fetch_wca_id
+    node = doc.at_css("div.main a.a_white")
+    return "" unless node
+
+    wca_url = node.attr("href")
+    wca_params = CGI.parse wca_url.split("?").last
+    wca_params["i"].first
   end
 
   def fetch_results

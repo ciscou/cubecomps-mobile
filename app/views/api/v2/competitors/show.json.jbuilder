@@ -1,6 +1,7 @@
 json.cache! ['api', 'v2', @competitor], ccm_cache_options(competition_id: @competitor.competition_id) do
   json.competition_name @competitor.competition_name
   json.name @competitor.name
+  json.wca_id @competitor.wca_id
   json.results do
     json.array! @competitor.results.by_event_code do |event_code, results|
       json.event_code event_code
