@@ -2,6 +2,8 @@
 
 Just like http://www.cubecomps.com, but optimized for small screens!
 
+:warning: WARNING: cubecomps mobile if officialy shut down as of Feb 13th, 2020. Thanks all for taking part of this over all these years! :warning:
+
 ## API included!
 
 Want to develop your own cubecomps application? No need to
