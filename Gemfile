@@ -9,7 +9,7 @@ gem 'memcachier'
 gem 'dalli'
 gem 'newrelic_rpm'
 
-gem 'rake', '< 11.0'
+gem 'rake', '< 14.0'
 gem 'test-unit'
 gem 'minitest'
 
